@@ -22,5 +22,6 @@ export default {
 body,html {
   margin: 0;
   padding: 0;
+  min-width: 1200px;
 }
 </style>

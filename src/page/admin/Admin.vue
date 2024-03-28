@@ -38,7 +38,7 @@ import { NetLoader } from '@/net';
         },
         methods: {
             logout() {
-                this.loader.post("/user/logout").then(() => {
+                this.loader.post("/users/logout").then(() => {
                     this.$message({
                         message: "退出账号成功",
                         type: "success"
@@ -50,7 +50,7 @@ import { NetLoader } from '@/net';
             }
         },
         created() {
-            this.loader.get("/user/verify").then(value => {
+            this.loader.get("/users/current").then(value => {
                 let username = value.data.userName;
                 this.username = username;
             })

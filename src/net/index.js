@@ -21,7 +21,7 @@ export class NetLoader {
         })
 
         this.instance.interceptors.request.use(config => {
-            if(config.url === "/user/login") {
+            if(config.url === "/users/login") {
                 return config;
             }
             if(window.localStorage.getItem("token")) {
