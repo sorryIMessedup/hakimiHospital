@@ -1,8 +1,26 @@
-<script setup>
-</script>
-
 <template>
-  <el-button type="primary">I am a button</el-button>
+  <div class="app">
+    <router-view></router-view>
+  </div>
+  
 </template>
 
-<style scoped></style>
+<script>
+import HospitalVR from './page/webvr/HospitalVR.vue';
+import Home from './page/home/Home.vue';
+
+export default {
+  name: 'App',
+  components: {
+    HospitalVR,
+    Home,
+  }
+}
+</script>
+
+<style lang="less" scoped>
+body,html {
+  margin: 0;
+  padding: 0;
+}
+</style>

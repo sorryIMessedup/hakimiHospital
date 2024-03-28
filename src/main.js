@@ -1,14 +1,19 @@
-import './assets/main.css'
-
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-
+import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
+import router from "@/router"
+import {store} from "@/store"
+import "@/style/global.less"
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+// import '@/style/tailwindcss.css'
 
-const app = createApp(App)
+Vue.config.productionTip = false
 
-app.use(createPinia())
-app.use(router)
-
-app.mount('#app')
+Vue.use(ElementUI);
+new Vue({
+  components: {
+    App
+  },
+  router,store,
+  render: h => h(App)
+}).$mount('#app') //挂载节点
