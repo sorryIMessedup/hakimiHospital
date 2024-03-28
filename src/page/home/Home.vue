@@ -9,11 +9,12 @@
 			</div>
 			<div class="nav-right">
 				<div class="nav-right-item">
-					<div v-if="$store.state.status === 1 && $store.state.type === 'user'" class="nav-right-itemLogin"
+					<div v-if="true" class="nav-right-itemLogin"
 						@click="toggleUserInfo">
 						<span>{{ username }}</span>
 					</div>
 					<span v-else @click="$router.push('/login')">登录</span>
+
 					<div class="nav-right-user" v-if="showUserInfo">
 						<div class="nav-right-info">用户详细信息</div>
 						<div class="nav-right-logout" @click="logout">退出登录</div>
@@ -39,7 +40,7 @@
 				</div>
 			</div>
 		</el-header>
-		<el-breadcrumb separator-class="el-icon-arrow-right" class="nav-path" style="margintop: 70px; marginleft: 10px"
+		<el-breadcrumb separator-class="el-icon-arrow-right" class="nav-path" style="margin-top: 70px; margin-left: 10px"
 			v-if="$router.currentRoute.path !== '/home/main'">
 			<el-breadcrumb-item v-for="(item, index) in $store.state.path" :key="index" :to="{ path: item.to }">{{
 					item.name }}</el-breadcrumb-item>
@@ -51,34 +52,17 @@
 </template>
 
 <script>
-import Add_disease from "@/page/disease_viewer/Add_disease.vue";
-import Case_list from "@/page/disease_viewer/Case_list.vue";
-import Disease_view from "@/page/disease_viewer/Disease_view.vue";
-import Edit_disease from "@/page/disease_viewer/Edit_disease.vue";
-import Disease_group from "@/component/Disease_group.vue";
-import Disease_list from "@/component/Disease_list.vue";
-import Picture_editor from "@/component/Picture_editor.vue";
-import Video_editor from "@/component/Video_editor.vue";
 import { NetLoader } from "@/net";
 export default {
+	// eslint-disable-next-line vue/multi-word-component-names
 	name: "Home",
-	components: {
-		Add_disease,
-		Case_list,
-		Disease_view,
-		Edit_disease,
-		Disease_group,
-		Disease_list,
-		Picture_editor,
-		Video_editor,
-	},
+	components: { },
 	data() {
 		return {
 			loader: new NetLoader("test"),
-			username: null,
+			username: "test1",
 			showItemList: false,
 			showUserInfo: false,
-			loader: new NetLoader("test"),
 		};
 	},
 	methods: {
@@ -86,7 +70,7 @@ export default {
 			this.showUserInfo = !this.showUserInfo;
 		},
 		logout() {
-			this.loader.post("/user/logout").then(() => {
+			this.loader.post("/users/logout").then(() => {
 				window.localStorage.removeItem("token");
 				this.$store.commit("changeStatus", 0);
 				this.showUserInfo = false;
@@ -101,7 +85,7 @@ export default {
 	created() {
 		if (window.localStorage.getItem("token")) {
 			//TODO 此处需要发送请求来验证该token的具体身份方便在导航栏出展示用户名和用户的信息
-			this.loader.get("/user/verify").then(
+			this.loader.get("/users/verify").then(
 				(value) => {
 					this.username = value.data.userName;
 					let type = value.data.type;

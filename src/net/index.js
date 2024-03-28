@@ -1,8 +1,7 @@
-// 发生网络请求的模块
+/* eslint-disable no-unused-vars */
 import config from "../../config.yaml"
 import axios from "axios";
 import { AxiosHeaders } from "axios";
-
 
 export class NetLoader {
     /**
@@ -19,7 +18,6 @@ export class NetLoader {
                 "Content-Encoding": "utf-8"
             }
         })
-
         this.instance.interceptors.request.use(config => {
             if(config.url === "/users/login") {
                 return config;

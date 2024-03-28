@@ -4,7 +4,7 @@
             <h1>病例总览</h1>
             
         </div>
-        <div class="case_list-container" v-if="$store.state.status === 1">
+        <div class="case_list-container" v-if="this.token != 0">
             <Disease_list />
             <Disease_selector />
             <div><el-button style="margin-left: 10%;margin-top:20px;" type="primary" size="small" v-on:click="navigate" v-if="this.$store.state.type == 'user'">进入模拟诊断</el-button></div>
@@ -23,6 +23,7 @@ export default {
     name: "Case_list",
     data() {
         return {
+            token: 0,
             loader: new NetLoader("test")
         };
     },
@@ -33,12 +34,7 @@ export default {
         }
     },
     created() {
-        this.loader.get("/user/verify").then(value => {
-            this.$store.commit("changeStatus",1);
-            this.$store.commit("changeType", value.data.type);
-        }, err => {
-            this.$store.commit("changeStatus",0);
-        })
+        this.token = window.sessionStorage.getItem("token")
     },
     components: { Disease_list,Disease_selector },
 }
