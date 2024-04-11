@@ -14,7 +14,7 @@ npm install
 
 ## 运行
 
-运行 `npm serve` 以在本地5000端口上启动devServer，
+运行 `npm run serve` 以在本地5000端口上启动devServer，
 
 或者运行 `npm run build` 以获得一个打包好的前端工程以部署在nginx或Apache上。
 
