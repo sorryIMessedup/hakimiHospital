@@ -17,16 +17,16 @@
       </div>
     </el-header>
 
-      <el-menu router background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
-        <el-menu-item index="/admin/user">用户管理</el-menu-item>
-        <el-menu-item index="/admin/basic_structure">基本结构与功能管理</el-menu-item>
-        <el-menu-item index="/admin/case_list">病例管理</el-menu-item>
-        <el-menu-item index="/admin/test_management">测试管理</el-menu-item>
-        <el-menu-item index="/admin/upload">文件批量上传</el-menu-item>
-      </el-menu>
-      <div class="hospital_admin-page">
-        <router-view></router-view>
-      </div>
+    <el-menu router background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+      <el-menu-item index="/admin/user">用户管理</el-menu-item>
+      <el-menu-item index="/admin/basic_structure">基本结构与功能管理</el-menu-item>
+      <el-menu-item index="/admin/case_list">病例管理</el-menu-item>
+      <el-menu-item index="/admin/test_management">测试管理</el-menu-item>
+      <el-menu-item index="/admin/upload">文件批量上传</el-menu-item>
+    </el-menu>
+    <div class="hospital_admin-page">
+      <router-view></router-view>
+    </div>
 
   </el-container>
 </template>
@@ -73,7 +73,7 @@ export default {
 .el-menu {
   height: 100%;
   position: fixed;
-  margin-top: 90px;
+  padding-top: 90px;
   margin-left: 0px;
 
   .el-menu-item {
@@ -81,7 +81,7 @@ export default {
     margin-top: 10px;
     margin-right: 10px;
     font-size: 20px;
-    border-bottom: 2px solid rgba(66,66,66);
+    border-bottom: 2px solid rgba(66, 66, 66);
   }
 }
 

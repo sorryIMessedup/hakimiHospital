@@ -58,6 +58,7 @@ export default {
 
 <style lang="less" scoped>
 .hospital_main-container {
+	position: relative;
 	height: calc(100vh - 100px);
 	padding-top: 100px;
 	background-color: gainsboro;

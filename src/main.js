@@ -9,7 +9,7 @@ import axios from 'axios'
 // import '@/style/tailwindcss.css'
 
 Vue.config.productionTip = false
-// axios.defaults.withCredentials = false
+// axios.defaults.withCredentials = true
 
 Vue.use(ElementUI);
 new Vue({

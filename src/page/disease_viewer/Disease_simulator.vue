@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-unused-vars -->
 <template>
     <div id="Disease_simulator">
         <div id="header">

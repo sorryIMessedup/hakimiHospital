@@ -68,7 +68,7 @@ export default {
   methods: {
     confirm: function () {
       let formData = new FormData();
-      formData.append("id", 0)
+      // formData.append("id", 0)
       for (let index in this.keyslist) {
         if (index == 0) {
           if (this.$refs.inputs[index].value == undefined) {
@@ -81,7 +81,7 @@ export default {
                 });
               }
             });
-            return
+            return;
           }
         }
         if (this.configs[index] == 'date') {
@@ -90,11 +90,23 @@ export default {
           } else {
             formData.append(this.keyslist[index], undefined)
           }
-        } else {
+        }
+        else if (this.configs[index] == 'roleList') {
+          formData.append(this.keyslist[index], [{
+            "id": {
+              "date": "2024-04-10T20:29:45.736Z",
+              "timestamp": 0
+            },
+            "name": "实习医师",
+            "text": "在宠物医院实习的一般医师"
+          }])
+        }
+        else {
           formData.append(this.keyslist[index], this.$refs.inputs[index].value)
         }
+
       }
-      let url = "http://127.0.0.1:8888" + this.$props.url + "/save"
+      let url = this.$props.base_url + this.$props.add_url;
       let loader = new NetLoader("test")
       loader.post(url, formData).then((value) => {
         this.dialogFormVisible = false
@@ -123,34 +135,35 @@ export default {
   props: {
     labels: Array,
     keys: Array,
-    url: String,
+    base_url: String,
+    add_url: String,
     get_data: Function,
     config: Array
   },
   watch: {
     dialogFormVisible(val, newval) {
-      for (let key in this.data) {
-        this.data[key] = ""
-      }
-      if (val) {
-        this.options = []
-        let loader = new NetLoader("test")
-        let url = "http://127.0.0.1:8888/case/findAllByType"
-        loader.get(url).then((value) => {
-          for (let key in value.data) {
-            let obj = {}
-            obj.label = key
-            obj.options = []
-            for (let data in value.data[key]) {
-              let newObject = {}
-              newObject.label = value.data[key][data]
-              newObject.value = value.data[key][data]
-              obj.options.push(newObject)
-            }
-            this.options.push(obj)
-          }
-        })
-      }
+      // for (let key in this.data) {
+      //   this.data[key] = ""
+      // }
+      // if (val) {
+      //   this.options = []
+      //   let loader = new NetLoader("test")
+      //   let url = "http://127.0.0.1:8888/case/findAllByType"
+      //   loader.get(url).then((value) => {
+      //     for (let key in value.data) {
+      //       let obj = {}
+      //       obj.label = key
+      //       obj.options = []
+      //       for (let data in value.data[key]) {
+      //         let newObject = {}
+      //         newObject.label = value.data[key][data]
+      //         newObject.value = value.data[key][data]
+      //         obj.options.push(newObject)
+      //       }
+      //       this.options.push(obj)
+      //     }
+      //   })
+      // }
     }
   }
 }

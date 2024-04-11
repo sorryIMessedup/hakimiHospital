@@ -10,12 +10,14 @@ export class NetLoader {
      */
     constructor(env = "dev") {
         this.env = env;
-        this.baseURL = config.env[this.env].base_url;
+        // this.baseURL = config.env[this.env].base_url;
+        this.baseURL = "";
         this.instance = axios.create({
             timeout: 2000,
             baseURL: this.baseURL,
             headers: {
-                "Content-Encoding": "utf-8"
+                "Content-Encoding": "utf-8",
+                "Content-Type": "application/json"
             }
         })
         this.instance.interceptors.request.use(config => {
