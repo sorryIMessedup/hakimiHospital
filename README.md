@@ -14,10 +14,14 @@ npm install
 
 ## 运行
 
-运行 `npm serve` 以在本地5000端口上启动devServer，或者运行 `npm run build` 以获得一个打包好的前端工程，后者可以部署在nginx的dist上。
+运行 `npm serve` 以在本地5000端口上启动devServer，
+
+或者运行 `npm run build` 以获得一个打包好的前端工程以部署在nginx或Apache上。
 
 ```bash
 npm run serve
 ```
 
-请注意，`vue.config.js` 在devServer上配置了proxy代理，默认指向http://localhost:8080/，这是为了解决前后端跨域CORS问题。
+请注意，`vue.config.js` 在devServer上配置了proxy代理，
+
+默认指向localhost:8080/，这是为了解决前后端跨域CORS问题。
