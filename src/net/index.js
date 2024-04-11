@@ -66,6 +66,22 @@ export class NetLoader {
     }
 
     /**
+     * @description 发生put请求
+     * @param {string} url 
+     * @param {{}} data 
+     * @returns {Promise<any>}
+     */
+    put(url, data, headers = {}) {
+        return new Promise((res,rej) => {
+            this.instance.put(url, data, {headers}).then((val) => {
+                res(val);
+            },(err) => {
+                rej(err);
+            })
+        })
+    }
+
+    /**
      * @description 发生delete 请求
      * @param {string} url 
      * @param {{}} params

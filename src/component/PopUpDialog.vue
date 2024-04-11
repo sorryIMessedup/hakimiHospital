@@ -82,9 +82,9 @@ export default {
           formData.append(this.keyslist[index], this.$refs.inputs[index].value)
         }
       }
-      let url = "http://127.0.0.1:8888" + this.$props.url + "/save"
+      let url = this.$props.base_url + this.$props.updateById_url;
       let loader = new NetLoader("test")
-      loader.post(url, formData).then((value) => {
+      loader.put(url, formData).then((value) => {
         this.dialogFormVisible = false
         this.$props.get_data()
         this.$message({
@@ -112,7 +112,8 @@ export default {
     selectData: Object,
     labels: Array,
     keys: Array,
-    url: String,
+    base_url: String,
+    updateById_url: String,
     get_data: Function,
     config: Array
   },

@@ -1,6 +1,6 @@
 <template>
     <div id="basic_structure">
-        <h1 style="textAlign: center">测试管理模块</h1>
+        <h1 style="text-align: center; margin-top: 20px;">测试管理模块</h1>
         <el-row>
             <el-col v-for="section in section_list" :key="section" style="align-items: center;">
                 <el-card class="box-card" shadow="hover" v-on:click.native="show_detail(section)"><h1>{{ section }}</h1></el-card>

@@ -15,8 +15,8 @@
       </el-table-column>
     </el-table>
     <el-button type="primary" icon="el-icon-plus" style="width:80vw" size="small" @click="handleAdd()"></el-button>
-    <PopUpDialog ref="child" :select-data="selectData" :labels="labels" :keys="keyslist" :url="this.$props.base_url"
-      :get_data="this.get_data" :config="this.$props.config"></PopUpDialog>
+    <PopUpDialog ref="child" :select-data="selectData" :labels="labels" :keys="keyslist" :base_url="this.$props.base_url"
+      :get_data="this.get_data" :config="this.$props.config" :updateById_url="this.$props.update_url"></PopUpDialog>
     <PopUpDialogForAdd ref="child2" :labels="labels.slice(1)" :keys="keyslist.slice(1)" :base_url="this.$props.base_url"
       :get_data="this.get_data" :config="configs.slice(1)" :add_url="add_url"></PopUpDialogForAdd>
   </div>
@@ -90,13 +90,14 @@ export default {
       for (let i = 0; i < this.labels.length; i++) {
         if (this.labels[i] == label) {
           let j = 0;
-          console.log(this.tableData);
-          for (let key in this.tableData[0]) {
+          for (var key in this.tableData[0]) {
             if (j == i) {
               res = key;
+              break;
             }
             j = j + 1;
           }
+          break;
         }
       }
       return res;
