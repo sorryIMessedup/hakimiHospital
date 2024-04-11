@@ -90,6 +90,7 @@ export default {
       for (let i = 0; i < this.labels.length; i++) {
         if (this.labels[i] == label) {
           let j = 0;
+          console.log(this.tableData);
           for (let key in this.tableData[0]) {
             if (j == i) {
               res = key;

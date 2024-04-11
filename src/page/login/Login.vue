@@ -6,12 +6,12 @@
       </div>
       <div class="hospital_login-rightBox">
         <div class="hospital_login-title">
-          <span v-if="type === 'user'">UserLogin</span>
-          <span v-else>AdminLogin</span>
+          <span v-if="type === 'user'">实习生登录</span>
+          <span v-else>管理员登录</span>
         </div>
         <div class="hospital_login-choice">
           <div class="hospital_login-user">
-            <span :class="userClass" @click="handleClick($event)">普通用户</span>
+            <span :class="userClass" @click="handleClick($event)">实习生</span>
           </div>
           <div class="hospital_login-admin">
             <span :class="adminClass" @click="handleClick($event)">管理员</span>
@@ -42,7 +42,9 @@
           <input type="password" v-model="password" placeholder="Password" ref="password">
         </div>
         <div class="hospital_login-button">
-          <div class="button" @click="login">Login</div>
+          <div class="button" @click="login">登录</div>
+          &nbsp;&nbsp;
+          <div class="button" @click="register">注册新用户</div>
         </div>
       </div>
     </div>
@@ -107,13 +109,16 @@ export default {
       }
     },
     handleClick(e) {
-      if (e.target.innerText === "普通用户") {
+      if (e.target.innerText === "实习生") {
         this.type = "user";
 
       } else if (e.target.innerText === "管理员") {
         this.type = "admin"
       }
       this.$store.commit("changeType", this.type);
+    },
+    register() {
+      this.$router.push("/register");
     }
   },
   computed: {
@@ -277,7 +282,7 @@ export default {
           color: #fff;
           font-size: 14px;
           text-align: center;
-          border-radius: 20px;
+          border-radius: 10px;
           cursor: pointer;
           margin-top: 20px;
         }

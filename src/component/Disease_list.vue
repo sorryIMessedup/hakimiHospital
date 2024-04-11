@@ -26,7 +26,7 @@ export default {
     get_data() {
       this.loader.get("/case/findAllCases").then((value) => {
         this.disease_data = value.data.data;
-        console.log(this.disease_data);
+        // console.log(this.disease_data);
       })
     }
   },

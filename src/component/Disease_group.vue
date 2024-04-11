@@ -5,7 +5,7 @@
         <span>{{ disease_group }}</span>
         <el-button style="float: right; padding: 3px 0" type="text" v-on:click="add_disease">添加疾病</el-button>
       </div>
-      <el-table v-if="true" :data="this.$props.disease_data" style="width: 100%" border>
+      <el-table :data="this.$props.disease_data" style="width: 100%" border>
         <el-table-column fixed width="120" prop="name" label="疾病名称" align="center" />
         <el-table-column prop="name" width="300" label="示意图片" align="center" />
         <el-table-column prop="name" width="300" label="示意视频" align="center" />

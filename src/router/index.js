@@ -12,6 +12,7 @@ const router = new VueRouter({
     { path: "/vr", component: () => import("@/page/webvr/HospitalVR.vue") },
     { path: "/detail", component: () => import("@/page/room/RoomDetail.vue") },
     { path: "/login", component: () => import("@/page/login/Login.vue") },
+    { path: "/register", component: () => import("@/page/login/Register.vue") },
     {
       path: "/home",
       component: () => import("@/page/home/Home.vue"),

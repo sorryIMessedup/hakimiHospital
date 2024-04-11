@@ -13,9 +13,9 @@ export default {
   name: "Charge_management",
   data() {
     return {
-      labels: ["编号", "科室名称", "介绍", "权限"],
-      keys: ["id", "name", "info", "roleList"],
-      widthList: [120, 150, 300, 250],
+      labels: ["编号", "科室名称", "科室介绍"],
+      keys: ["id", "name", "info"],
+      widthList: [120, 150, 500],
       base_url: "/department",
       add_url: '/addDepartment',
       delete_url: '/deleteDepartment',
@@ -24,7 +24,7 @@ export default {
       searchByName_url: '/searchDepartmentsByName',
       update_url: '/updateDepartment',
       title: "科室管理",
-      config: ["uneditable_text", "uneditable_text", "text", "roleList"]
+      config: ["uneditable_text", "uneditable_text", "text"]
     }
   },
   methods: {
