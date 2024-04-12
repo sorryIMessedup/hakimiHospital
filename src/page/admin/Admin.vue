@@ -86,11 +86,16 @@ export default {
 
 .hospital_admin-page {
   margin-top: 90px;
+  height: 100%;
   margin-left: 241px;
+  background-image: url("@/assets/main/bg.jpg");
+  background-position: center center;
+  background-repeat: repeat;
+  background-size: 100%;
+
 }
 
 .nav {
-  min-width: 900px;
   min-height: 90px;
   background: rgba(44, 44, 44);
   position: absolute;

@@ -38,6 +38,7 @@
   
   <style lang="less" scoped>
   .container {
+    background-color: white;
     margin-top: 10px;
     margin-left: 10px;
   }

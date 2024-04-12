@@ -198,6 +198,11 @@ export default {
 
 <style lang="less" scoped>
 .hospital_user-container {
+  height: 100vh;
+  background-image: url("@/assets/main/bg.jpg");
+  background-position: center center;
+  background-repeat: repeat;
+  background-size: 100%;
   .hospital_user-addBtn {
     position: fixed;
     bottom: 30px;

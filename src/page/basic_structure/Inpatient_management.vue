@@ -40,5 +40,6 @@
   .container {
     margin-top: 10px;
     margin-left: 10px;
+    background-color: white;
   }
   </style>

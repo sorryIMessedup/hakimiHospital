@@ -4,7 +4,7 @@
       <h1 style="margin-left: calc(-35vh);">病例总览</h1>
     </div>
     <div class="case_list-container" v-if="this.token != 0">
-      <Disease_list :category="category"/>
+      <Disease_list :category="category" />
       <Disease_selector />
       <div><el-button style="margin-left: 10%;margin-top:20px;" type="primary" size="small" v-on:click="navigate"
           v-if="this.$store.state.type == 'user'">进入模拟诊断</el-button></div>

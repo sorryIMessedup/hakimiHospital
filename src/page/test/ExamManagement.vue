@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div style="height: 100%;">
 		<h1 style="text-align: center">考试管理</h1>
 		<el-button type="primary" size="mini" @click="add">添加</el-button>
 		<el-table :data="examList" border style="width: 100%;margin-top: 20px;"

@@ -150,5 +150,6 @@ export default {
   //background: rgb(175, 240, 211);
   padding: 0;
   margin: 0;
+  background-color: aliceblue;
 }
 </style>

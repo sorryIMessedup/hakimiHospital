@@ -1,6 +1,7 @@
 <template>
   <div id="basic_structure">
-    <h1 style="text-align: center; margin-top: 20px;">
+    <h1 style="text-align: center; margin-top: 20px; background-color: white; line-height: 70px; 
+      margin-left: 30vh; margin-right: 30vh;">
       基本结构与功能管理导航页面
     </h1>
     <el-row>
@@ -64,6 +65,7 @@ export default {
   width: 250px;
   margin: auto;
   margin-top: 20px;
+  background-color: white;
 }
 
 </style>

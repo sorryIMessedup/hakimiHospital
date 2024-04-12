@@ -88,6 +88,11 @@ export default {
   height: 100vh;
   margin: 0px;
   min-width: 900px;
+  background-image: url("@/assets/main/bg.jpg");
+  background-position: center center;
+  background-repeat: repeat;
+  background-size: cover;
+
 }
 
 .el-card {

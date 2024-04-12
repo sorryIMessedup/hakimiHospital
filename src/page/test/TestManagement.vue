@@ -37,6 +37,7 @@ export default {
 #basic_structure{
     width:100%;
     align-items: center;
+    height: calc(100vh - 120px);
 .box-card{
     text-align: center;
     width:600px;

@@ -2,7 +2,10 @@
 <template>
   <div class="hospital_login-container">
     <div class="hospital_login-box">
-      <div class="hospital_login-leftBox">
+      <div class="hospital_login-leftBox" style="display: flex; justify-content: center; align-items: center;">
+        <h1 style="color: aliceblue; font-weight: 500;">
+          虚拟宠物医院学习系统
+        </h1>
       </div>
       <div class="hospital_login-rightBox">
         <div class="hospital_login-title">
@@ -175,7 +178,10 @@ export default {
 .hospital_login-container {
   width: 100vw;
   height: 100vh;
-  background: rgba(220, 220, 220);
+  background-image: url("@/assets/main/bg.jpg");
+  background-position: center center;
+  background-repeat: repeat;
+  background-size: cover;
 
   .hospital_login-box {
     position: absolute;

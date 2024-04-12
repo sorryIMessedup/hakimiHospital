@@ -1,8 +1,6 @@
 <template>
 	<div class="hospital_main-container">
-		<div class="hospital_main-logo">
-			<img src="@/assets/logo.png" alt="" />
-		</div>
+		<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 		<el-row :gutter="0">
 			<el-col :span="6">
 				<el-card>
@@ -61,10 +59,10 @@ export default {
 	position: relative;
 	height: calc(100vh - 100px);
 	padding-top: 100px;
-	background-color: gainsboro;
-	background-position: center center;
-	background-repeat: no-repeat;
-	background-size: cover;
+	background-image: url("@/assets/main/bg.jpg");
+  background-position: center center;
+  background-repeat: repeat;
+  background-size: cover;
 
 	.el-card {
 		margin-left: 20px;
