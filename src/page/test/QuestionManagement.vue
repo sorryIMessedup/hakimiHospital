@@ -213,7 +213,30 @@ export default {
         }
         else {
           let url = "/question/addQuestion";
-          this.loader.post(url, this.question).then(() => {
+          const testParams = {
+            "answer": "A",
+            "category": {
+              "id": {
+                "date": "2024-04-13T13:04:46.741Z",
+                "timestamp": 0
+              },
+              "name": "string"
+            },
+            "id": {
+              "date": "2024-04-13T13:04:46.741Z",
+              "timestamp": 0
+            },
+            "optionList": [
+              "太平洋",
+              "大西洋",
+              "印度洋",
+              "北冰洋"
+            ],
+            "score": 5,
+            "stem": "世界上最大的海洋是？",
+            "visible": true
+          }
+          this.loader.post(url, testParams).then(() => {
             this.$message(this.dialogTitle === "添加试题" ? '添加成功' : '编辑成功');
             this.loader.get("/question/findAll").then((value) => {
               this.questionsList = value.data
