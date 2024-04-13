@@ -2,18 +2,24 @@
     <div>
         <el-table :data="exams" border style="width: 100%;margin-top: 20px;"
         :header-cell-style="{background: 'rgb(242, 243, 244)',color:'#515a6e'}">
-            <el-table-column prop="id" label="考试名称">
+            <el-table-column prop="id" label="考试id">
                 <template slot-scope="scope">
                     考试{{ scope.row.id }}
                 </template>
             </el-table-column>
-            <el-table-column prop="testpaper.period" label="考试时间">
+          <el-table-column prop="name" label="考试名字">
+          </el-table-column>
+            <el-table-column prop="startTime" label="开始时间">
             </el-table-column>
-            <el-table-column prop="testpaper.total_score" label="总分">
+          <el-table-column prop="endTime" label="结束时间">
+          </el-table-column>
+            <el-table-column prop="score" label="总分">
             </el-table-column>
             <el-table-column fixed="right" label="操作">
                 <template slot-scope="scope">
                     <el-button type="primary" size="mini" @click="show_paper(scope.row)">参加考试</el-button>
+                    <el-button type="primary" size="mini" @click="delete_exam(scope.row)">删除考试</el-button>
+
                 </template>
             </el-table-column>
         </el-table>
@@ -38,6 +44,26 @@ export default {
         }
     },
     methods: {
+      getAll() {
+        // 清空现有的表单数据
+        this.exams = [];
+        this.loader.get("/exams/list").then((value) => {
+          const jsonData = value.data;
+          // 将 JSON 数据转换为字符串并输出到控制台
+          console.log(JSON.stringify(jsonData));
+
+
+          if (jsonData.code == 200) {
+            let res = value.data.data;
+            console.log(res)
+            for (let item of res) {
+              this.exams.push(item);
+            }
+          } else {
+            this.$message.error(jsonData.message);
+          }
+
+        })},
         show_paper: function(row) {
             let users = row.users
             let flag = false
@@ -55,14 +81,20 @@ export default {
                 this.$message('抱歉，您没有权限参加本考试')
             }
         },
+        delete_exam: function (row){
+          const examId = row.id;
+          this.loader.post("/exams/setExamStatusToDeleted",{examId : examId}).then((value) =>{
+            if(value.data.code == 200){
+              this.getAll()
+            }else{
+              this.$message.error(jsonData.message);
+            }
+          })
+        }
     },
     created() {
-        this.loader.get("/test/findAll").then((value) => {
-            this.exams = value.data
-        })
-        this.loader.get("/user/verify").then(value => {
-            this.currentUserName = value.data.userName
-        })
+        this.getAll()
+
     }
 }
 </script>
