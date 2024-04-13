@@ -210,6 +210,7 @@ export default {
     showAddDialog() {
       this.dialogVisible = true;
     },
+
     getAll() {
       // 清空现有的表单数据
       this.exams = [];
@@ -231,22 +232,13 @@ export default {
         }
 
       })},
+
     show_paper: function(row) {
-      let users = row.users
-      let flag = false
-      for(let i=0; i<users.length; i++) {
-        if (users[i].userName === this.currentUserName) {
-          flag = true
-        }
-      }
-      if (flag === true) {
-        this.$router.push({
-          path: '/home/testPaper', query: { questions: row.testpaper.questions, period: row.testpaper.period }
-        })
-      }
-      else {
-        this.$message('抱歉，您没有权限参加本考试')
-      }
+      let id = row.id
+      this.$router.push({ name: 'PaperDetail', params: { paperId: id } });
+      console.log("id是"+id)
+
+
     },
 
 
