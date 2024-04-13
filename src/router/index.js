@@ -61,6 +61,12 @@ const router = new VueRouter({
           component: () => import("@/page/test/Exams.vue"),
         },
         {
+          path: '/paper/:paperId',
+          name: 'PaperDetail',
+          component: () => import('@/page/test/PaperDetail.vue'),
+          props: true // 将路由参数作为组件的 props
+        },
+        {
           path: "testPaper",
           component: () => import("@/page/test/TestPaper.vue"),
         },
