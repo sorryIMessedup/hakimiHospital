@@ -2,7 +2,7 @@
 <template>
   <div class="container">
     <el-card>
-      <h1 style="padding-bottom: 10px; padding-left: 10px;">新用户注册</h1>
+      <h1 style="padding-bottom: 10px; padding-left: 10px; padding-top: 10px;">新用户注册</h1>
       <p style="padding-left: 10px; padding-bottom: 20px;">
         新注册的用户都会被作为实习生注册。<br>
         如果你需要成为管理员，请联系超级管理员。
@@ -113,8 +113,8 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 60%;
-  height: 600px;
+  width: 55%;
+  height: 640px;
 }
 
 .el-input {
