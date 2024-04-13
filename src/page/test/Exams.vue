@@ -3,6 +3,21 @@
     <el-button type="primary" size="medium" @click="showAddDialog">新增考试</el-button>
 
 
+    <!-- 搜索栏和按钮 -->
+    <div style="display: flex; align-items: center; margin-bottom: 20px;">
+      <el-input
+          v-model="searchBar"
+          placeholder="请输入关键字搜索"
+          prefix-icon="el-icon-search"
+          clearable
+          @clear="getAll"
+
+          @keyup.enter.native="search"
+          style="flex: 1; margin-right: 10px;"
+      ></el-input>
+      <el-button type="primary" @click="search" style="flex-shrink: 0;">搜索</el-button>
+    </div>
+
     <!--考试list -->
     <el-table :data="exams" border style="width: 100%;margin-top: 20px;"
               :header-cell-style="{background: 'rgb(242, 243, 244)',color:'#515a6e'}">
@@ -131,14 +146,39 @@ export default {
         selectedUser : [],
         selectedQuestion : [],
         filteredQuestion : [],
-        selectedCategory : []
+        selectedCategory : [],
 
-      }
+
+      },
+      searchBar : ""
 
     }
   },
 
   methods: {
+    search(){
+      const name = this.searchBar;
+      console.log("名字"+name)
+      var url = "exams/search?name=" + name +"?status=false";
+      this.loader.get(url).then(value => {
+        const jsonData = value.data;
+        // 将 JSON 数据转换为字符串并输出到控制台
+        console.log(JSON.stringify(jsonData));
+
+
+        if (jsonData.code == 200) {
+          let res = value.data.data;
+          console.log(res)
+          for (let item of res) {
+            this.exams.push(item);
+          }
+        } else {
+          console.log(400)
+          this.$message.error(jsonData.message);
+        }
+      })
+
+    },
     addExam(){
       const postData = {
         name: this.formData.name,
