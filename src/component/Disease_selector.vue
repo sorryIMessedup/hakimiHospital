@@ -9,7 +9,6 @@
       <p id="select">选择检索方式：</p>
       <el-radio-group v-model="radio" style="display:flex; flex-flow:column nowrap; align-items: flex-start;">
         <el-radio :label="1">疾病名称检索</el-radio>
-        
         <el-radio :label="2">关键字检索</el-radio>
       </el-radio-group>
       <p id="select">检索结果：</p>
@@ -63,12 +62,11 @@ export default {
 
 <style scoped lang="less">
 #disease_selector {
-  width: 29%;
-  float: right;
+  margin-left: 10px;
+  width: 280px;
   height: wrap-content;
-  //background: rgb(148, 254, 0);
   padding: 0;
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 .box-card {
