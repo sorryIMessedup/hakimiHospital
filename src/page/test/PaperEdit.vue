@@ -5,10 +5,11 @@
             <el-form :rules="rules" :model="paper" ref="paper">
                 <el-form-item label="考试时间(分钟)：" label-width="150px" prop="period">
                     <el-input-number v-model="paper.period" :min="1" :max="300"></el-input-number>
-                    <el-button style="margin-left:20px" @click="periodEdit()" >确认</el-button>
+                    <el-button style="margin-left:20px" @click="periodEdit()">确认</el-button>
                 </el-form-item>
                 <el-button size="mini" @click="add_question()" style="margin-bottom:10px;float:right;">添加试题</el-button>
-                <el-table :data="paper.questions" :header-cell-style="{ background: 'rgb(242, 243, 244)', color: '#515a6e' }">
+                <el-table :data="paper.questions"
+                    :header-cell-style="{ background: 'rgb(242, 243, 244)', color: '#515a6e' }">
                     <el-table-column prop="type" label="类别">
                     </el-table-column>
                     <el-table-column prop="content" label="题干">
@@ -23,16 +24,18 @@
                 </el-table>
             </el-form>
             <div style="margin-top:20px;text-align:right;">
-                <el-button @click="back()" >返回</el-button>
+                <el-button @click="back()">返回</el-button>
             </div>
             <el-dialog title="添加试题" :visible.sync="dialogFormVisible">
                 <el-card class="box-card">
                     <div slot="header">
                         <span style="font-size: large;">试题检索</span>
                     </div>
-                    <el-input placeholder="在此输入检索试题" v-model="input" size="small" style="width:80%" clearable> </el-input>
+                    <el-input placeholder="在此输入检索试题" v-model="input" size="small" style="width:80%" clearable>
+                    </el-input>
                     <el-button type="primary" icon="el-icon-search" size="small" v-on:click="search"></el-button>
-                    <el-radio-group id="select" v-model="radio" style="display:flex; flex-flow:row nowrap; align-items: flex-start;">
+                    <el-radio-group id="select" v-model="radio"
+                        style="display:flex; flex-flow:row nowrap; align-items: flex-start;">
                         <el-radio :label="1">内容检索</el-radio>
                         <!-- <el-radio :label="2">ID检索</el-radio> -->
                         <el-radio :label="3">类别检索</el-radio>
@@ -108,10 +111,10 @@ export default {
             this.dialogFormVisible = true
         },
         async delete_question(row) {
-            await this.loader.get("/paper/deleteQuestions?paper_id="+this.paper.id+"&question_id="+row.id).then((value) => {
+            await this.loader.get("/paper/deleteQuestions?paper_id=" + this.paper.id + "&question_id=" + row.id).then((value) => {
             })
             this.$message("删除成功");
-            this.loader.get("/paper/findById?id="+this.paper.id).then((value) => {
+            this.loader.get("/paper/findById?id=" + this.paper.id).then((value) => {
                 this.paper = value.data
             })
         },
@@ -121,24 +124,24 @@ export default {
                 question_id.push(this.$refs.questionTable.selection[i].id)
             }
             let formData = new FormData();
-            formData.append("paper_id",this.paper.id)
-            formData.append("question_id",question_id)
-            
+            formData.append("paper_id", this.paper.id)
+            formData.append("question_id", question_id)
+
             let url = "http://127.0.0.1:8888/paper/addQuestions"
-            await this.loader.post(url,formData).then((value) => {
+            await this.loader.post(url, formData).then((value) => {
             })
             this.$message("添加成功");
             this.dialogFormVisible = false
-            this.loader.get("/paper/findById?id="+this.paper.id).then((value) => {
+            this.loader.get("/paper/findById?id=" + this.paper.id).then((value) => {
                 this.paper = value.data
             })
         },
         periodEdit() {
             let formData = new FormData()
-            formData.append("id",this.paper.id)
-            formData.append("period",this.paper.period)
+            formData.append("id", this.paper.id)
+            formData.append("period", this.paper.period)
             let url = "http://127.0.0.1:8888/paper/save"
-            this.loader.post(url,formData).then((value) => {
+            this.loader.post(url, formData).then((value) => {
                 this.$message("修改成功");
             })
         },
@@ -157,9 +160,9 @@ export default {
 </script>
 
 <style>
-#select{
+#select {
     font-size: 14px;
     margin-top: 10px;
-    margin-bottom:5px;
+    margin-bottom: 5px;
 }
 </style>

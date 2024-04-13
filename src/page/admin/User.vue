@@ -115,10 +115,12 @@ export default {
             type: "success"
           })
           this.loader.get("/users/findAllUsers").then(val => {
+            console.log(val);
             this.getUsers();
           })
           window.location.reload();
         }, err => {
+          console.log(err);
           this.$message.error("删除信息失败")
         })
       }).catch(() => {

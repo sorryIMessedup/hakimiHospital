@@ -2,27 +2,32 @@
 <template>
   <div class="container">
     <el-card>
-      <h1 style="padding-bottom: 20px; padding-left: 10px;">新用户注册</h1>
-      <el-form label-position="left" label-width="80px" :model="formLabelAlign" style="padding-left: 10px;">
-        <el-form-item label="用户名">
-          <el-input v-model="formLabelAlign.username" placeholder="用户名"></el-input>
+      <h1 style="padding-bottom: 10px; padding-left: 10px;">新用户注册</h1>
+      <p style="padding-left: 10px; padding-bottom: 20px;">
+        新注册的用户都会被作为实习生注册。<br>
+        如果你需要成为管理员，请联系超级管理员。
+      </p>
+      <el-form :rules="rules" label-position="left" label-width="80px" :model="formLabelAlign" style="padding-left: 10px;">
+        <el-form-item label="用户名" prop="username">
+          <el-input v-model="formLabelAlign.username" placeholder="请输入用户名"></el-input>
         </el-form-item>
-        <el-form-item label="密码">
-          <el-input v-model="formLabelAlign.password" placeholder="密码"></el-input>
+        <el-form-item label="密码" prop="password">
+          <el-input v-model="formLabelAlign.password" placeholder="请输入密码"></el-input>
         </el-form-item>
-        <el-form-item label="确认密码">
-          <el-input v-model="formLabelAlign.confirmedPassword" placeholder="确认密码"></el-input>
+        <el-form-item label="确认密码" prop="confirmedPassword">
+          <el-input v-model="formLabelAlign.confirmedPassword" placeholder="请输入确认密码"></el-input>
         </el-form-item>
-        <el-form-item label="邮箱">
-          <el-input v-model="formLabelAlign.email" placeholder="邮箱"></el-input>
+        <el-form-item label="邮箱" prop="email">
+          <el-input v-model="formLabelAlign.email" placeholder="请输入邮箱"></el-input>
         </el-form-item>
-        <el-form-item label="密保问题">
+        <el-form-item label="密保问题" prop="question">
           <el-select v-model="formLabelAlign.questions" placeholder="请选择密保问题">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
+            <el-option label="你就读的学校是什么？" value="你就读的学校是什么？"></el-option>
+            <el-option label="你最印象深刻的人是谁？" value="你最印象深刻的人是谁？"></el-option>
+            <el-option label="你的宠物名字是什么？" value="你的宠物名字是什么？"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="密保答案">
+        <el-form-item label="密保答案" prop="answer">
           <el-input v-model="formLabelAlign.answer" placeholder="请输入密保答案"></el-input>
         </el-form-item>
       </el-form>
@@ -49,6 +54,13 @@ export default {
         email: '',
         questions: '',
         answer: ''
+      },
+      rules: {
+        username: [{required: true , message: '请输入用户名', trigger: 'blur'},
+                   {min: 2, message: '长度至少为2个字符', trigger:'blur'} ],
+        password: [ {required: true, message: '请输入密码',  trigger:'blur'},
+                    {min: 6, message: '长度至少为6个字符且包含字母', trigger:'blur'} ],
+        confirmedPassword: [ {required: true, message: '请输入确认密码', trigger:'blur'} ]
       }
     }
   },
@@ -67,10 +79,10 @@ export default {
           this.$message.success('注册成功');
           this.$router.push("/login");
         } else {
-          this.$message.error('注册失败');
+          this.$message.error(val.data.data.message);
         }
       }, err => {
-        this.$message.error('注册失败');
+        this.$message.error(err.response.data.message);
         console.log(err);
       })
     },
