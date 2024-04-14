@@ -10,8 +10,8 @@
         <el-button type="primary" icon="el-icon-search" size="small" v-on:click="search"></el-button>
         <el-radio-group id="select" v-model="radio"
           style="display:flex; flex-flow:row nowrap; align-items: flex-start;">
-          <el-radio :label="1">模糊检索</el-radio>
-          <el-radio :label="2">精确检索</el-radio>
+          <el-radio :label="1">题干检索</el-radio>
+          <el-radio :label="2">id检索</el-radio>
           <el-radio :label="3">类别检索</el-radio>
         </el-radio-group>
         <el-button style="margin-top:10px" type="primary" size="mini" @click="get_data">全部试题</el-button>
@@ -23,9 +23,9 @@
       :header-cell-style="{ background: 'rgb(242, 243, 244)', color: '#515a6e' }">
       <el-table-column fixed prop="id" label="ID">
       </el-table-column>
-      <el-table-column prop="type" label="类别">
+      <el-table-column prop="category.name" label="类别">
       </el-table-column>
-      <el-table-column prop="content" label="题干">
+      <el-table-column prop="stem" label="题干">
       </el-table-column>
       <el-table-column prop="score" label="分数">
       </el-table-column>
@@ -42,14 +42,19 @@
           <el-form-item style="display:none;" label="id" label-width="100px">
             <el-input v-model="question.id"></el-input>
           </el-form-item>
+
           <el-form-item label="类别：" label-width="100px" prop="type">
-            <!-- <el-input v-model="question.type" placeholder="请输入类别">
-                        </el-input> -->
-            <el-select v-model="question.type" placeholder="请选择试题类别">
-              <el-option v-for="typeName in types" :key="typeName" :label="typeName" :value="typeName">
+            <el-select ref="categorySelect" v-model="question.type" placeholder="请选择问题范畴">
+              <el-option
+                  v-for="category in categories"
+                  :key="category.value"
+                  :label="category.label"
+                  :value="category.value">
               </el-option>
             </el-select>
           </el-form-item>
+
+
           <el-form-item label="题干：" label-width="100px" prop="content">
             <el-input v-model="question.content" type="textarea" :rows="5" placeholder="请输入题干">
             </el-input>
@@ -103,6 +108,7 @@ export default {
       loader: new NetLoader("test"),
       radio: 3,
       input: "",
+      categories : "",
       question: {
         id: "",
         content: "",
@@ -115,7 +121,7 @@ export default {
         score: ""
       },
       questionsList: [],
-      types: ["传染病", "寄生虫病", "内科", "外产科疾病", "常用手术", "免疫"],
+      types: [],
       dialogTitle: "",
       dialogFormVisible: false,
       dialogRules: {
@@ -146,35 +152,33 @@ export default {
   },
   methods: {
     get_data() {
-      this.loader.get("/question/findAllQuestions").then((value) => {
+      this.loader.get("/question/findAllVisibleQuestions").then((value) => {
         this.questionsList = value.data.data
       })
     },
+
     search() {
+      const searchText = this.input;
       if (this.radio === 1) { // 根据题面模糊查找
-        this.loader.get("/question/findQuestionByStem").then((value) => {
-          this.questionsList = value.data
+        this.loader.get("/question/findVisibleQuestionsByStem?stem="+searchText).then((value) => {
+          this.questionsList = value.data.data
         })
       }
       else if (this.radio === 2) { // 根据ID获取问题
-        this.loader.get("/question/findQuestionById").then((value) => {
+        this.loader.get("/question/findQuestionById?questionId="+searchText).then((value) => {
           this.questionsList = []
-          this.questionsList.push(value.data)
-        }).catch(() => {
-          this.questionsList = []
+          this.questionsList.push(value.data.data)
         })
       }
       else if (this.radio === 3) { // 根据类别ID获取问题
-        this.loader.get("/question/findByCategoryId").then((value) => {
-          this.questionsList = []
-          this.questionsList.push(value.data)
-        }).catch(() => {
-          this.questionsList = []
+        this.loader.get("/question/findByCategoryName?categoryName="+searchText).then((value) => {
+          this.questionsList = value.data.data
         })
       }
       else if (this.radio === 4) { // 根据类别名称获取问题
         this.loader.get("/question/findByCategoryName" + this.input).then((value) => {
-          this.questionsList = value.data
+          this.questionsList = []
+          this.questionsList.push(value.data.data)
         }).catch(() => {
           this.$alert('请输入正确、完整的类名')
         })
@@ -213,25 +217,55 @@ export default {
         }
         else {
           let url = "/question/addQuestion";
-          this.loader.post(url, this.question).then(() => {
+          const testParams = {
+            "answer": this.question.answer,
+            "category": {
+              "id": this.$refs.categorySelect.value,
+            },
+
+            "optionList": [
+              this.question.a_choice,
+              this.question.b_choice,
+              this.question.c_choice,
+              this.question.d_choice
+            ],
+            "score": this.question.score,
+            "stem": this.question.content,
+            "visible": true
+          }
+          this.loader.post(url, testParams).then(() => {
             this.$message(this.dialogTitle === "添加试题" ? '添加成功' : '编辑成功');
-            this.loader.get("/question/findAll").then((value) => {
-              this.questionsList = value.data
-            })
+            this.get_data()
             this.clear()
           })
         }
       })
     },
-    del() { // 隐藏问题
-      this.loader.put("/question/hideQuestion").then(() => {
+    del(row) { // 隐藏问题
+      let id = row.id
+      this.loader.put("/question/hideQuestion",{"questionId" : id}).then(() => {
         this.$message("删除成功");
-        this.loader.get("/question/findAll").then((value) => {
-          this.questionsList = value.data
-        })
+        this.get_data()
       }).catch(() => {
         this.$alert('删除失败，请先将该试题从所有试卷中移除')
       })
+    },
+    loadCategoryList(){
+      this.loader.get('category/findAllCategories')
+          .then((value) => {
+            if(value.data.code == 200){
+              let categoryList = value.data.data
+              this.categories= categoryList.map(category => ({
+                label: category.name,
+                value: category.id
+              }))
+              console.log("category列表"+this.formData.categories)
+            }else{
+              this.$message.error(jsonData.message);
+            }
+            // 请求成功，获取用户数据并赋值给 questionList
+
+          })
     },
     clear() {
       this.dialogFormVisible = false
@@ -239,7 +273,8 @@ export default {
     }
   },
   created() {
-    this.get_data()
+    this.get_data(),
+    this.loadCategoryList()
   },
 }
 </script>

@@ -1,13 +1,13 @@
 <template>
   <div id="case_list">
-    <div id="header">
-      <h1 style="margin-left: calc(-35vh);">病例总览</h1>
-    </div>
     <div class="case_list-container" v-if="this.token != 0">
-      <Disease_list :category="category" />
-      <Disease_selector />
-      <div><el-button style="margin-left: 10%;margin-top:20px;" type="primary" size="small" v-on:click="navigate"
-          v-if="this.$store.state.type == 'user'">进入模拟诊断</el-button></div>
+      <div>
+        <Disease_group v-for="item in category" :key="item.id" :disease_group="item.name" :disease_groupid="item.id"
+          :disease_data="disease_data" />
+      </div>
+      <div style="">
+        <Disease_selector />
+      </div>
     </div>
     <div v-else>
       <el-empty description="您暂未登录，无法查看病例信息"></el-empty>
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import Disease_list from '@/component/Disease_list.vue';
+import Disease_group from '@/component/Disease_group.vue'
 import Disease_selector from '@/component/Disease_selector.vue';
 import { NetLoader } from '@/net';
 export default {
@@ -25,7 +25,8 @@ export default {
     return {
       category: [],
       token: 0,
-      loader: new NetLoader("test")
+      loader: new NetLoader("test"),
+      disease_data: []
     };
   },
   methods: {
@@ -37,23 +38,35 @@ export default {
     this.token = window.sessionStorage.getItem("token")
     this.loader.get("/category/findAllCategories").then((val) => {
       let res = val.data.data;
-      // console.log(res)
+      console.log(res);
       for (let item of res) {
         this.category.push(item);
       }
     });
+    this.loader.get("/case/findAllCases").then((val) => {
+      let res = val.data.data;
+      console.log(res);
+      for (let item of res) {
+        this.disease_data.push(item);
+      }
+    });
   },
-  components: { Disease_list, Disease_selector },
+  components: { Disease_selector, Disease_group },
 }
 </script>
 
 <style scoped lang="less">
 #case_list {
-  width: 100%;
+  display: flex;
+  width: 100vh;
   height: wrap-content;
   margin: 0;
   margin-left: 2%;
   margin-top: 30px;
+
+  .case_list-container {
+    display: flex;
+  }
 }
 
 #header {

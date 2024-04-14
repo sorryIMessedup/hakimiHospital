@@ -3,19 +3,20 @@
     <el-card class="box-card" style="margin-top: -10px;">
       <div slot="header" class="clearfix">
         <span>{{ disease_group }}</span>
-        <el-button style="float: right; padding: 3px 0" type="text" v-on:click="add_disease">添加疾病</el-button>
+        <el-button style="float: right; padding: 3px 0" type="text" v-on:click="add_disease">添加病例</el-button>
       </div>
-      <el-table :data="this.$props.disease_data" style="width: 100%" border>
-        <el-table-column fixed width="120" prop="name" label="疾病名称" align="center" />
+      <el-table :data="this.list" style="width: 100%" border>
+        <el-table-column fixed width="120" prop="name" label="病例名" align="center" />
+        <el-table-column fixed width="120" prop="name" label="疾病名" align="center" />
         <el-table-column prop="name" width="300" label="示意图片" align="center" />
-        <el-table-column prop="name" width="300" label="示意视频" align="center" />
-        <el-table-column fixed="right" width="150">
+        <el-table-column fixed="right" width="230">
           <template slot="header">
             <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
           </template>
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            <el-button size="mini" @click="handleEdit(scope.row)">查看</el-button>
+            <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
+            <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -35,54 +36,71 @@ export default {
     return {
       currentPage4: 4,
       search: "",
-      list: []
+      list: [],
+      loader: new NetLoader("test"),
+      list2: []
     };
   },
   methods: {
-    show_data: function (name) {
-      let usr = "home"
-      if (this.$store.state.type == "admin") {
-        usr = "admin"
-      }
-      this.$router.push({
-        path: '/' + usr + '/disease_view', query: { disease_name: name, disease_group: this.disease_group }
-      })
-    },
-    delete_disease: function (name) {
-      let loader = new NetLoader("test")
-      this.$confirm('这将会永久删除数据，确定继续删除吗？', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
-        type: 'warning'
+    get_data() {
+      this.loader.get("/case/findAllCases").then((val) => {
+        this.list = [];
+        let res = val.data.data;
+        for (let item of res)
+          this.list2.push(item);
+        this.list = this.list2;
       }).then(() => {
-        loader.get("/case/deleteByName?name=" + name + "").then(() => {
-          this.$message({
-            message: '删除成功',
-            type: "success"
-          });
-          this.$props.refresh();
+        let target = this.$props.disease_groupid;
+        var res = [];
+        for (let item of this.list) {
+          if (item.categoryId == target)
+            res.push(item);
+        }
+        console.log(res);
+        this.list = res;
+      })
+
+    },
+    handleDelete(row) {
+      console.log(row);
+      this.$confirm('此操作将永久删除该病例, 是否继续?', '提示', {
+        confirmButtonText: '确定', cancelButtonText: '取消', type: 'warning'
+      }).then(() => {
+        this.loader.delete("/case/deleteCase", { id: row.id }).then(val => {
+          console.log(val);
+          this.list = [];
+          this.get_data();
+        }, err => {
+          this.$message({ type: 'warning', message: err.response.data.message });
+          console.log(err);
         })
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        });
       }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
       });
     },
-    add_disease: function () {
-      window.localStorage.setItem('disease_groupid', this.disease_groupid);
-      this.$router.push({
-        path: '/admin/add_disease', query: { disease_group: this.disease_group }
-      })
-    },
     handleSizeChange(val) {
+      // @TODO
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
+      // @TODO
       console.log(`当前页: ${val}`);
     }
+  },
+  created() {
+    this.get_data();
   },
   props: {
     disease_group: String,
     disease_groupid: String,
-    disease_data: Array,
-    refresh: Function
+    disease_data: Array
   }
 }
 </script>

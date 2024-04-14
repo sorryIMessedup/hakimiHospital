@@ -196,10 +196,8 @@ export default {
             newPassword: this.formLabelAlign.password
           }).then(val => {
             console.log(val);
-            this.loader.post("users/updateAuth", {
-              id: this.formLabelAlign.id,
-              auth: this.formLabelAlign.auth
-            }).then(val => {
+            this.loader.post("users/updateAuth?auth=" + this.formLabelAlign.auth +
+            "&id="+ this.formLabelAlign.id).then(val => {
               console.log(val);
             }, err => {
               console.log(err);
