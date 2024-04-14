@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="nav-right">
-        <div class="nav-right-item" @click="$router.push('/home/test')">
+        <div class="nav-right-item" >
           <span>{{ username }}</span>
         </div>
         <div class="nav-right-item" @click=logout()>
