@@ -1,7 +1,7 @@
 <template>
 	<div style="height: 100%;">
 		<h1 style="text-align: center">考试管理</h1>
-		<el-button type="primary" size="mini" @click="add">添加</el-button>
+		<el-button type="primary" size="mini" @click="add">新增考试</el-button>
 		<el-table :data="examList" border style="width: 100%;margin-top: 20px;"
 			:header-cell-style="{ background: 'rgb(242, 243, 244)', color: '#515a6e' }">
 			<el-table-column fixed prop="id" label="ID">
@@ -95,7 +95,7 @@ export default {
 			dialogFormVisible: false,
 			dialogRules: {
 				selectedPaper: [
-					{ required: true, message: '请选择试卷', trigger: 'change' },
+					{ required: false, message: '请选择试卷', trigger: 'change' },
 				]
 			},
 			dateTimeValue: []
@@ -115,6 +115,7 @@ export default {
 				this.exam.testpaper = value.data
 			})
 		},
+
 		add() {
 			this.exam.id = ""
 			this.exam.testpaper = { id: "", period: "", total_score: "" }
@@ -145,7 +146,7 @@ export default {
 					let formData = new FormData();
 					formData.append("paper_id", this.exam.testpaper.id)
 					formData.append("user_id", this.exam.users)
-					let url = "http://127.0.0.1:8888/test/addTest"
+					let url = "public"? "exams/holdPublicExam":"exams/holdPrivateExam"
 					this.loader.post(url, formData).then(() => {
 						this.$message(this.dialogTitle === "添加考试" ? '添加成功' : '编辑成功');
 						this.dialogFormVisible = false

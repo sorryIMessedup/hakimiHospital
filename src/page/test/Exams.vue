@@ -37,7 +37,7 @@
       <el-table-column fixed="right" label="操作">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="show_paper(scope.row)">参加考试</el-button>
-          <el-button type="primary" size="mini" @click="delete_exam(scope.row)">删除考试</el-button>
+          <el-button type="primary" size="mini" @click="delete_exam(scope.row)">查看考试（占位）</el-button>
 
         </template>
       </el-table-column>

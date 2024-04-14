@@ -20,14 +20,14 @@
 						<div class="nav-right-logout" @click="logout">退出登录</div>
 					</div>
 				</div>
-				<div class="nav-right-item" @click="$router.push('/home/test')">
-					<span>测试功能</span>
+				<div class="nav-right-item" @click="$router.push('/home/exams')">
+					<span>参与考试</span>
 				</div>
 				<div class="nav-right-item" @click="$router.push('/home/role')">
 					<span>角色扮演</span>
 				</div>
 				<div class="nav-right-item" @click="$router.push('/home/case_list')">
-					<span>病例管理</span>
+					<span>病例查阅</span>
 				</div>
 				<div class="nav-right-item" ref="guide">
 					<span>医院导览</span>

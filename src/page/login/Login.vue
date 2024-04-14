@@ -191,7 +191,7 @@ export default {
     width: 800px;
     height: 320px;
     box-sizing: border-box;
-    background: #fff;
+    background: rgba(255,255,255,0.7);
     border-radius: 10px;
 
     display: flex;
@@ -199,7 +199,7 @@ export default {
     .hospital_login-leftBox {
       height: 100%;
       width: 60%;
-      background-color: rgba(40, 40, 40);
+      background-color: rgba(40, 40, 40, 0.7);
       background-position: center center;
       background-repeat: no-repeat;
       background-size: cover;
