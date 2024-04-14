@@ -94,7 +94,6 @@ export default {
   background-position: center center;
   background-repeat: repeat;
   background-size: 100%;
-
 }
 
 .nav {
