@@ -1,7 +1,6 @@
 import VueRouter from "vue-router";
 import Vue from "vue";
 import { store } from "@/store";
-import { NetLoader } from "@/net";
 
 Vue.use(VueRouter);
 
@@ -24,6 +23,10 @@ const router = new VueRouter({
         {
           path: "main",
           component: () => import("@/page/home/Main.vue"),
+        },
+        {
+          path: "disease_list",
+          component: () => import("@/page/disease_viewer/Disease_list.vue"),
         },
         {
           path: "case_list",
@@ -173,8 +176,6 @@ const router = new VueRouter({
   ],
 });
 
-const net = new NetLoader("test");
-
 router.beforeEach((to, from, next) => {
   switch (to.path) {
     case "/home/main":
@@ -206,6 +207,7 @@ router.beforeEach((to, from, next) => {
       });
       break;
     case "/home/roleDetail":
+      // eslint-disable-next-line no-case-declarations
       let name = "";
       switch (to.query.role) {
         case "yizhu":
