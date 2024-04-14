@@ -198,17 +198,20 @@ export default {
       this.dialogFormVisible = true
     },
     edit(row) {
+
+      console.log(row.stem)
       this.question.id = row.id
-      this.question.type = row.type
-      this.question.content = row.content
-      this.question.a_choice = row.a_choice
-      this.question.b_choice = row.b_choice
-      this.question.c_choice = row.c_choice
-      this.question.d_choice = row.d_choice
+      this.question.type = row.category.id
+      this.question.content = row.stem
+      this.question.a_choice = row.optionList[0],
+      this.question.b_choice = row.optionList[1],
+      this.question.c_choice = row.optionList[2],
+      this.question.d_choice = row.optionList[3]
       this.question.answer = row.answer
       this.question.score = row.score
       this.dialogTitle = "编辑试题"
       this.dialogFormVisible = true
+      console.log(this.question)
     },
     submit(formName) { //添加问题
       this.$refs[formName].validate((valid) => {
@@ -216,8 +219,10 @@ export default {
           return false;
         }
         else {
+          if(this.dialogTitle == "添加试题"){
           let url = "/question/addQuestion";
           const testParams = {
+
             "answer": this.question.answer,
             "category": {
               "id": this.$refs.categorySelect.value,
@@ -234,15 +239,41 @@ export default {
             "visible": true
           }
           this.loader.post(url, testParams).then(() => {
-            this.$message(this.dialogTitle === "添加试题" ? '添加成功' : '编辑成功');
+            this.$message("添加成功");
             this.get_data()
             this.clear()
           })
+        }else if(this.dialogTitle == "编辑试题"){
+            let url = "/question/updateQuestion";
+            const testParams = {
+              "id" : this.question.id,
+              "answer": this.question.answer,
+              "category": {
+                "id": this.$refs.categorySelect.value,
+              },
+
+              "optionList": [
+                this.question.a_choice,
+                this.question.b_choice,
+                this.question.c_choice,
+                this.question.d_choice
+              ],
+              "score": this.question.score,
+              "stem": this.question.content,
+              "visible": true
+            }
+            this.loader.put(url, testParams).then(() => {
+              this.$message("更新成功");
+              this.get_data()
+              this.clear()
+            })
+          }
         }
       })
     },
     del(row) { // 隐藏问题
       let id = row.id
+
       this.loader.put("/question/hideQuestion",{"questionId" : id}).then(() => {
         this.$message("删除成功");
         this.get_data()
