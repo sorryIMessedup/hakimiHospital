@@ -72,6 +72,7 @@ export default {
 .el-menu {
   height: 100%;
   position: fixed;
+  background: rgba(84, 92, 100, 0.7);
   padding-top: 90px;
   margin-left: 0px;
 
@@ -80,7 +81,7 @@ export default {
     margin-top: 10px;
     margin-right: 10px;
     font-size: 20px;
-    border-bottom: 2px solid rgba(66, 66, 66);
+    border-bottom: 2px solid rgba(66, 66, 66, 0.7);
   }
 }
 
@@ -96,8 +97,8 @@ export default {
 }
 
 .nav {
-  min-height: 90px;
-  background: rgba(44, 44, 44);
+  min-height: 10px;
+  background: rgba(44, 44, 44, 0.7);
   position: absolute;
   left: 0;
   top: 0;

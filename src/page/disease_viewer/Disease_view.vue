@@ -114,7 +114,7 @@ export default {
 #disease_view {
     width: 100%;
     height: wrap-content;
-    //background: rgb(114, 239, 139);
+    background-image: url("@/assets/main/bg.jpg");
     padding-top: 60px;
     margin: 0;
     margin-left:2%;

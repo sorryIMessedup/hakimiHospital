@@ -122,8 +122,8 @@ export default {
 <style lang="less" scoped>
 .nav {
 	min-width: 900px;
-	min-height: 90px;
-	background: rgba(44, 44, 44);
+	min-height: 10px;
+	background: rgba(44, 44, 44, 0.7);
 	position: absolute;
 	left: 0;
 	top: 0;

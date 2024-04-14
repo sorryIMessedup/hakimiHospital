@@ -1,13 +1,13 @@
 <template>
   <div class="hospital_roomdetail-container">
     <div class="hospital_room-header">
-        <el-page-header @back="goBack" content="系统主页">
+        <el-page-header @back="goBack" content="平面导览主页">
         </el-page-header>
     </div>
     <div class="hospital_room-detail">
       <div class="hospital_room-leftDetail">
         <RoomSvg
-          backgroundColor="#F56C6C"
+          backgroundColor="#7fb9ba"
           :height="300"
           :width="300"
           @click="changeScene"
@@ -18,7 +18,7 @@
           :width="200"
           :x="300"
           :y="0"
-          backgroundColor="#67C23A"
+          backgroundColor="#659cc3"
           @click="changeScene"
           >手术室</RoomSvg
         >
@@ -27,7 +27,7 @@
           :width="250"
           :x="300"
           :y="200"
-          backgroundColor="#FF40A3"
+          backgroundColor="#ccdad4"
           @click="changeScene"
           >诊室</RoomSvg
         >
@@ -36,7 +36,7 @@
           :width="150"
           :x="500"
           :y="0"
-          backgroundColor="#5940FF"
+          backgroundColor="#c7eafe"
           @click="changeScene"
           >病例剖析室</RoomSvg
         >
@@ -45,7 +45,7 @@
           :width="50"
           :x="500"
           :y="150"
-          backgroundColor="#79A1E1"
+          backgroundColor="#cdc1b4"
           @click="changeScene"
           >免疫室</RoomSvg
         >
@@ -54,7 +54,7 @@
           :width="100"
           :x="550"
           :y="150"
-          backgroundColor="#39B6EB"
+          backgroundColor="#31c8ca"
           @click="changeScene"
           >药房</RoomSvg
         >
@@ -63,7 +63,7 @@
           :width="100"
           :x="550"
           :y="250"
-          backgroundColor="#44E8B2"
+          backgroundColor="#3d74ce"
           @click="changeScene"
           >手术准备室</RoomSvg
         >
@@ -72,7 +72,7 @@
           :width="100"
           :x="550"
           :y="350"
-          backgroundColor="#44E878"
+          backgroundColor="#aff0ff"
           @click="changeScene"
           >住院部</RoomSvg
         >
@@ -81,7 +81,7 @@
           :width="100"
           :x="200"
           :y="400"
-          backgroundColor="#06A037"
+          backgroundColor="#b7c6c8"
           @click="changeScene"
           >档案室</RoomSvg
         >
@@ -90,7 +90,7 @@
           :width="100"
           :x="0"
           :y="300"
-          backgroundColor="#70DD55"
+          backgroundColor="#d3dde5"
           @click="changeScene"
           >化验室</RoomSvg
         >
@@ -99,7 +99,7 @@
           :width="100"
           :x="100"
           :y="300"
-          backgroundColor="#6AE31A"
+          backgroundColor="#86b5ee"
           @click="changeScene"
           >影像室</RoomSvg
         >
@@ -108,7 +108,7 @@
           :width="100"
           :x="200"
           :y="300"
-          backgroundColor="#C2E31A"
+          backgroundColor="#deb900"
           @click="changeScene"
           >处置室</RoomSvg
         >
@@ -117,7 +117,7 @@
           :width="200"
           :x="0"
           :y="400"
-          backgroundColor="#E3D21A"
+          backgroundColor="#d0c9c4"
           @click="changeScene"
           >专科检查室</RoomSvg
         >
@@ -210,7 +210,8 @@ export default {
     height: 60px;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid rgb(220, 223, 230);
+	background-color: #fff;
+    border-bottom: 1px solid rgb(220, 220, 220);
 }
 .hospital_room-detail {
   display: flex;
