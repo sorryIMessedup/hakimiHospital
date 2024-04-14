@@ -42,14 +42,19 @@
           <el-form-item style="display:none;" label="id" label-width="100px">
             <el-input v-model="question.id"></el-input>
           </el-form-item>
+
           <el-form-item label="类别：" label-width="100px" prop="type">
-            <!-- <el-input v-model="question.type" placeholder="请输入类别">
-                        </el-input> -->
-            <el-select v-model="question.type" placeholder="请选择试题类别">
-              <el-option v-for="typeName in types" :key="typeName" :label="typeName" :value="typeName">
+            <el-select ref="categorySelect" v-model="question.type" placeholder="请选择问题范畴">
+              <el-option
+                  v-for="category in categories"
+                  :key="category.value"
+                  :label="category.label"
+                  :value="category.value">
               </el-option>
             </el-select>
           </el-form-item>
+
+
           <el-form-item label="题干：" label-width="100px" prop="content">
             <el-input v-model="question.content" type="textarea" :rows="5" placeholder="请输入题干">
             </el-input>
@@ -103,6 +108,7 @@ export default {
       loader: new NetLoader("test"),
       radio: 3,
       input: "",
+      categories : "",
       question: {
         id: "",
         content: "",
@@ -115,7 +121,7 @@ export default {
         score: ""
       },
       questionsList: [],
-      types: ["传染病", "寄生虫病", "内科", "外产科疾病", "常用手术", "免疫"],
+      types: [],
       dialogTitle: "",
       dialogFormVisible: false,
       dialogRules: {
@@ -214,31 +220,24 @@ export default {
         else {
           let url = "/question/addQuestion";
           const testParams = {
-            "answer": "A",
+            "answer": this.question.answer,
             "category": {
-              "id": {
-                "date": "2024-04-13T13:04:46.741Z",
-                "timestamp": 0
-              },
-              "name": "string"
+              "id": this.$refs.categorySelect.value,
             },
-            "id": {
-              "date": "2024-04-13T13:04:46.741Z",
-              "timestamp": 0
-            },
+
             "optionList": [
-              "太平洋",
-              "大西洋",
-              "印度洋",
-              "北冰洋"
+              this.question.a_choice,
+              this.question.b_choice,
+              this.question.c_choice,
+              this.question.d_choice
             ],
-            "score": 5,
-            "stem": "世界上最大的海洋是？",
+            "score": this.question.score,
+            "stem": this.question.content,
             "visible": true
           }
           this.loader.post(url, testParams).then(() => {
             this.$message(this.dialogTitle === "添加试题" ? '添加成功' : '编辑成功');
-            this.loader.get("/question/findAll").then((value) => {
+            this.loader.get("/question/findAllQuestions").then((value) => {
               this.questionsList = value.data
             })
             this.clear()
@@ -249,12 +248,29 @@ export default {
     del() { // 隐藏问题
       this.loader.put("/question/hideQuestion").then(() => {
         this.$message("删除成功");
-        this.loader.get("/question/findAll").then((value) => {
+        this.loader.get("/question/findAllQuestions").then((value) => {
           this.questionsList = value.data
         })
       }).catch(() => {
         this.$alert('删除失败，请先将该试题从所有试卷中移除')
       })
+    },
+    loadCategoryList(){
+      this.loader.get('category/findAllCategories')
+          .then((value) => {
+            if(value.data.code == 200){
+              let categoryList = value.data.data
+              this.categories= categoryList.map(category => ({
+                label: category.name,
+                value: category.id
+              }))
+              console.log("category列表"+this.formData.categories)
+            }else{
+              this.$message.error(jsonData.message);
+            }
+            // 请求成功，获取用户数据并赋值给 questionList
+
+          })
     },
     clear() {
       this.dialogFormVisible = false
@@ -262,7 +278,8 @@ export default {
     }
   },
   created() {
-    this.get_data()
+    this.get_data(),
+    this.loadCategoryList()
   },
 }
 </script>
