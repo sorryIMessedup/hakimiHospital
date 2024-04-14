@@ -45,11 +45,8 @@
 
           <el-form-item label="类别：" label-width="100px" prop="type">
             <el-select ref="categorySelect" v-model="question.type" placeholder="请选择问题范畴">
-              <el-option
-                  v-for="category in categories"
-                  :key="category.value"
-                  :label="category.label"
-                  :value="category.value">
+              <el-option v-for="category in categories" :key="category.value" :label="category.label"
+                :value="category.value">
               </el-option>
             </el-select>
           </el-form-item>
@@ -108,7 +105,7 @@ export default {
       loader: new NetLoader("test"),
       radio: 3,
       input: "",
-      categories : "",
+      categories: "",
       question: {
         id: "",
         content: "",
@@ -160,18 +157,18 @@ export default {
     search() {
       const searchText = this.input;
       if (this.radio === 1) { // 根据题面模糊查找
-        this.loader.get("/question/findVisibleQuestionsByStem?stem="+searchText).then((value) => {
+        this.loader.get("/question/findVisibleQuestionsByStem?stem=" + searchText).then((value) => {
           this.questionsList = value.data.data
         })
       }
       else if (this.radio === 2) { // 根据ID获取问题
-        this.loader.get("/question/findQuestionById?questionId="+searchText).then((value) => {
+        this.loader.get("/question/findQuestionById?questionId=" + searchText).then((value) => {
           this.questionsList = []
           this.questionsList.push(value.data.data)
         })
       }
       else if (this.radio === 3) { // 根据类别ID获取问题
-        this.loader.get("/question/findByCategoryName?categoryName="+searchText).then((value) => {
+        this.loader.get("/question/findByCategoryName?categoryName=" + searchText).then((value) => {
           this.questionsList = value.data.data
         })
       }
@@ -198,15 +195,16 @@ export default {
       this.dialogFormVisible = true
     },
     edit(row) {
-
-      console.log(row.stem)
+      console.log(row)
       this.question.id = row.id
-      this.question.type = row.category.id
+      this.question.type = row.category?.id
       this.question.content = row.stem
-      this.question.a_choice = row.optionList[0],
-      this.question.b_choice = row.optionList[1],
-      this.question.c_choice = row.optionList[2],
-      this.question.d_choice = row.optionList[3]
+      if (row.optionList) {
+        this.question.a_choice = row.optionList[0]
+        this.question.b_choice = row.optionList[1]
+        this.question.c_choice = row.optionList[2]
+        this.question.d_choice = row.optionList[3]
+      }
       this.question.answer = row.answer
       this.question.score = row.score
       this.dialogTitle = "编辑试题"
@@ -219,34 +217,32 @@ export default {
           return false;
         }
         else {
-          if(this.dialogTitle == "添加试题"){
-          let url = "/question/addQuestion";
-          const testParams = {
-
-            "answer": this.question.answer,
-            "category": {
-              "id": this.$refs.categorySelect.value,
-            },
-
-            "optionList": [
-              this.question.a_choice,
-              this.question.b_choice,
-              this.question.c_choice,
-              this.question.d_choice
-            ],
-            "score": this.question.score,
-            "stem": this.question.content,
-            "visible": true
-          }
-          this.loader.post(url, testParams).then(() => {
-            this.$message("添加成功");
-            this.get_data()
-            this.clear()
-          })
-        }else if(this.dialogTitle == "编辑试题"){
+          if (this.dialogTitle == "添加试题") {
+            let url = "/question/addQuestion";
+            const requestPrams = {
+              answer: this.question.answer,
+              category: {
+                id: this.question.type
+              },
+              optionList: [
+                this.question.a_choice,
+                this.question.b_choice,
+                this.question.c_choice,
+                this.question.d_choice
+              ],
+              score: this.question.score,
+              stem: this.question.content,
+              "visible": true
+            }
+            this.loader.post(url, requestPrams).then(() => {
+              this.$message("添加成功");
+              this.get_data()
+              this.clear()
+            })
+          } else if (this.dialogTitle == "编辑试题") {
             let url = "/question/updateQuestion";
             const testParams = {
-              "id" : this.question.id,
+              "id": this.question.id,
               "answer": this.question.answer,
               "category": {
                 "id": this.$refs.categorySelect.value,
@@ -274,29 +270,29 @@ export default {
     del(row) { // 隐藏问题
       let id = row.id
 
-      this.loader.put("/question/hideQuestion",{"questionId" : id}).then(() => {
+      this.loader.put("/question/hideQuestion", { "questionId": id }).then(() => {
         this.$message("删除成功");
         this.get_data()
       }).catch(() => {
         this.$alert('删除失败，请先将该试题从所有试卷中移除')
       })
     },
-    loadCategoryList(){
+    loadCategoryList() {
       this.loader.get('category/findAllCategories')
-          .then((value) => {
-            if(value.data.code == 200){
-              let categoryList = value.data.data
-              this.categories= categoryList.map(category => ({
-                label: category.name,
-                value: category.id
-              }))
-              console.log("category列表"+this.formData.categories)
-            }else{
-              this.$message.error(jsonData.message);
-            }
-            // 请求成功，获取用户数据并赋值给 questionList
+        .then((value) => {
+          if (value.data.code == 200) {
+            let categoryList = value.data.data
+            this.categories = categoryList.map(category => ({
+              label: category.name,
+              value: category.id
+            }))
+            // console.log("category列表" + this.formData.categories)
+          } else {
+            this.$message.error(jsonData.message);
+          }
+          // 请求成功，获取用户数据并赋值给 questionList
 
-          })
+        })
     },
     clear() {
       this.dialogFormVisible = false
@@ -305,7 +301,7 @@ export default {
   },
   created() {
     this.get_data(),
-    this.loadCategoryList()
+      this.loadCategoryList()
   },
 }
 </script>
