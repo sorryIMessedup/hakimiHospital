@@ -126,7 +126,7 @@ export default {
       formData.append("paper_id", this.paper.id)
       formData.append("question_id", question_id)
 
-      let url = "http://127.0.0.1:8888/paper/addQuestions"
+      let url = "/home/paper/addQuestion"
       await this.loader.post(url, formData).then((value) => {
       })
       this.$message("添加成功");
@@ -139,7 +139,7 @@ export default {
       let formData = new FormData()
       formData.append("id", this.paper.id)
       formData.append("period", this.paper.period)
-      let url = "http://127.0.0.1:8888/paper/save"
+      let url = "/home/paper/save"
       this.loader.post(url, formData).then((value) => {
         this.$message("修改成功");
       })

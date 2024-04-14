@@ -1,8 +1,5 @@
 <template>
   <div>
-    <el-button type="primary" size="medium" @click="showAddDialog">新增考试</el-button>
-
-
     <!-- 搜索栏和按钮 -->
     <div style="display: flex; align-items: center; margin-bottom: 20px;">
       <el-input
