@@ -3,12 +3,11 @@
       <el-card class="box-card" style="margin-top: -10px;">
         <div slot="header" class="clearfix">
           <span>{{ disease_group }}</span>
-          <el-button style="float: right; padding: 3px 0" type="text" v-on:click="add_disease">添加病例</el-button>
+          <el-button style="float: right; padding: 3px 0" type="text" v-on:click="add_disease">添加疾病</el-button>
         </div>
         <el-table :data="this.list" style="width: 100%" border>
-          <el-table-column fixed width="120" prop="name" label="病例名" align="center" />
-          <el-table-column fixed width="120" prop="name" label="疾病名" align="center" />
-          <el-table-column prop="name" width="300" label="示意图片" align="center" />
+          <el-table-column fixed width="200" prop="name" label="疾病名" align="center" />
+          <el-table-column prop="name" width="300" label="描述" align="center" />
           <el-table-column fixed="right" width="230">
             <template slot="header">
               <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
@@ -43,7 +42,7 @@
     },
     methods: {
       get_data() {
-        this.loader.get("/case/findAllCases").then((val) => {
+        this.loader.get("/disease/findAllDiseases").then((val) => {
           this.list = [];
           let res = val.data.data;
           for (let item of res)
