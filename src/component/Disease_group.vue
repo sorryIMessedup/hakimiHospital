@@ -79,9 +79,9 @@ export default {
 				name: this.form2.name,
         info: this.form2.info
 			}).then(val => {
-				console.log(val);
 				if (val.status == 200) {
 					this.$message.success('添加疾病成功');
+          this.list = [];
 					this.get_data();
 				} else {
 					this.$message.error(val.data.data.message);
@@ -93,13 +93,11 @@ export default {
 		},
     get_data() {
       this.loader.get("/disease/findAllDiseases").then((val) => {
-        console.log(val);
         this.list = [];
         let res = val.data.data;
         for (let item of res)
           this.list2.push(item);
         this.list = this.list2;
-        console.log(this.list);
       }).then(() => {
         let target = this.$props.disease_groupid;
         var res = [];
@@ -112,11 +110,10 @@ export default {
       })
     },
     handleDelete(row) {
-      console.log(row);
       this.$confirm('此操作将永久删除该病例, 是否继续?', '提示', {
         confirmButtonText: '确定', cancelButtonText: '取消', type: 'warning'
       }).then(() => {
-        this.loader.delete("/case/deleteCase", { id: row.id }).then(val => {
+        this.loader.delete("/disease/deleteDisease", { id: row.id }).then(val => {
           console.log(val);
           this.list = [];
           this.get_data();

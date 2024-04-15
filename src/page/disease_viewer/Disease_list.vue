@@ -4,22 +4,47 @@
 			<Disease_group v-for="item in category" :key="item.id" :disease_group="item.name" :disease_groupid="item.id"
 				:disease_data="disease_data" />
 		</div>
-		<div style="padding-left: 10px; margin-top: 20px;">
-			<el-card style="width: 280px;">
-				<h1>病类与疾病管理</h1><br>
-				<p style="padding-bottom: 10px;">
-					这里显示的是各种病类下的疾病，您可以添加病类或疾病。
-				</p>
-				<p style="padding-bottom: 30px;">
-					请确保必要的病类存在，才可以在该病类下添加疾病。<br>
-					如果当前不存在任何病类，您看到的将是一片空白。<br>
-					如果某个疾病的病类被删除了，那么它将被更新至【待定】病类。
-				</p>
-				<el-button type="primary" size="medium" @click="add_category()">
-					&nbsp;&nbsp;添加病类&nbsp;&nbsp;</el-button>
-				<el-button type="danger" size="medium" @click="delete_category()">
-					&nbsp;&nbsp;删除病类&nbsp;&nbsp;</el-button> <br><br>
-			</el-card>
+		<div>
+			<div style="padding-left: 10px; margin-top: 20px;">
+				<el-card style="width: 280px;">
+					<h1>病类与疾病管理</h1><br>
+					<p style="padding-bottom: 10px;">
+						这里显示的是各种病类下的疾病，您可以添加病类或疾病。
+					</p>
+					<p style="padding-bottom: 30px;">
+						请确保必要的病类存在，才可以在该病类下添加疾病。<br>
+						如果当前不存在任何病类，您看到的将是一片空白。<br>
+						如果某个疾病的病类被删除了，那么它将被更新至【待定】病类。
+					</p>
+					<el-button type="primary" size="medium" @click="add_category()">
+						&nbsp;&nbsp;添加病类&nbsp;&nbsp;</el-button>
+					<el-button type="danger" size="medium" @click="delete_category()">
+						&nbsp;&nbsp;删除病类&nbsp;&nbsp;</el-button> <br><br>
+				</el-card>
+			</div>
+
+			<div style="padding-left: 10px; margin-top: 20px;">
+				<el-card style="width: 280px;">
+					<h1>统计数据</h1><br>
+					<el-row style="font-size: 15px;">
+						<el-col :span="6">
+							<el-statistic group-separator="," :precision="0" decimal-separator="." :value="category.length" title="病类数量">
+								<template slot="prefix">
+									<i class="el-icon-s-flag" style="color: red"></i>
+								</template>
+							</el-statistic>
+						</el-col>
+						<el-col :span="3">&nbsp;&nbsp;</el-col>
+						<el-col :span="6">
+							<el-statistic group-separator="," :precision="0" decimal-separator="." :value="disease_data.length" title="疾病数量">
+								<template slot="prefix">
+									<i class="el-icon-s-flag" style="color: blue"></i>
+								</template>
+							</el-statistic>
+						</el-col>
+					</el-row>
+				</el-card>
+			</div>
 		</div>
 
 		<el-dialog title="添加病类" :visible.sync="addVisible1" width="30%" :before-close="handleClose">
