@@ -2,7 +2,7 @@
   <div id="case_list">
     <div class="case_list-container" v-if="this.token != 0">
       <div>
-        <Disease_group v-for="item in category" :key="item.id" :disease_group="item.name" :disease_groupid="item.id"
+        <Case_group v-for="item in category" :key="item.id" :disease_group="item.name" :disease_groupid="item.id"
           :disease_data="disease_data" />
       </div>
       <div style="">
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import Disease_group from '@/component/Disease_group.vue'
+import Case_group from '@/component/Case_group.vue';
 import Disease_selector from '@/component/Disease_selector.vue';
 import { NetLoader } from '@/net';
 export default {
@@ -51,7 +51,7 @@ export default {
       }
     });
   },
-  components: { Disease_selector, Disease_group },
+  components: { Disease_selector, Case_group },
 }
 </script>
 
