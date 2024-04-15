@@ -5,19 +5,20 @@
         </div>
         <div id="timer">
             距离考试结束还有：
-            <div style="color:red;">{{djs}}</div>
+            <div style="color:red;">{{ djs }}</div>
         </div>
         <ul class="list">
             <li v-for="(q, i) in questions" :key="q.id">
                 <el-card class="box-card">
                     <div slot="header">
-                        <span style="font-size: large;">{{ i+1 }}. {{q.content}}</span>
+                        <span style="font-size: large;">{{ i + 1 }}. {{ q.stem }}</span>
                     </div>
-                    <el-radio-group v-model="selected[i]" style="display:flex; flex-flow:column nowrap; align-items: flex-start;">
-                        <el-radio label="A">A. {{q.a_choice}}</el-radio>
-                        <el-radio label="B">B. {{q.b_choice}}</el-radio>
-                        <el-radio label="C">C. {{q.c_choice}}</el-radio>
-                        <el-radio label="D">D. {{q.d_choice}}</el-radio>
+                    <el-radio-group v-model="selected[i]"
+                        style="display:flex; flex-flow:column nowrap; align-items: flex-start;">
+                        <el-radio label="A">A. {{ q.optionList[0] }}</el-radio>
+                        <el-radio label="B">B. {{ q.optionList[1] }}</el-radio>
+                        <el-radio label="C">C. {{ q.optionList[2] }}</el-radio>
+                        <el-radio label="D">D. {{ q.optionList[3] }}</el-radio>
                     </el-radio-group>
                 </el-card>
             </li>
@@ -27,21 +28,29 @@
 </template>
 
 <script>
+import { NetLoader } from '@/net';
 export default {
     data() {
         return {
-            questions: this.$route.query.questions,
-            period: this.$route.query.period,
+            questions: [],
+            period: 60,
             selected: [],
             timer: null,
             djs: "",
-            seconds: 0
+            seconds: 0,
+            loader: new NetLoader("test"),
         }
     },
     methods: {
-        present: function() {
-            this.$router.replace({
-                path: '/home/testResult', query: { questionsList: this.questions, usrSelected: this.selected }
+        present: function () {
+            this.loader.post('/question/checkQuestionAnswers', {
+                examId: this.$route.params.paperId,
+                answerList: this.selected,
+                questionList: this.questions
+            }).then(() => {
+                this.$router.replace({
+                    path: '/home/testResult', query: { questionsList: this.questions, usrSelected: this.selected }
+                })
             })
             clearInterval(this.timer);
         },
@@ -54,12 +63,20 @@ export default {
         },
     },
     created() {
+        console.log(this.$route);
         if (this.questions[0] === "[object Object]") {
             this.$router.replace('/home/exams')
         }
         this.seconds = this.period * 60;
+
+        this.loader.get("/question/findAllVisibleQuestions", {
+            id: this.$route.params.paperId
+        }).then((value) => {
+            console.log('所有问题裂变', value);
+            this.questions = value.data.data;
+        })
         //考试时间倒计时监听器
-        this.timer=setInterval(() => {
+        this.timer = setInterval(() => {
             if (this.seconds < 1) {
                 this.present();
                 this.$message({
@@ -81,31 +98,34 @@ export default {
 </script>
 
 <style scoped>
-
 .header {
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
+
 .list {
     list-style-type: none;
 }
-.subBtn{
-  display: block;
-  width: 15%;
-  margin: 20px auto;
+
+.subBtn {
+    display: block;
+    width: 15%;
+    margin: 20px auto;
 }
+
 .box-card {
     height: wrap-content;
     padding: 0;
     margin-top: 15px;
 }
+
 #timer {
-  /* position: fixed; */
-  width: 160px;
-  left: 20px;
-  padding-left: 20px;
-  font-size: 17px;
-  background:white;
+    /* position: fixed; */
+    width: 160px;
+    left: 20px;
+    padding-left: 20px;
+    font-size: 17px;
+    background: white;
 }
 </style>

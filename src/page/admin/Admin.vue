@@ -20,6 +20,7 @@
     <el-menu router background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
       <el-menu-item index="/admin/user">用户管理</el-menu-item>
       <el-menu-item index="/admin/basic_structure">基本结构与功能管理</el-menu-item>
+      <el-menu-item index="/admin/disease_list">病类与疾病管理</el-menu-item>
       <el-menu-item index="/admin/case_list">病例管理</el-menu-item>
       <el-menu-item index="/admin/test_management">测试管理</el-menu-item>
     </el-menu>
@@ -93,7 +94,6 @@ export default {
   background-position: center center;
   background-repeat: repeat;
   background-size: 100%;
-
 }
 
 .nav {
