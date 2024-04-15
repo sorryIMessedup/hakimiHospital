@@ -13,7 +13,7 @@
 				<p style="padding-bottom: 30px;">
 					请确保必要的病类存在，才可以在该病类下添加疾病。<br>
 					如果当前不存在任何病类，您看到的将是一片空白。<br>
-					如果某个疾病的病类被删除了，那么它将被更新至“待定”病类。
+					如果某个疾病的病类被删除了，那么它将被更新至【待定】病类。
 				</p>
 				<el-button type="primary" size="medium" @click="add_category()">
 					&nbsp;&nbsp;添加病类&nbsp;&nbsp;</el-button>
