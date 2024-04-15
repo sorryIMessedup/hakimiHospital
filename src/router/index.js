@@ -193,14 +193,14 @@ router.beforeEach((to, from, next) => {
       store.commit("changePath", {
         index: 1,
         router: to,
-        name: "病例管理",
+        name: "病例查阅",
       });
       break;
-    case "/home/test":
+    case "/home/exams":
       store.commit("changePath", {
         index: 1,
         router: to,
-        name: "测试",
+        name: "考试",
       });
       break;
     case "/home/role":

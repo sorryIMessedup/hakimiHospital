@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="nav-right">
-        <div class="nav-right-item" @click="$router.push('/home/test')">
+        <div class="nav-right-item" >
           <span>{{ username }}</span>
         </div>
         <div class="nav-right-item" @click=logout()>
@@ -97,9 +97,14 @@ export default {
 }
 
 .nav {
+<<<<<<< HEAD
   min-height: 80px;
   background: rgba(66, 66, 66, 1.0);
   height: 90px;
+=======
+  min-height: 90px;
+  background: rgba(44, 44, 44, 1.0);
+>>>>>>> 6f1b57cb614d322c111c6f433920744dd32f7236
   position: absolute;
   left: 0;
   top: 0;
