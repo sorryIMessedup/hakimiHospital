@@ -100,7 +100,7 @@ export default {
   min-height: 80px;
   background: rgba(66, 66, 66, 1.0);
   height: 90px;
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   width: 100%;
