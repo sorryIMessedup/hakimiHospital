@@ -1,29 +1,32 @@
 <template>
     <div class="test-container">
-        <div class="header">
-            <h1>试卷</h1>
+        <div class="test-container-inner">
+            <div class="header">
+                <h1>试卷</h1>
+            </div>
+            <div id="timer">
+                距离考试结束还有：
+                <div style="color:red;">{{ djs }}</div>
+            </div>
+            <ul class="list">
+                <li v-for="(q, i) in questions" :key="q.id">
+                    <el-card class="box-card">
+                        <div slot="header">
+                            <span style="font-size: large;">{{ i + 1 }}. {{ q.stem }}</span>
+                        </div>
+                        <el-radio-group v-model="selected[i]"
+                            style="display:flex; flex-flow:column nowrap; align-items: flex-start;">
+                            <el-radio label="A">A. {{ q.optionList[0] }}</el-radio>
+                            <el-radio label="B">B. {{ q.optionList[1] }}</el-radio>
+                            <el-radio label="C">C. {{ q.optionList[2] }}</el-radio>
+                            <el-radio label="D">D. {{ q.optionList[3] }}</el-radio>
+                        </el-radio-group>
+                    </el-card>
+                </li>
+            </ul>
+            <el-button type="primary" class="subBtn" @click="present()">提交试卷</el-button>
         </div>
-        <div id="timer">
-            距离考试结束还有：
-            <div style="color:red;">{{ djs }}</div>
-        </div>
-        <ul class="list">
-            <li v-for="(q, i) in questions" :key="q.id">
-                <el-card class="box-card">
-                    <div slot="header">
-                        <span style="font-size: large;">{{ i + 1 }}. {{ q.stem }}</span>
-                    </div>
-                    <el-radio-group v-model="selected[i]"
-                        style="display:flex; flex-flow:column nowrap; align-items: flex-start;">
-                        <el-radio label="A">A. {{ q.optionList[0] }}</el-radio>
-                        <el-radio label="B">B. {{ q.optionList[1] }}</el-radio>
-                        <el-radio label="C">C. {{ q.optionList[2] }}</el-radio>
-                        <el-radio label="D">D. {{ q.optionList[3] }}</el-radio>
-                    </el-radio-group>
-                </el-card>
-            </li>
-        </ul>
-        <el-button type="primary" class="subBtn" @click="present()">提交试卷</el-button>
+
     </div>
 </template>
 
@@ -98,6 +101,15 @@ export default {
 </script>
 
 <style scoped>
+.test-container {
+    background-image: url("@/assets/main/bg.jpg");
+}
+
+.test-container-inner {
+    width: 760px;
+    margin: auto;
+}
+
 .header {
     display: flex;
     flex-direction: row;
