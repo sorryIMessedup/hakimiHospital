@@ -97,8 +97,8 @@ export default {
 }
 
 .nav {
-  min-height: 10px;
-  background: rgba(44, 44, 44, 0.7);
+  min-height: 90px;
+  background: rgba(44, 44, 44, 1.0);
   position: absolute;
   left: 0;
   top: 0;
