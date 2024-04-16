@@ -51,12 +51,26 @@ import {NetLoader} from "@/net";
                 console.log("click left")
                 if(this.index > 0) this.index--
                 this.activity = this.enum[this.index]
+                this.reloadResources()
             },
             handleRightClick() {
                 console.log("click right")
                 if(this.index < this.enum.length-1) this.index++;
                 this.activity = this.enum[this.index]
-            }
+                this.reloadResources()
+            },
+          reloadResources(){
+            const activityId = this.activity.id
+            console.log(this.activity)
+            const avatarId = this.activity.avatar
+            this.videoUrl = "files/findFileById?id=" + avatarId
+            console.log("viedourl是"+this.videoUrl)
+
+            this.loader.get("procedure/findProceduresByActivityId?id="+activityId).then(value => {
+              this.progress = value.data.data
+              console.log(this.progress)
+            })
+          }
         },
         beforeRouteLeave(from,to,next) {
             // 销毁组件
