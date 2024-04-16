@@ -2,7 +2,7 @@
     <div class="role_progress-container">
         <div class="role_progress-progress">
             <el-steps :active="active" finish-status="success">
-                <el-step v-for="(item,index) in progress" :key="index" :title="item.title"></el-step>
+                <el-step v-for="(item,index) in progress" :key="index" :title="item.name"></el-step>
             </el-steps>
             <el-button type="primary" @click="enterNext" v-if="progress.length > 0">
                 <template>
@@ -13,18 +13,21 @@
         </div>
         <div class="role_progress-detail" v-if="active < progress.length">
             <div>示例图:</div>
-            <div class="role_progress-image" v-if="progress[active].image !== undefined">
-                <img :src="progress[active].image" alt="">
+            <div class="role_progress-image" v-if="picUrl !== null">
+                <img :src= picUrl alt="">
             </div>
             <div>具体步骤:</div>
-            <div class="role_progress-desc">
-                <p v-for="(item,index) in progress[active].desc" :key="index">{{ item }}</p>
-            </div>
+          <div class="role_progress-desc">
+            <span v-for="(item,index) in progress[active].info" :key="index">{{ item }}</span>
+          </div>
+
         </div>
     </div>  
 </template>
 
 <script>
+    import {NetLoader} from "@/net";
+
     export default {
         name: "RoleProgress",
         props: {
@@ -35,16 +38,30 @@
         },
         data() {
             return {
-                active: 0
+                loader: new NetLoader("test"),
+                active: 0,
+                image : null,
+                picUrl : ""
             }
         },
         methods: {
             enterNext() {
                 this.active = (this.active + 1)%(this.progress.length + 1);
-                
-            }
+                this.getImage()
+            },
+          getImage() {
+            const id = this.progress[this.active].avatar;
+            this.picUrl = "files/findFileById?id="+id
+
+          }
+
+
         },
-        watch: {
+      created() {
+          this.getImage()
+           console.log("url是"+ this.picUrl)
+      },
+      watch: {
             progress() {
                 this.active = 0;
             }
