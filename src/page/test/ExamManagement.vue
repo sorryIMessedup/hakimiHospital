@@ -222,15 +222,6 @@ export default {
       console.log("id是" + id)
     },
 
-    // show_paper: function (row) {
-    //   let id = row.id
-    //   this.$router.push({ name: 'ExamPaper', params: { paperId: id } });
-    //   console.log("id是" + id)
-    // },
-		
-	//show_record: function(){
-	//展示所有人的考试记录
-	//}
     delete_exam: function (row) {
       if (confirm("确定要删除考试吗？")) {
         // 用户点击了确认按钮，执行删除操作
