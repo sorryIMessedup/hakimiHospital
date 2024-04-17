@@ -232,7 +232,7 @@ export default {
 
     show_paper: function(row) {
       let id = row.id
-      this.$router.push({ name: 'ExamPaper', params: { paperId: id } });
+      this.$router.push({ name: 'PaperDetail', params: { paperId: id } });
       console.log("id是"+id)
 
 
@@ -241,20 +241,19 @@ export default {
 		//查询当前用户的当前考试结果
 		let examId = row.id	
 		this.loader.get('/exams/examId/checkParticipant')
-			  .then((value) => {
-				if(value.data.code == 200){
-				  let participant = value.data.status;
-				}else{
-				  this.$message.error(jsonData.message);
-				}
-				if(!participant){
-					this.$message("你没有参加过这个考试");
-				}
-				this.$router.push({
-					path: '/home/testResult', query:{questionList: this.questions, usrSelected: this.selected}
-				})
-			  })
-
+			.then((value) => {
+			if(value.data.code == 200){
+				let participant = value.data.status;
+			}else{
+				this.$message.error(jsonData.message);
+			}
+			if(!participant){
+				this.$message("你没有参加过这个考试");
+			}
+			this.$router.push({
+				path: '/home/testResult', query:{questionList: this.questions, usrSelected: this.selected}
+			})
+			})
 		},
 
 
