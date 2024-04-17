@@ -34,7 +34,7 @@
       <el-table-column fixed="right" label="操作">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="show_paper(scope.row)">参加考试</el-button>
-          <el-button type="primary" size="mini" @click="delete_exam(scope.row)">查看考试（占位）</el-button>
+          <el-button type="primary" size="mini" @click="show_result(scope.row)">考试结果</el-button>
 
         </template>
       </el-table-column>
@@ -232,31 +232,19 @@ export default {
 
     show_paper: function(row) {
       let id = row.id
-      this.$router.push({ name: 'PaperDetail', params: { paperId: id } });
+      this.$router.push({ name: 'ExamPaper', params: { paperId: id } });
       console.log("id是"+id)
 
 
     },
-
-
-
-    delete_exam: function (row){
-      if (confirm("确定要删除考试吗？")) {
-        // 用户点击了确认按钮，执行删除操作
-        // 在这里执行删除考试的逻辑，例如发送请求到后端删除考试数据
-
-        const examId = row.id;
-        this.loader.post("/exams/setExamStatusToDeleted",{examId : examId}).then((value) =>{
-              if(value.data.code == 200){
-                this.getAll()
-              }else{
-                this.$message.error(jsonData.message);
-              }
-            }
-        )}
-    },
-
-
+	//show_result: function(row) {
+	//查询当前用户的当前考试结果
+	// let id = row.id	
+	// this.$router.push({
+	//      path: '/home/testResult', query: { questionsList: this.questions, usrSelected: this.selected }
+	//  })
+	//},
+	
 
     loadUserList() {
       this.loader.get('users/findAllUsers')
