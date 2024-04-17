@@ -73,7 +73,8 @@ export default {
       if (this.type === "admin") {
         this.loader.post("/users/login", {
           username: this.username,
-          password: this.password
+          password: this.password,
+          auth : "2"
         }).then(val => {
           console.log(val)
           if (val.status == 200) {
@@ -94,7 +95,8 @@ export default {
       else { // 用户登录
         this.loader.post("/users/login", {
           username: this.username,
-          password: this.password
+          password: this.password,
+          auth : "1"
         }).then(val => {
           if (val.status === 200) {
             window.localStorage.setItem("token", val.data.data.auth);
