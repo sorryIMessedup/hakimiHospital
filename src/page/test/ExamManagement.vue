@@ -114,6 +114,7 @@ export default {
       dialogVisible: false, // 控制新增对话框的显示与隐藏的变量
 
       exams: [],
+      questionRecord: [],
       currentUserName: "",
       formData: {
         name: "",
@@ -168,6 +169,7 @@ export default {
         startTime: this.formData.startTime.toISOString(),
         endTime: this.formData.endTime.toISOString(),
         score: this.formData.score,
+        status : "",
         everyone: true
         // 其他表单项
       };
