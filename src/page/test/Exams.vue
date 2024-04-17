@@ -238,8 +238,12 @@ export default {
 
     },
 	//show_result: function(row) {
-	//查询当前用户的当前考试结果
+	// 查询当前用户的当前考试结果
 	// let id = row.id	
+	// if(user not exist in testResult){
+	// 这个判断还不会写
+	// this.$message("你没有参加过这个考试");
+	//}
 	// this.$router.push({
 	//      path: '/home/testResult', query: { questionsList: this.questions, usrSelected: this.selected }
 	//  })
