@@ -79,15 +79,16 @@
     <el-dialog title="" :visible.sync="addVisible1" :before-close="handleClose">
       <div class="container">
         <div>
-          <div style="padding-top: 0px; margin-bottom: 20px;">
+          <div>
             <span style="font-size: 30px; font-weight: bold;">查看疾病</span><br>
             <span style="font-size: 20px; font-weight: normal;">正在尝试编辑：{{ this.rrow.name }}</span>
             <span style="font-size: 20px; font-weight: normal;">&nbsp;(#{{ this.rrow.id }})</span>
           </div>
           <el-divider></el-divider>
           <div class="editor">
-            <quill-editor ref="myQuillEditor" v-model="content" :options="this.editorOption"
-              @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
+            <quill-editor ref="myQuillEditor" v-model="content" :options="{
+              modules: { toolbar: false }
+            }" @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
               @change="onEditorChange($event)" />
           </div>
           <div class="hospital_register-button">
@@ -122,7 +123,8 @@ export default {
       addVisible1: false,
       addVisible2: false,
       addVisible3: false,
-      rrow : '',
+      rrow: '',
+      newName: '',
       form: {},
       form2: { name: '', info: '' },
       rules: { newName: { required: true, message: '请输入疾病名', trigger: 'blur' } },
