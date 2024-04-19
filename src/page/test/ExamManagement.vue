@@ -299,13 +299,7 @@ export default {
       })
     },
 	
-    cal_score: function() {
-        for(let i=0; i<this.usrSelected.length; i++) {
-            if (this.usrSelected[i] === this.questionsList[i].answer) {
-                 this.score += this.questionsList[i].score
-              }
-          }
-     },
+
 	 
 	 loadUserResult: function(){
 		 this.load.get('examRecord/findAll')

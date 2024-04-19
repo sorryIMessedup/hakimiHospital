@@ -24,7 +24,6 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="show_paper(scope.row)">参加考试</el-button>
           <el-button type="primary" size="mini" @click="show_result(scope.row)">考试结果</el-button>
 
         </template>
@@ -96,7 +95,7 @@ export default {
         startTime: this.formData.startTime.toISOString(),
         endTime: this.formData.endTime.toISOString(),
         score: this.formData.score,
-        everyone: false
+        everyone: true
         // 其他表单项
       };
       var url = this.formData.visibility == "public" ? "exams/holdPublicExam" : "exams/holdPrivateExam";
@@ -172,7 +171,6 @@ export default {
     },
 
 
-
     loadUserList() {
       this.loader.get('users/findAllUsers')
         .then((value) => {
@@ -224,6 +222,7 @@ export default {
         }
       })
     }
+
   },
 
 

@@ -68,11 +68,7 @@ export default {
             s = s < 10 ? "0" + s : s
             this.djs = m + '分钟' + s + '秒'
         },
-		postResult(){
-			let url = "/home/examRecord"
-			this.recordData.exam = this.$route.params.paperId,
-			this.loader.post(url, recordData)
-		},
+
     },
     created() {
         console.log(this.$route);
