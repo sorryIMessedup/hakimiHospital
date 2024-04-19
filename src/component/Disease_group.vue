@@ -1,4 +1,4 @@
-<template>
+z<template>
   <div id="disease_group">
     <el-card class="box-card" style="margin-top: -10px;">
       <div slot="header" class="clearfix">

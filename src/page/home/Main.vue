@@ -59,10 +59,11 @@ export default {
 	position: relative;
 	height: calc(100vh - 100px);
 	padding-top: 100px;
-	background-image: url("@/assets/main/bg.jpg");
-  background-position: center center;
-  background-repeat: repeat;
-  background-size: cover;
+	//background-image: url("@/assets/main/bg.jpg");
+  //background-position: center center;
+  ////background-repeat: repeat;
+  //background-size: 100%;
+
 
 	.el-card {
 		margin-left: 20px;
@@ -71,7 +72,7 @@ export default {
 	}
 
 	.item {
-		height: width;
+		height: auto;
 		text-align: center;
 	}
 
