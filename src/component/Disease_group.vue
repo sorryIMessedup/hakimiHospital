@@ -149,6 +149,11 @@ export default {
 				// eslint-disable-next-line no-unused-vars
 				.catch(_ => { });
 		},
+    handleEdit(row) {
+      console.log(row);
+      window.sessionStorage.setItem('rowIdToEdit', row.id);
+      this.$router.push('/admin/edit_disease');
+    }
   },
   created() {
     this.get_data();
