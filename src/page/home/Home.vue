@@ -94,21 +94,14 @@
   </div>
 
 </template>
-<noscript>
-<style>
-  *[data-aos] {
-    display: block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-  }
-</style>
-</noscript>
+<script src="./assets/js/vendor/aos.js" type="text/javascript">
+</script>
 <script>
 import { NetLoader } from "@/net";
 import '../../css/main.css'
 
 import '../../css/vendor/aos.css'
-import AOS from '../../js/aos'
+
 
 export default {
 	// eslint-disable-next-line vue/multi-word-component-names
@@ -170,6 +163,7 @@ export default {
 		}
 	},
 	mounted() {
+
 		this.$refs.guide.addEventListener("mouseenter", () => {
 			this.showItemList = true;
 		});
@@ -178,13 +172,24 @@ export default {
 			this.showItemList = false;
 		});
 
-    AOS.init({ duration: 700 });
+
+      AOS.init({ duration: 700 });
+      AOS.refresh();
+      console.log("大妈能不能好了")
+
 
 	},
 };
 </script>
 
 <style lang="less" scoped>
+
+*[data-aos] {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
 .nav {
 	min-width: 900px;
 	min-height: 10px;

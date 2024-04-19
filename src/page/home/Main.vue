@@ -23,8 +23,9 @@
 
 
 </div>
-  <br><br><br><br><br><br>
-  <div class="container" >
+  <br><br><br><br><br><br><br><br><br><br><br>
+  <div class="container" data-aos="fade-up">
+
     <div class="row">
     <div class="col-md-3">
       <div class="card shadow-sm border-0">
@@ -75,6 +76,7 @@
       </div>
     </div>
     </div>
+
   </div>
 
 </div>
@@ -83,7 +85,8 @@
 </template>
 
 <script>
-
+import '../../css/vendor/aos.css'
+import AOS from '../../js/vendor/aos'
 export default {
 	// eslint-disable-next-line vue/multi-word-component-names
 	name: "Main",
@@ -91,6 +94,17 @@ export default {
 		return { };
 	},
 	methods: {},
+  mounted() {
+
+
+
+    AOS.init({ duration: 1000 });
+    AOS.refresh();
+    console.log("大妈能不能好了")
+
+
+  },
+
 
 };
 
