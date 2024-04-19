@@ -24,6 +24,7 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作">
         <template slot-scope="scope">
+          <el-button type="primary" size="mini" @click="show_paper(scope.row)">参加考试</el-button>
           <el-button type="primary" size="mini" @click="show_result(scope.row)">考试结果</el-button>
 
         </template>
