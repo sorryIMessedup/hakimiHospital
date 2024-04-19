@@ -26,18 +26,15 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="delete_exam(scope.row)">删除考试</el-button>
-		  <el-popover
-		    placement="right"
-			width="700"
-			trigger="click">
-			  <el-table :data="questionRecord">
-				  <el-table-column width="400" property="exam" label="考试"></el-table-column>
-				  <el-table-column width="200" property="user" label="用户"></el-table-column>
-				  <el-table-column width="100" property="score" label="得分"></el-table-column>
-			  </el-table>
-			  <el-button type="primary" size="mini" slot="reference">考试结果</el-button>
-			</el-popover>
+          <el-button type="primary" size="mini" @click="delete_exam(scope.row)" style="margin-right: 15px;">删除考试</el-button>
+          <el-popover placement="right" width="700" trigger="click">
+            <el-table :data="questionRecord">
+              <el-table-column width="400" property="exam" label="考试"></el-table-column>
+              <el-table-column width="200" property="user" label="用户"></el-table-column>
+              <el-table-column width="100" property="score" label="得分"></el-table-column>
+            </el-table>
+            <el-button type="primary" size="mini" slot="reference">考试结果</el-button>
+          </el-popover>
         </template>
       </el-table-column>
     </el-table>
@@ -95,11 +92,11 @@
         <el-button type="primary" @click="addExam">确定</el-button>
       </span>
     </el-dialog>
-	
-	
 
-	
-	
+
+
+
+
   </div>
 </template>
 
@@ -114,13 +111,13 @@ export default {
 
       exams: [],
       currentUserName: "",
-	  
+
       questionRecord: {
-		  date: "",
-		  user: "",
-		  score: 0,
-	  },	  
-	  
+        date: "",
+        user: "",
+        score: 0,
+      },
+
       formData: {
         name: "",
         startTime: "",
@@ -174,7 +171,7 @@ export default {
         startTime: this.formData.startTime.toISOString(),
         endTime: this.formData.endTime.toISOString(),
         score: this.formData.score,
-        status : "",
+        status: "",
         everyone: false
         // 其他表单项
       };
@@ -297,19 +294,19 @@ export default {
         }
       })
     },
-	
 
-	 
-	 loadUserResult: function(){
-		 this.load.get('examRecord/findAll')
-			.then((value) => {
-				if (value.data.code == 200){
-					this.questionRecord.exam = value.data.exam
-					this.questionRecord.user = value.data.user
-					this.questionRecord.score = value.data.score
-				}
-			})
-	 }
+
+
+    loadUserResult: function () {
+      this.load.get('examRecord/findAll')
+        .then((value) => {
+          if (value.data.code == 200) {
+            this.questionRecord.exam = value.data.exam
+            this.questionRecord.user = value.data.user
+            this.questionRecord.score = value.data.score
+          }
+        })
+    }
   },
 
 

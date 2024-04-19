@@ -15,11 +15,11 @@
                 更多功能
               </a>
               <div class="dropdown-menu" :class="{ show: isDropdownOpen }" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" @click="$router.push('/detail?room=手术室')">医院2d导览</a>
-                <a class="dropdown-item" @click="$router.push('/vr')">医院VR导览</a>
-                <a class="dropdown-item" @click="$router.push('/home/case_list')">病例查阅</a>
-                <a class="dropdown-item" @click="$router.push('/home/role')">角色扮演</a>
-                <a class="dropdown-item" @click="$router.push('/home/exams')">参与考试</a>
+                <a class="dropdown-item" @click="$router.push('/detail?room=手术室');isDropdownOpen=false;">医院2d导览</a>
+                <a class="dropdown-item" @click="$router.push('/vr');isDropdownOpen=false;">医院VR导览</a>
+                <a class="dropdown-item" @click="$router.push('/home/case_list');isDropdownOpen=false;">病例查阅</a>
+                <a class="dropdown-item" @click="$router.push('/home/role');isDropdownOpen=false;">角色扮演</a>
+                <a class="dropdown-item" @click="$router.push('/home/exams');isDropdownOpen=false;">参与考试</a>
               </div>
             </li>
           </ul>
