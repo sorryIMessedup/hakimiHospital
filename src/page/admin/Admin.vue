@@ -1,13 +1,13 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-black fixed-top">
       <div class="container">
         <a class="navbar-brand" href='/home'><i class="fas fa-anchor mr-2"></i><img src="@/assets/logo.png" style="width: 45px;" alt="" />
           <span style="font-size: 30px;">&nbsp;&nbsp;虚拟宠物医院学习后台</span>
         </a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-1" aria-controls="navbarNavDropdown-1" aria-expanded="false" aria-label="Toggle navigation" style=""><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown-1">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active"><a class="nav-link" @click="$router.push('/home')">主页<span class="sr-only">(current)</span></a></li>
+            <li class="nav-item active"><a class="nav-link" @click="$router.push('/admin/mainpage')">主页<span class="sr-only">(current)</span></a></li>
             <li class="nav-item"><a class="nav-link" @click="$router.push('/admin/user')">用户管理</a></li>
             <li class="nav-item"><a class="nav-link" @click="$router.push('/admin/test_management')">问题管理</a></li>
             <li class="nav-item"><a class="nav-link" @click="$router.push('/admin/basic_structure')">基本结构与功能管理</a></li>
@@ -30,6 +30,49 @@
     <div class="hospital_admin-page">
       <router-view></router-view>
     </div>
+
+    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1440 126" style="enable-background:new 0 0 1440 126;" xml:space="preserve">
+<path class="bg-light" d="M685.6,38.8C418.7-11.1,170.2,9.9,0,30v96h1440V30C1252.7,52.2,1010,99.4,685.6,38.8z"></path>
+</svg>
+    <footer class="bg-light pb-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-md mr-4">
+            <i class="fas fa-copyright text-grey"></i>
+            <small class="d-block mt-3 mb-3 text-muted">© 2024 G14A&amp;B作业</small>
+          </div>
+          <div class="col-6 col-md">
+            <h5 class="mb-4 text-grey">Features</h5>
+            <ul class="list-unstyled text-small">
+              <li><a class="text-muted" href="#">Cool stuff</a></li>
+
+            </ul>
+          </div>
+          <div class="col-6 col-md">
+            <h5 class="mb-4 text-grey">Resources</h5>
+            <ul class="list-unstyled text-small">
+              <li><a class="text-muted" @click="$router.push('/home/case_list')">Resource</a></li>
+
+            </ul>
+          </div>
+          <div class="col-6 col-md">
+            <h5 class="mb-4 text-grey">Utilities</h5>
+            <ul class="list-unstyled text-small">
+              <li><a class="text-muted" href="https://www.ecnu.edu.cn">Education</a></li>
+
+            </ul>
+          </div>
+          <div class="col-6 col-md">
+            <h5 class="mb-4 text-grey">About</h5>
+            <ul class="list-unstyled text-small">
+              <li><a class="text-muted" href="https://github.com/Yemiaojun/pet114">Backend Team</a></li>
+              <li><a class="text-muted" href="https://github.com/sorryIMessedup/hakimiHospital">Frontend Team</a></li>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
 
   </div>
 </template>
