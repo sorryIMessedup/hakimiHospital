@@ -170,7 +170,7 @@ export default {
         endTime: this.formData.endTime.toISOString(),
         score: this.formData.score,
         status : "",
-        everyone: true
+        everyone: false
         // 其他表单项
       };
       var url = this.formData.visibility == "public" ? "exams/holdPublicExam" : "exams/holdPrivateExam";
