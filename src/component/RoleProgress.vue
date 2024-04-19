@@ -72,7 +72,7 @@
 <style lang="less" scoped>
 .role_progress-container {
     padding: 10px;
-    width:   1000px;
+    width:  1000px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     .role_progress-progress {
         width: 100%;
