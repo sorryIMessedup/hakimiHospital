@@ -110,6 +110,7 @@ export default {
 	mounted() {
 		this.$refs.guide.addEventListener("mouseenter", () => {
 			this.showItemList = true;
+      this.isDropdownOpen = false;
 		});
 
 		this.$refs.guide.addEventListener("mouseleave", () => {
