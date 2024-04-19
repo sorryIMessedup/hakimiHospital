@@ -1,4 +1,4 @@
-z<template>
+<template>
   <div id="disease_group">
     <el-card class="box-card" style="margin-top: -10px;">
       <div slot="header" class="clearfix">
@@ -48,6 +48,58 @@ z<template>
       </span>
     </el-dialog>
 
+    <el-dialog title="" :visible.sync="addVisible3" :before-close="handleClose">
+      <div class="container">
+        <div>
+          <div style="padding-top: 0px; margin-bottom: 20px;">
+            <span style="font-size: 30px; font-weight: bold;">编辑疾病</span><br>
+            <span style="font-size: 20px; font-weight: normal;">正在尝试编辑：{{ this.rrow.name }}</span>
+            <span style="font-size: 20px; font-weight: normal;">&nbsp;(#{{ this.rrow.id }})</span>
+          </div>
+          <el-divider></el-divider>
+          <span style="font-size: 20px; font-weight: normal;">请输入(新)疾病名：</span><br><br>
+          <el-form :rules="rules" label-position="left" label-width="20px">
+            <el-form-item label=" " prop="newName">
+              <el-input v-model="newName" placeholder="请输入(新)疾病名"></el-input>
+            </el-form-item>
+          </el-form>
+          <span style="font-size: 20px; font-weight: normal;">请输入(新)疾病描述：</span><br><br>
+          <div class="editor">
+            <quill-editor ref="myQuillEditor" v-model="content" :options="this.editorOption"
+              @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
+              @change="onEditorChange($event)" />
+          </div>
+          <div class="hospital_register-button">
+            <div class="button">确定修改</div>
+            &nbsp;&nbsp;
+            <div class="button" @click="addVisible3 = false">返回</div>
+          </div>
+        </div>
+      </div>
+    </el-dialog>
+
+    <el-dialog title="" :visible.sync="addVisible1" :before-close="handleClose">
+      <div class="container">
+        <div>
+          <div>
+            <span style="font-size: 30px; font-weight: bold;">查看疾病</span><br>
+            <span style="font-size: 20px; font-weight: normal;">正在尝试编辑：{{ this.rrow.name }}</span>
+            <span style="font-size: 20px; font-weight: normal;">&nbsp;(#{{ this.rrow.id }})</span>
+          </div>
+          <el-divider></el-divider>
+          <div class="editor">
+            <quill-editor ref="myQuillEditor" v-model="content" :options="{
+              modules: { toolbar: false }
+            }" @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
+              @change="onEditorChange($event)" />
+          </div>
+          <div class="hospital_register-button">
+            <div class="button" @click="addVisible1 = false">我知道了</div>
+          </div>
+        </div>
+      </div>
+    </el-dialog>
+    
   </div>
 </template>
 
@@ -62,7 +114,37 @@ export default {
       list: [],
       loader: new NetLoader("test"),
       list2: [],
+      addVisible1: false,
       addVisible2: false,
+      addVisible3: false,
+      rrow: '',
+      newName: '',
+      form: {},
+      form2: { name: '', info: '' },
+      rules: { newName: { required: true, message: '请输入疾病名', trigger: 'blur' } },
+      rules2: {
+        name: [{ required: true, message: '请输入疾病名', trigger: 'blur' }],
+        info: [{ required: true, message: '请输入疾病描述', trigger: 'blur' }]
+      },
+      editorOption: {
+        modules: {
+          toolbar: [
+            ['bold', 'italic', 'underline', 'strike'], // 字体
+            ['blockquote', 'code-block'],
+            [{ 'header': 1 }, { 'header': 2 }], // 样式标题
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            [{ 'script': 'sub' }, { 'script': 'super' }], // 下标、上标
+            [{ 'indent': '-1' }, { 'indent': '+1' }], // 缩进
+            [{ 'direction': 'rtl' }],
+            [{ 'size': ['small', false, 'large', 'huge'] }], // 字体
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+            [{ 'color': [] }, { 'background': [] }],
+            [{ 'font': [] }],
+            [{ 'align': [] }],
+            ['clean'] // 格式清除
+          ]
+        }
+      },
       form2: { name:'', info: '' },
       rules2: { name: [{ required: true, message: '请输入疾病名', trigger: 'blur' }],
                 info :[{ required: true, message: '请输入疾病描述', trigger: 'blur' }] }
