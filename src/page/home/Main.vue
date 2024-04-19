@@ -71,7 +71,7 @@
           <p class="card-text text-muted">
             在这个你模块你可以浏览2D和3D的医院地图
           </p>
-          <a @click="$router.push('/home/exams')"   class="btn btn-info btn-round">进入查看</a>
+          <a @click="$router.push('/vr')"    class="btn btn-info btn-round">进入查看</a>
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { store } from "@/store";
 
 Vue.use(VueRouter);
 
+
 // 路由的配置信息
 const router = new VueRouter({
   routes: [
@@ -182,6 +183,10 @@ const router = new VueRouter({
       ],
     },
   ],
+  scrollBehavior(to, from, savedPosition) {
+    // 总是滚动到顶部
+    return { x: 0, y: 0 };
+  }
 });
 router.beforeEach((to, from, next) => {
   switch (to.path) {
