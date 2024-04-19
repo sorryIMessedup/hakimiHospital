@@ -1,23 +1,22 @@
 <template>
-  <div>
+
+  <div >
     <h1 style="textAlign: center">试题管理</h1>
-    <div id="question_selector">
-      <el-card class="box-card">
-        <div slot="header">
-          <span style="font-size: large;">试题检索</span>
-        </div>
-        <el-input placeholder="在此输入检索试题" v-model="input" size="small" style="width:80%" clearable> </el-input>
-        <el-button type="primary" icon="el-icon-search" size="small" v-on:click="search"></el-button>
-        <el-radio-group id="select" v-model="radio"
-          style="display:flex; flex-flow:row nowrap; align-items: flex-start;">
-          <el-radio :label="1">题干检索</el-radio>
-          <el-radio :label="2">id检索</el-radio>
-          <el-radio :label="3">类别检索</el-radio>
-        </el-radio-group>
-        <el-button style="margin-top:10px" type="primary" size="mini" @click="get_data">全部试题</el-button>
-        <el-button type="primary" size="mini" @click="add">添加</el-button>
-      </el-card>
-    </div>
+    <el-card class="box-card">
+      <div slot="header">
+        <span style="font-size: large;">试题检索</span>
+      </div>
+      <el-input placeholder="在此输入检索试题" v-model="input" size="small" style="width:80%" clearable> </el-input>
+      <el-button type="primary" icon="el-icon-search" size="small" v-on:click="search"></el-button>
+      <el-radio-group id="select" v-model="radio"
+                      style="display:flex; flex-flow:row nowrap; align-items: flex-start;">
+        <el-radio :label="1">题干检索</el-radio>
+        <el-radio :label="2">id检索</el-radio>
+        <el-radio :label="3">类别检索</el-radio>
+      </el-radio-group>
+      <el-button style="margin-top:10px" type="primary" size="mini" @click="get_data">全部试题</el-button>
+      <el-button type="primary" size="mini" @click="add">添加</el-button>
+    </el-card>
 
     <el-table :data="questionsList" border style="width: 100%;margin-top: 20px;"
       :header-cell-style="{ background: 'rgb(242, 243, 244)', color: '#515a6e' }">
@@ -307,6 +306,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
 #question_selector {
   //width: 50%;
   //float:right;

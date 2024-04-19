@@ -83,7 +83,7 @@ export default {
           if (val.status == 200) {
             window.localStorage.setItem("token", val.data.data.auth)
             window.sessionStorage.setItem("username", this.username)
-            this.$router.push("/admin")
+            this.$router.push("/admin/mainpage")
           } else {
             this.$message.error('登陆失败，用户名或密码错误');
           }

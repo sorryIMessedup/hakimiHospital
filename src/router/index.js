@@ -89,6 +89,10 @@ const router = new VueRouter({
       component: () => import("@/page/admin/Admin.vue"),
       children: [
         {
+          path: "mainpage",
+          component:() => import ("@/page/admin/Mainpage.vue")
+        },
+        {
           path: "user",
           component: () => import("@/page/admin/User.vue"),
         },

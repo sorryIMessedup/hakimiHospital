@@ -1,24 +1,25 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="hospital_user-container">
-    <el-table :data="userData" border style="width: 100%">
-      <el-table-column fixed label="用户名" width="100" prop="username" align="center"> </el-table-column>
-      <el-table-column fixed label="权限" prop="auth" width="100" align="center"> </el-table-column>
-      <el-table-column label="密保问题" prop="question" width="180" align="center"></el-table-column>
-      <el-table-column label="密保答案" prop="answer" width="100" align="center"></el-table-column>
-      <el-table-column label="用户ID" prop="id" width="150"></el-table-column>
-      <el-table-column label="密码" prop="password" width="300"></el-table-column>
-      <el-table-column fixed="right" width="150">
-        <template slot="header">
-          <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
-        </template>
-        <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-
+    <div>
+      <el-table :data="userData" border style="width: 100%" class="table">
+        <el-table-column fixed label="用户名" width="100" prop="username" align="center"> </el-table-column>
+        <el-table-column fixed label="权限" prop="auth" width="100" align="center"> </el-table-column>
+        <el-table-column label="密保问题" prop="question" width="180" align="center"></el-table-column>
+        <el-table-column label="密保答案" prop="answer" width="100" align="center"></el-table-column>
+        <el-table-column label="用户ID" prop="id" width="150"></el-table-column>
+        <el-table-column label="密码" prop="password" width="300"></el-table-column>
+        <el-table-column fixed="right" width="150">
+          <template slot="header">
+            <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
+          </template>
+          <template slot-scope="scope">
+            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
     <el-dialog :title="title" :visible.sync="dialogFormVisible">
       <h1 style="padding-bottom: 20px; padding-left: 5px; margin-top: -20px;">请输入用户的相关信息</h1>
       <el-form :rules="rules" label-position="left" label-width="80px" :model="formLabelAlign"
@@ -238,7 +239,6 @@ export default {
 <style lang="less" scoped>
 .hospital_user-container {
   height: 100vh;
-  background-image: url("@/assets/main/bg.jpg");
   background-position: center center;
   background-repeat: repeat;
   background-size: 100%;
