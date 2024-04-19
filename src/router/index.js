@@ -21,6 +21,10 @@ const router = new VueRouter({
           redirect: "main",
         },
         {
+          path: "testing",
+          component: () => import("@/component/test.vue"),
+        },
+        {
           path: "main",
           component: () => import("@/page/home/Main.vue"),
         },

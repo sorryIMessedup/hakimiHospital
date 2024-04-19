@@ -1,5 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
+  <div class="jumbotron jumbotron-xl jumbotron-fluid overlay overlay-blue" style="background-size:cover; background-image:url(../../assets/img/1.jpg);">
+
   <div class="hospital_login-container">
     <div class="hospital_login-box">
       <div class="hospital_login-leftBox" style="display: flex; justify-content: center; align-items: center;">
@@ -52,6 +54,7 @@
       </div>
     </div>
   </div>
+  </div>
 </template>
 
 <script>
@@ -100,7 +103,7 @@ export default {
         }).then(val => {
           if (val.status === 200) {
             window.localStorage.setItem("token", val.data.data.auth);
-            this.$router.push("/home")
+            this.$router.push("/home/main")
           } else {
             this.$message.error('登陆失败，用户名或密码错误');
           }
@@ -180,7 +183,7 @@ export default {
 .hospital_login-container {
   width: 100vw;
   height: 100vh;
-  background-image: url("@/assets/main/bg.jpg");
+  background-image: url("@/assets/img/1.jpg");
   background-position: center center;
   background-repeat: repeat;
   background-size: cover;
