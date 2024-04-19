@@ -34,7 +34,7 @@
       <span>病类：{{ disease_group }}</span>
       
       <el-form :rules="rules2" :model="form2">
-				<el-form-item label="病类名" prop="name">
+				<el-form-item label="疾病名" prop="name">
           <el-input v-model="form2.name" placeholder="请输入疾病名"></el-input>
 				</el-form-item>
         <el-form-item label="疾病描述" prop="info">
@@ -111,7 +111,7 @@ export default {
     },
     handleDelete(row) {
       this.$confirm('此操作将永久删除该病例, 是否继续?', '提示', {
-        confirmButtonText: '确定', cancelButtonText: '取消', type: 'warning'
+        confirmButtonText: '确定', cancelButtonText: '取消', type: 'danger'
       }).then(() => {
         this.loader.delete("/disease/deleteDisease", { id: row.id }).then(val => {
           console.log(val);
