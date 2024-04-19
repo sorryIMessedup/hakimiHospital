@@ -2,8 +2,13 @@
   <div id="disease_group">
     <el-card class="box-card" style="margin-top: -10px;">
       <div slot="header" class="clearfix">
-        <span>{{ disease_group }}</span>
-        <el-button style="float: right; padding: 3px 0" type="text" v-on:click="add_disease">添加病例</el-button>
+        <span style="font-size: 25px; font-weight: normal; padding-left: 5px;">
+          病类&nbsp;
+        </span>
+        <span style="font-size: 25px; font-weight: bold; padding-left: 0px;">
+          {{ disease_group }}
+        </span>
+        <el-button style="float: right; padding: 3px 0" type="text" v-on:click="add_case()">添加病例</el-button>
       </div>
       <el-table :data="this.list" style="width: 100%" border>
         <el-table-column fixed width="120" prop="name" label="病例名" align="center" />
@@ -25,6 +30,17 @@
         :total="400">
       </el-pagination>
     </el-card>
+
+    <el-dialog title="添加病例" :visible.sync="addVisible" width="30%" :before-close="handleClose">
+      <el-form :rules="rules" :model="form">
+				
+			</el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="addVisible = false">取消</el-button>
+        <el-button type="primary" @click="handleConfirm()">确定</el-button>
+      </span>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -38,7 +54,12 @@ export default {
       search: "",
       list: [],
       loader: new NetLoader("test"),
-      list2: []
+      list2: [],
+      addVisible: false,
+      form: {
+
+      },
+      rules: {}
     };
   },
   methods: {
@@ -59,7 +80,12 @@ export default {
         console.log(res);
         this.list = res;
       })
-
+    },
+    add_case() {
+      this.addVisible = true;
+    },
+    handleConfirm() {
+      this.addVisible = false;
     },
     handleDelete(row) {
       console.log(row);
@@ -92,7 +118,16 @@ export default {
     handleCurrentChange(val) {
       // @TODO
       console.log(`当前页: ${val}`);
-    }
+    },
+    handleClose(done) {
+			this.$confirm('确认关闭？')
+				// eslint-disable-next-line no-unused-vars
+				.then(_ => {
+					done();
+				})
+				// eslint-disable-next-line no-unused-vars
+				.catch(_ => { });
+		},
   },
   created() {
     this.get_data();
