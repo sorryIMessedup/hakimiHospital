@@ -1,5 +1,16 @@
-<template>
-    <div id="basic_structure">
+<template xmlns="http://www.w3.org/1999/html">
+  <div>
+    <div class="jumbotron jumbotron-lg jumbotron-fluid jumbotron-lg-withnav mb-3 bg-black position-relative">
+      <div class="container text-white h-100 tofront">
+        <div class="row align-items-center justify-content-center text-center">
+          <div class="col-md-10">
+            <h1 class="display-3">您可以布置测试题和考试</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br><br><br><br><br><br><br><br><br><br><br><br>
+    <div id="basic_structure" data-aos="fade-up">
 
         <el-row>
             <el-col v-for="section in section_list" :key="section" style="align-items: center;">
@@ -7,9 +18,12 @@
             </el-col>
         </el-row>
     </div>
+  </div>
 </template>
 
 <script>
+import '../../css/vendor/aos.css'
+import AOS from '../../js/vendor/aos'
 export default {
     name: "Test_management",
     data() {
@@ -29,7 +43,17 @@ export default {
                 path: "/admin" + s
             })
         }
-    }
+    },
+  mounted() {
+
+
+
+    AOS.init({ duration: 1000 });
+    AOS.refresh();
+
+
+
+  },
 }
 </script>
 

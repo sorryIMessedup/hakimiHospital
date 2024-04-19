@@ -10,7 +10,22 @@
             <li class="nav-item active"><a class="nav-link" @click="$router.push('/admin/mainpage')">主页<span class="sr-only">(current)</span></a></li>
             <li class="nav-item"><a class="nav-link" @click="$router.push('/admin/user')">用户管理</a></li>
             <li class="nav-item"><a class="nav-link" @click="$router.push('/admin/test_management')">问题管理</a></li>
-            <li class="nav-item"><a class="nav-link" @click="$router.push('/admin/basic_structure')">基本结构与功能管理</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" @click="toggleDropdown">
+                基本功能管理
+              </a>
+              <div class="dropdown-menu" :class="{ show: isDropdownOpen }" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" @click="$router.push('/admin/department');isDropdownOpen=false;">科室管理</a>
+                <a class="dropdown-item" @click="$router.push('/admin/medicine');isDropdownOpen=false;">药品管理</a>
+                <a class="dropdown-item" @click="$router.push('/admin/charge');isDropdownOpen=false;">收费管理</a>
+                <a class="dropdown-item" @click="$router.push('/admin/vaccinum');isDropdownOpen=false;">疫苗管理</a>
+                <a class="dropdown-item" @click="$router.push('/admin/assay');isDropdownOpen=false;">化验项目管理</a>
+                <a class="dropdown-item" @click="$router.push('/admin/staff');isDropdownOpen=false;">人员管理</a>
+                <a class="dropdown-item" @click="$router.push('/admin/record');isDropdownOpen=false;">档案管理</a>
+                <a class="dropdown-item" @click="$router.push('/admin/inpatient');isDropdownOpen=false;">住院管理</a>
+
+              </div>
+            </li>
             <li class="nav-item"><a class="nav-link" @click="$router.push('/admin/disease_list')">疾病与病类管理</a></li>
 
 
@@ -84,11 +99,15 @@ export default {
   name: "Admin",
   data() {
     return {
+      isDropdownOpen: false,
       loader: new NetLoader("test"),
       username: "default"
     }
   },
   methods: {
+    toggleDropdown() {
+      this.isDropdownOpen = !this.isDropdownOpen; // 每次点击时取反布尔值
+    },
     logout() {
       this.loader.post("/users/logout").then(() => {
         this.$message({
@@ -105,13 +124,14 @@ export default {
     let username = window.sessionStorage.getItem("username")
     this.username = username;
   },
-  mounted() {
+
+
     // this.$notify({
     //    title: '恭喜你登陆成功',
     //    message: '这是一条登录成功的提示消息，现在请你好好体验管理员功能吧',
     //    type: 'success'
     // });
-  }
+
 }
 </script>
 
