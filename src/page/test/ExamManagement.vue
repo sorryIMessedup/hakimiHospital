@@ -33,8 +33,8 @@
 			width="700"
 			trigger="click">
 			  <el-table :data="questionRecord">
-				  <el-table-column width="400" property="examid" label="考试"></el-table-column>
-				  <el-table-column width="200" property="username" label="用户"></el-table-column>
+				  <el-table-column width="400" property="exam" label="考试"></el-table-column>
+				  <el-table-column width="200" property="user" label="用户"></el-table-column>
 				  <el-table-column width="100" property="score" label="得分"></el-table-column>
 			  </el-table>
 			  <el-button type="primary" size="mini" slot="reference">考试结果</el-button>
@@ -114,8 +114,14 @@ export default {
       dialogVisible: false, // 控制新增对话框的显示与隐藏的变量
 
       exams: [],
-      questionRecord: [],
       currentUserName: "",
+	  
+      questionRecord: {
+		  date: "",
+		  user: "",
+		  score: 0,
+	  },	  
+	  
       formData: {
         name: "",
         startTime: "",
@@ -224,15 +230,6 @@ export default {
       console.log("id是" + id)
     },
 
-    // show_paper: function (row) {
-    //   let id = row.id
-    //   this.$router.push({ name: 'ExamPaper', params: { paperId: id } });
-    //   console.log("id是" + id)
-    // },
-		
-	//show_record: function(){
-	//展示所有人的考试记录
-	//}
     delete_exam: function (row) {
       if (confirm("确定要删除考试吗？")) {
         // 用户点击了确认按钮，执行删除操作
@@ -300,7 +297,26 @@ export default {
           this.$message.error(jsonData.message);
         }
       })
-    }
+    },
+	
+    cal_score: function() {
+        for(let i=0; i<this.usrSelected.length; i++) {
+            if (this.usrSelected[i] === this.questionsList[i].answer) {
+                 this.score += this.questionsList[i].score
+              }
+          }
+     },
+	 
+	 loadUserResult: function(){
+		 this.load.get('examRecord/findAll')
+			.then((value) => {
+				if (value.data.code == 200){
+					this.questionRecord.exam = value.data.exam
+					this.questionRecord.user = value.data.user
+					this.questionRecord.score = value.data.score
+				}
+			})
+	 }
   },
 
 

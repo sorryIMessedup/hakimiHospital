@@ -35,6 +35,10 @@ import { NetLoader } from '@/net';
 export default {
     data() {
         return {
+			recordData: {
+				exam:"",
+				user:"",
+			},
             questions: [],
             period: 60,
             selected: [],
@@ -64,6 +68,11 @@ export default {
             s = s < 10 ? "0" + s : s
             this.djs = m + '分钟' + s + '秒'
         },
+		postResult(){
+			let url = "/home/examRecord"
+			this.recordData.exam = this.$route.params.paperId,
+			this.loader.post(url, recordData)
+		},
     },
     created() {
         console.log(this.$route);
