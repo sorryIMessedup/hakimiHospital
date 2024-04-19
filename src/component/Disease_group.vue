@@ -18,7 +18,7 @@
             <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
           </template>
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.row)">查看</el-button>
+            <el-button size="mini" @click="handleView(scope.row)">查看</el-button>
             <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
             <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
           </template>
@@ -32,20 +32,69 @@
 
     <el-dialog title="添加疾病" :visible.sync="addVisible2" width="30%" :before-close="handleClose">
       <span>病类：{{ disease_group }}</span>
-      
       <el-form :rules="rules2" :model="form2">
-				<el-form-item label="疾病名" prop="name">
+        <el-form-item label="疾病名" prop="name">
           <el-input v-model="form2.name" placeholder="请输入疾病名"></el-input>
-				</el-form-item>
+        </el-form-item>
         <el-form-item label="疾病描述" prop="info">
           <el-input v-model="form2.info" placeholder="请输入疾病描述"></el-input>
-				</el-form-item>
-			</el-form>
-
+        </el-form-item>
+      </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="addVisible2 = false">取消</el-button>
         <el-button type="primary" @click="handleConfirm2()">确定</el-button>
       </span>
+    </el-dialog>
+
+    <el-dialog title="" :visible.sync="addVisible3" :before-close="handleClose">
+      <div class="container">
+        <div>
+          <div style="padding-top: 0px; margin-bottom: 20px;">
+            <span style="font-size: 30px; font-weight: bold;">编辑疾病</span><br>
+            <span style="font-size: 20px; font-weight: normal;">正在尝试编辑：{{ this.rrow.name }}</span>
+            <span style="font-size: 20px; font-weight: normal;">&nbsp;(#{{ this.rrow.id }})</span>
+          </div>
+          <el-divider></el-divider>
+          <span style="font-size: 20px; font-weight: normal;">请输入(新)疾病名：</span><br><br>
+          <el-form :rules="rules" label-position="left" label-width="20px">
+            <el-form-item label=" " prop="newName">
+              <el-input v-model="newName" placeholder="请输入(新)疾病名"></el-input>
+            </el-form-item>
+          </el-form>
+          <span style="font-size: 20px; font-weight: normal;">请输入(新)疾病描述：</span><br><br>
+          <div class="editor">
+            <quill-editor ref="myQuillEditor" v-model="content" :options="this.editorOption"
+              @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
+              @change="onEditorChange($event)" />
+          </div>
+          <div class="hospital_register-button">
+            <div class="button">确定修改</div>
+            &nbsp;&nbsp;
+            <div class="button" @click="addVisible3 = false">返回</div>
+          </div>
+        </div>
+      </div>
+    </el-dialog>
+
+    <el-dialog title="" :visible.sync="addVisible1" :before-close="handleClose">
+      <div class="container">
+        <div>
+          <div style="padding-top: 0px; margin-bottom: 20px;">
+            <span style="font-size: 30px; font-weight: bold;">查看疾病</span><br>
+            <span style="font-size: 20px; font-weight: normal;">正在尝试编辑：{{ this.rrow.name }}</span>
+            <span style="font-size: 20px; font-weight: normal;">&nbsp;(#{{ this.rrow.id }})</span>
+          </div>
+          <el-divider></el-divider>
+          <div class="editor">
+            <quill-editor ref="myQuillEditor" v-model="content" :options="this.editorOption"
+              @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
+              @change="onEditorChange($event)" />
+          </div>
+          <div class="hospital_register-button">
+            <div class="button" @click="addVisible1 = false">我知道了</div>
+          </div>
+        </div>
+      </div>
     </el-dialog>
 
   </div>
@@ -53,8 +102,15 @@
 
 <script>
 import { NetLoader } from '@/net';
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
+import { quillEditor } from 'vue-quill-editor'
 export default {
   name: "Disease_group",
+  // eslint-disable-next-line vue/no-unused-components
+  components: { quillEditor },
   data() {
     return {
       currentPage4: 4,
@@ -62,35 +118,62 @@ export default {
       list: [],
       loader: new NetLoader("test"),
       list2: [],
+      content: '<h2>请输入疾病描述...</h2><br><br>',
+      addVisible1: false,
       addVisible2: false,
-      form2: { name:'', info: '' },
-      rules2: { name: [{ required: true, message: '请输入疾病名', trigger: 'blur' }],
-                info :[{ required: true, message: '请输入疾病描述', trigger: 'blur' }] }
+      addVisible3: false,
+      rrow : '',
+      form: {},
+      form2: { name: '', info: '' },
+      rules: { newName: { required: true, message: '请输入疾病名', trigger: 'blur' } },
+      rules2: {
+        name: [{ required: true, message: '请输入疾病名', trigger: 'blur' }],
+        info: [{ required: true, message: '请输入疾病描述', trigger: 'blur' }]
+      },
+      editorOption: {
+        modules: {
+          toolbar: [
+            ['bold', 'italic', 'underline', 'strike'], // 字体
+            ['blockquote', 'code-block'],
+            [{ 'header': 1 }, { 'header': 2 }], // 样式标题
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            [{ 'script': 'sub' }, { 'script': 'super' }], // 下标、上标
+            [{ 'indent': '-1' }, { 'indent': '+1' }], // 缩进
+            [{ 'direction': 'rtl' }],
+            [{ 'size': ['small', false, 'large', 'huge'] }], // 字体
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+            [{ 'color': [] }, { 'background': [] }],
+            [{ 'font': [] }],
+            [{ 'align': [] }],
+            ['clean'] // 格式清除
+          ]
+        }
+      },
     };
   },
   methods: {
     add_disease() {
-			this.addVisible2 = true;
-		},
+      this.addVisible2 = true;
+    },
     handleConfirm2() {
-			this.addVisible2 = false;
+      this.addVisible2 = false;
       this.loader.post("/disease/addDisease", {
-        category: {id : this.$props.disease_groupid, name: this.$props.disease_group},
-				name: this.form2.name,
+        category: { id: this.$props.disease_groupid, name: this.$props.disease_group },
+        name: this.form2.name,
         info: this.form2.info
-			}).then(val => {
-				if (val.status == 200) {
-					this.$message.success('添加疾病成功');
+      }).then(val => {
+        if (val.status == 200) {
+          this.$message.success('添加疾病成功');
           this.list = [];
-					this.get_data();
-				} else {
-					this.$message.error(val.data.data.message);
-				}
-			}, err => {
-				this.$message.error(err.response.data.message);
-				console.log(err);
-			})
-		},
+          this.get_data();
+        } else {
+          this.$message.error(val.data.data.message);
+        }
+      }, err => {
+        this.$message.error(err.response.data.message);
+        console.log(err);
+      })
+    },
     get_data() {
       this.loader.get("/disease/findAllDiseases").then((val) => {
         this.list = [];
@@ -141,18 +224,39 @@ export default {
       console.log(`当前页: ${val}`);
     },
     handleClose(done) {
-			this.$confirm('确认关闭？')
-				// eslint-disable-next-line no-unused-vars
-				.then(_ => {
-					done();
-				})
-				// eslint-disable-next-line no-unused-vars
-				.catch(_ => { });
-		},
+      this.$confirm('确认关闭？')
+        // eslint-disable-next-line no-unused-vars
+        .then(_ => {
+          done();
+        })
+        // eslint-disable-next-line no-unused-vars
+        .catch(_ => { });
+    },
+    handleView(row) {
+      console.log(row);
+      this.rrow = row;
+      this.addVisible1 = true;
+    },
     handleEdit(row) {
       console.log(row);
-      window.sessionStorage.setItem('rowIdToEdit', row.id);
-      this.$router.push('/admin/edit_disease');
+      this.rrow = row;
+      this.addVisible3 = true;
+    },
+    quit() {
+      this.$router.push("/admin/disease_list");
+    },
+    onEditorBlur(quill) {
+      console.log('editor blur!', quill)
+    },
+    onEditorFocus(quill) {
+      console.log('editor focus!', quill)
+    },
+    onEditorReady(quill) {
+      console.log('editor ready!', quill)
+    },
+    onEditorChange({ quill, html, text }) {
+      console.log('editor change!', quill, html, text)
+      this.content = html
     }
   },
   created() {
@@ -161,7 +265,12 @@ export default {
   props: {
     disease_group: String,
     disease_groupid: String
-  }
+  },
+  computed: {
+    editor() {
+      return this.$refs.myQuillEditor.quill
+    }
+  },
 }
 </script>
 
@@ -193,5 +302,33 @@ export default {
 
 .box-card {
   width: 100%;
+}
+
+.container {
+  color: black;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+
+  .hospital_register-button {
+    width: 100%;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+
+    .button {
+      margin-left: 20px;
+      width: 200px;
+      padding: 10px 0px;
+      background: rgba(40, 40, 40);
+      color: #fff;
+      font-size: 14px;
+      text-align: center;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+  }
 }
 </style>
