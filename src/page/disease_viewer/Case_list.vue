@@ -1,20 +1,5 @@
 <template>
-  <div>
-    <div>
-      <div class="jumbotron jumbotron-lg jumbotron-fluid jumbotron-lg-withnav mb-3 bg-primary position-relative">
-        <div class="container text-white h-100 tofront">
-          <div class="row align-items-center justify-content-center text-center">
-            <div class="col-md-10">
-              <h1 class="display-3">这里将为你提供最新的疾病案例</h1>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <br><br><br><br>    <br><br><br><br><br>
-
-    <div id="case_list" data-aos="fade-up">
-
+  <div id="case_list">
     <div class="case_list-container" v-if="this.token != 0">
       <div>
         <Case_group v-for="item in category" :key="item.id" :disease_group="item.name" :disease_groupid="item.id"
@@ -28,15 +13,12 @@
       <el-empty description="您暂未登录，无法查看病例信息"></el-empty>
     </div>
   </div>
-  </div>
 </template>
 
 <script>
 import Case_group from '@/component/Case_group.vue';
 import Disease_selector from '@/component/Disease_selector.vue';
 import { NetLoader } from '@/net';
-import '../../css/vendor/aos.css'
-import AOS from '../../js/vendor/aos'
 export default {
   name: "Case_list",
   data() {
@@ -68,10 +50,6 @@ export default {
         this.disease_data.push(item);
       }
     });
-  },
-  mounted() {
-    AOS.init({ duration: 1000 });
-    AOS.refresh();
   },
   components: { Disease_selector, Case_group },
 }

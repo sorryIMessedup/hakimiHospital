@@ -35,10 +35,6 @@ import { NetLoader } from '@/net';
 export default {
     data() {
         return {
-			recordData: {
-				exam:"",
-				user:"",
-			},
             questions: [],
             period: 60,
             selected: [],
@@ -68,7 +64,6 @@ export default {
             s = s < 10 ? "0" + s : s
             this.djs = m + '分钟' + s + '秒'
         },
-
     },
     created() {
         console.log(this.$route);

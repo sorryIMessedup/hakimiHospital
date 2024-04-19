@@ -26,15 +26,19 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="delete_exam(scope.row)" style="margin-right: 15px;">删除考试</el-button>
-          <el-popover placement="right" width="700" trigger="click">
-            <el-table :data="questionRecord">
-              <el-table-column width="400" property="exam" label="考试"></el-table-column>
-              <el-table-column width="200" property="user" label="用户"></el-table-column>
-              <el-table-column width="100" property="score" label="得分"></el-table-column>
-            </el-table>
-            <el-button type="primary" size="mini" slot="reference">考试结果</el-button>
-          </el-popover>
+          <el-button type="primary" size="mini" @click="show_paper(scope.row)">考试记录</el-button>
+          <el-button type="primary" size="mini" @click="delete_exam(scope.row)">删除考试</el-button>
+		  <el-popover
+		    placement="right"
+			width="700"
+			trigger="click">
+			  <el-table :data="questionRecord">
+				  <el-table-column width="400" property="examid" label="考试"></el-table-column>
+				  <el-table-column width="200" property="username" label="用户"></el-table-column>
+				  <el-table-column width="100" property="score" label="得分"></el-table-column>
+			  </el-table>
+			  <el-button type="primary" size="mini" slot="reference">考试结果</el-button>
+			</el-popover>
         </template>
       </el-table-column>
     </el-table>
@@ -92,11 +96,11 @@
         <el-button type="primary" @click="addExam">确定</el-button>
       </span>
     </el-dialog>
+	
+	
 
-
-
-
-
+	
+	
   </div>
 </template>
 
@@ -110,14 +114,8 @@ export default {
       dialogVisible: false, // 控制新增对话框的显示与隐藏的变量
 
       exams: [],
+      questionRecord: [],
       currentUserName: "",
-
-      questionRecord: {
-        date: "",
-        user: "",
-        score: 0,
-      },
-
       formData: {
         name: "",
         startTime: "",
@@ -171,8 +169,8 @@ export default {
         startTime: this.formData.startTime.toISOString(),
         endTime: this.formData.endTime.toISOString(),
         score: this.formData.score,
-        status: "",
-        everyone: false
+        status : "",
+        everyone: true
         // 其他表单项
       };
       var url = this.formData.visibility == "public" ? "exams/holdPublicExam" : "exams/holdPrivateExam";
@@ -226,6 +224,15 @@ export default {
       console.log("id是" + id)
     },
 
+    // show_paper: function (row) {
+    //   let id = row.id
+    //   this.$router.push({ name: 'ExamPaper', params: { paperId: id } });
+    //   console.log("id是" + id)
+    // },
+		
+	//show_record: function(){
+	//展示所有人的考试记录
+	//}
     delete_exam: function (row) {
       if (confirm("确定要删除考试吗？")) {
         // 用户点击了确认按钮，执行删除操作
@@ -293,19 +300,6 @@ export default {
           this.$message.error(jsonData.message);
         }
       })
-    },
-
-
-
-    loadUserResult: function () {
-      this.load.get('examRecord/findAll')
-        .then((value) => {
-          if (value.data.code == 200) {
-            this.questionRecord.exam = value.data.exam
-            this.questionRecord.user = value.data.user
-            this.questionRecord.score = value.data.score
-          }
-        })
     }
   },
 

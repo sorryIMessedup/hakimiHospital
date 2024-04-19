@@ -4,7 +4,6 @@ import { store } from "@/store";
 
 Vue.use(VueRouter);
 
-
 // 路由的配置信息
 const router = new VueRouter({
   routes: [
@@ -20,10 +19,6 @@ const router = new VueRouter({
         {
           path: "",
           redirect: "main",
-        },
-        {
-          path: "testing",
-          component: () => import("@/component/test.vue"),
         },
         {
           path: "main",
@@ -89,10 +84,6 @@ const router = new VueRouter({
       component: () => import("@/page/admin/Admin.vue"),
       children: [
         {
-          path: "mainpage",
-          component:() => import ("@/page/admin/Mainpage.vue")
-        },
-        {
           path: "user",
           component: () => import("@/page/admin/User.vue"),
         },
@@ -111,10 +102,6 @@ const router = new VueRouter({
         {
           path: "add_disease",
           component: () => import("@/page/disease_viewer/Add_disease.vue"),
-        },
-        {
-          path: "edit_disease",
-          component: () => import("@/page/disease_viewer/Edit_disease.vue"),
         },
         {
           path: "disease_view",
@@ -191,22 +178,40 @@ const router = new VueRouter({
       ],
     },
   ],
-  scrollBehavior(to, from, savedPosition) {
-    // 总是滚动到顶部
-    return { x: 0, y: 0 };
-  }
 });
+
 router.beforeEach((to, from, next) => {
   switch (to.path) {
     case "/home/main":
-    case "/home/case_list":
-    case "/home/exams":
-    case "/home/role":
-    case "/home/roleDetail":
-      next(); // 跳过路径修改
+      store.commit("changePath", {
+        index: 0,
+        router: to,
+        name: "首页",
+      });
       break;
-    default:
-      // 对于其他页面，执行路径修改
+    case "/home/case_list":
+      store.commit("changePath", {
+        index: 1,
+        router: to,
+        name: "病例查阅",
+      });
+      break;
+    case "/home/exams":
+      store.commit("changePath", {
+        index: 1,
+        router: to,
+        name: "考试",
+      });
+      break;
+    case "/home/role":
+      store.commit("changePath", {
+        index: 1,
+        router: to,
+        name: "角色扮演",
+      });
+      break;
+    case "/home/roleDetail":
+      // eslint-disable-next-line no-case-declarations
       let name = "";
       switch (to.query.role) {
         case "yizhu":
@@ -222,14 +227,14 @@ router.beforeEach((to, from, next) => {
           name = "游客";
       }
       store.commit("changePath", {
-        index: -1,
+        index: 2,
         router: to,
         name,
       });
-      next();
+      break;
   }
+  next();
 });
-
 
 // 前置路由守卫
 //router.beforeEach((to, from, next) => {

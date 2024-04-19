@@ -18,7 +18,7 @@
             <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
           </template>
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleView(scope.row)">查看</el-button>
+            <el-button size="mini" @click="handleEdit(scope.row)">查看</el-button>
             <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
             <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
           </template>
@@ -32,14 +32,16 @@
 
     <el-dialog title="添加疾病" :visible.sync="addVisible2" width="30%" :before-close="handleClose">
       <span>病类：{{ disease_group }}</span>
+      
       <el-form :rules="rules2" :model="form2">
-        <el-form-item label="疾病名" prop="name">
+				<el-form-item label="病类名" prop="name">
           <el-input v-model="form2.name" placeholder="请输入疾病名"></el-input>
-        </el-form-item>
+				</el-form-item>
         <el-form-item label="疾病描述" prop="info">
           <el-input v-model="form2.info" placeholder="请输入疾病描述"></el-input>
-        </el-form-item>
-      </el-form>
+				</el-form-item>
+			</el-form>
+
       <span slot="footer" class="dialog-footer">
         <el-button @click="addVisible2 = false">取消</el-button>
         <el-button type="primary" @click="handleConfirm2()">确定</el-button>
@@ -97,21 +99,14 @@
         </div>
       </div>
     </el-dialog>
-
+    
   </div>
 </template>
 
 <script>
 import { NetLoader } from '@/net';
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
-import 'quill/dist/quill.bubble.css'
-
-import { quillEditor } from 'vue-quill-editor'
 export default {
   name: "Disease_group",
-  // eslint-disable-next-line vue/no-unused-components
-  components: { quillEditor },
   data() {
     return {
       currentPage4: 4,
@@ -119,7 +114,6 @@ export default {
       list: [],
       loader: new NetLoader("test"),
       list2: [],
-      content: '<h2>请输入疾病描述...</h2><br><br>',
       addVisible1: false,
       addVisible2: false,
       addVisible3: false,
@@ -151,31 +145,34 @@ export default {
           ]
         }
       },
+      form2: { name:'', info: '' },
+      rules2: { name: [{ required: true, message: '请输入疾病名', trigger: 'blur' }],
+                info :[{ required: true, message: '请输入疾病描述', trigger: 'blur' }] }
     };
   },
   methods: {
     add_disease() {
-      this.addVisible2 = true;
-    },
+			this.addVisible2 = true;
+		},
     handleConfirm2() {
-      this.addVisible2 = false;
+			this.addVisible2 = false;
       this.loader.post("/disease/addDisease", {
-        category: { id: this.$props.disease_groupid, name: this.$props.disease_group },
-        name: this.form2.name,
+        category: {id : this.$props.disease_groupid, name: this.$props.disease_group},
+				name: this.form2.name,
         info: this.form2.info
-      }).then(val => {
-        if (val.status == 200) {
-          this.$message.success('添加疾病成功');
+			}).then(val => {
+				if (val.status == 200) {
+					this.$message.success('添加疾病成功');
           this.list = [];
-          this.get_data();
-        } else {
-          this.$message.error(val.data.data.message);
-        }
-      }, err => {
-        this.$message.error(err.response.data.message);
-        console.log(err);
-      })
-    },
+					this.get_data();
+				} else {
+					this.$message.error(val.data.data.message);
+				}
+			}, err => {
+				this.$message.error(err.response.data.message);
+				console.log(err);
+			})
+		},
     get_data() {
       this.loader.get("/disease/findAllDiseases").then((val) => {
         this.list = [];
@@ -196,7 +193,7 @@ export default {
     },
     handleDelete(row) {
       this.$confirm('此操作将永久删除该病例, 是否继续?', '提示', {
-        confirmButtonText: '确定', cancelButtonText: '取消', type: 'danger'
+        confirmButtonText: '确定', cancelButtonText: '取消', type: 'warning'
       }).then(() => {
         this.loader.delete("/disease/deleteDisease", { id: row.id }).then(val => {
           console.log(val);
@@ -226,40 +223,14 @@ export default {
       console.log(`当前页: ${val}`);
     },
     handleClose(done) {
-      this.$confirm('确认关闭？')
-        // eslint-disable-next-line no-unused-vars
-        .then(_ => {
-          done();
-        })
-        // eslint-disable-next-line no-unused-vars
-        .catch(_ => { });
-    },
-    handleView(row) {
-      console.log(row);
-      this.rrow = row;
-      this.addVisible1 = true;
-    },
-    handleEdit(row) {
-      console.log(row);
-      this.rrow = row;
-      this.addVisible3 = true;
-    },
-    quit() {
-      this.$router.push("/admin/disease_list");
-    },
-    onEditorBlur(quill) {
-      console.log('editor blur!', quill)
-    },
-    onEditorFocus(quill) {
-      console.log('editor focus!', quill)
-    },
-    onEditorReady(quill) {
-      console.log('editor ready!', quill)
-    },
-    onEditorChange({ quill, html, text }) {
-      console.log('editor change!', quill, html, text)
-      this.content = html
-    }
+			this.$confirm('确认关闭？')
+				// eslint-disable-next-line no-unused-vars
+				.then(_ => {
+					done();
+				})
+				// eslint-disable-next-line no-unused-vars
+				.catch(_ => { });
+		},
   },
   created() {
     this.get_data();
@@ -267,12 +238,7 @@ export default {
   props: {
     disease_group: String,
     disease_groupid: String
-  },
-  computed: {
-    editor() {
-      return this.$refs.myQuillEditor.quill
-    }
-  },
+  }
 }
 </script>
 
@@ -304,33 +270,5 @@ export default {
 
 .box-card {
   width: 100%;
-}
-
-.container {
-  color: black;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-
-  .hospital_register-button {
-    width: 100%;
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
-
-    .button {
-      margin-left: 20px;
-      width: 200px;
-      padding: 10px 0px;
-      background: rgba(40, 40, 40);
-      color: #fff;
-      font-size: 14px;
-      text-align: center;
-      border-radius: 10px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-  }
 }
 </style>

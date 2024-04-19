@@ -72,6 +72,8 @@ export default {
       this.loader.get(url).then(value => {
         const jsonData = value.data;
         // 将 JSON 数据转换为字符串并输出到控制台
+        console.log(JSON.stringify(jsonData));
+
 
         if (jsonData.code == 200) {
           let res = value.data.data;
@@ -94,7 +96,6 @@ export default {
         startTime: this.formData.startTime.toISOString(),
         endTime: this.formData.endTime.toISOString(),
         score: this.formData.score,
-        status: "",
         everyone: true
         // 其他表单项
       };
@@ -120,6 +121,10 @@ export default {
       this.exams = [];
       this.loader.get("/exams/list").then((value) => {
         const jsonData = value.data;
+        // 将 JSON 数据转换为字符串并输出到控制台
+        console.log(JSON.stringify(jsonData));
+
+
         if (jsonData.code == 200) {
           let res = value.data.data;
           console.log(res)
@@ -135,22 +140,17 @@ export default {
     },
 
     show_paper: function (row) {
-      this.$router.push({ name: 'PaperDetail', params: { paperId: row.id } });
-      /* this.loader.post('/exams/joinExam', { examId: row.id }).then((value) => {
+      this.loader.post('/exams/joinExam', { examId: row.id }).then((value) => {
+        console.log(value, 'xxx');
         const jsonData = value.data;
         if (jsonData.code == 200) {
           this.$router.push({ name: 'PaperDetail', params: { paperId: row.id } });
         } else {
           this.$message.error(jsonData.message);
         }
-      }).catch(({ response: res }) => {
-        const message = res?.data?.message;
-        if (message) {
-          this.$message.error(message);
-        } else {
-          this.$message.error('未知错误！!');
-        }
-      }) */
+      }).catch(() => {
+        this.$message.error('未知错误！');
+      })
     },
     show_result: function (row) {
       //查询当前用户的当前考试结果
@@ -223,7 +223,6 @@ export default {
         }
       })
     }
-
   },
 
 

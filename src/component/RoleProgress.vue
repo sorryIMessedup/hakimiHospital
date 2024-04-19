@@ -4,7 +4,7 @@
             <el-steps :active="active" finish-status="success">
                 <el-step v-for="(item,index) in progress" :key="index" :title="item.name"></el-step>
             </el-steps>
-            <el-button type="primary" @click="enterNext" v-if="progress.length > 0">
+            <el-button class="choose" type="primary" @click="enterNext" v-if="progress.length > 0">
                 <template>
                     <span v-if="active === progress.length">重新开始</span>
                     <span v-else>下一步</span>
@@ -72,12 +72,21 @@
 <style lang="less" scoped>
 .role_progress-container {
     padding: 10px;
+    width:  1000px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     .role_progress-progress {
+        width: 100%;
         border-bottom: 1px solid #dcdfe6;
         padding: 20px;
     }
+    .choose {
+        margin-top: 20px;
+        margin-left: 50%;
+        transform: translateX(-50%);
+    }
+
     .role_progress-detail {
+        width: 100%;
         padding: 10px;
         margin-top: 30px;
         // overflow-y: scroll;
