@@ -34,9 +34,7 @@ import 'quill/dist/quill.bubble.css'
 import { quillEditor } from 'vue-quill-editor'
 
 export default {
-  comments: {
-    quillEditor
-  },
+  comments: { quillEditor },
   data() {
     return {
       rules: {
