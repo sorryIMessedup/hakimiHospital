@@ -183,39 +183,17 @@ const router = new VueRouter({
     },
   ],
 });
-
 router.beforeEach((to, from, next) => {
   switch (to.path) {
     case "/home/main":
-      store.commit("changePath", {
-        index: 0,
-        router: to,
-        name: "首页",
-      });
-      break;
     case "/home/case_list":
-      store.commit("changePath", {
-        index: 1,
-        router: to,
-        name: "病例查阅",
-      });
-      break;
     case "/home/exams":
-      store.commit("changePath", {
-        index: 1,
-        router: to,
-        name: "考试",
-      });
-      break;
     case "/home/role":
-      store.commit("changePath", {
-        index: 1,
-        router: to,
-        name: "角色扮演",
-      });
-      break;
     case "/home/roleDetail":
-      // eslint-disable-next-line no-case-declarations
+      next(); // 跳过路径修改
+      break;
+    default:
+      // 对于其他页面，执行路径修改
       let name = "";
       switch (to.query.role) {
         case "yizhu":
@@ -231,14 +209,14 @@ router.beforeEach((to, from, next) => {
           name = "游客";
       }
       store.commit("changePath", {
-        index: 2,
+        index: -1,
         router: to,
         name,
       });
-      break;
+      next();
   }
-  next();
 });
+
 
 // 前置路由守卫
 //router.beforeEach((to, from, next) => {

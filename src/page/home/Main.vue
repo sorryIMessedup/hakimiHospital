@@ -100,7 +100,6 @@ export default {
 
     AOS.init({ duration: 1000 });
     AOS.refresh();
-    console.log("大妈能不能好了")
 
 
   },
