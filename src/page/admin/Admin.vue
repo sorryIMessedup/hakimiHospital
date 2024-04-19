@@ -1,34 +1,37 @@
 <template>
-  <el-container>
-    <el-header class="nav">
-      <div class="nav-left">
-        <div class="nav-icon" @click="$router.push('/admin')">
-          <img src="@/assets/logo.png" style="width: 45px;" alt="" />
-          <span style="font-size: 30px;">&nbsp;&nbsp;虚拟宠物医院后台管理系统</span>
-        </div>
-      </div>
-      <div class="nav-right">
-        <div class="nav-right-item" >
-          <span>{{ username }}</span>
-        </div>
-        <div class="nav-right-item" @click=logout()>
-          <span>退出账号</span>
-        </div>
-      </div>
-    </el-header>
+  <div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href='/home'><i class="fas fa-anchor mr-2"></i><img src="@/assets/logo.png" style="width: 45px;" alt="" />
+          <span style="font-size: 30px;">&nbsp;&nbsp;虚拟宠物医院学习后台</span>
+        </a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-1" aria-controls="navbarNavDropdown-1" aria-expanded="false" aria-label="Toggle navigation" style=""><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown-1">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active"><a class="nav-link" @click="$router.push('/home')">主页<span class="sr-only">(current)</span></a></li>
+            <li class="nav-item"><a class="nav-link" @click="$router.push('/admin/user')">用户管理</a></li>
+            <li class="nav-item"><a class="nav-link" @click="$router.push('/admin/test_management')">问题管理</a></li>
+            <li class="nav-item"><a class="nav-link" @click="$router.push('/admin/basic_structure')">基本结构与功能管理</a></li>
+            <li class="nav-item"><a class="nav-link" @click="$router.push('/admin/disease_list')">疾病与病类管理</a></li>
 
-    <el-menu router background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
-      <el-menu-item index="/admin/user">用户管理</el-menu-item>
-      <el-menu-item index="/admin/basic_structure">基本结构与功能管理</el-menu-item>
-      <el-menu-item index="/admin/disease_list">病类与疾病管理</el-menu-item>
-      <el-menu-item index="/admin/case_list">病例管理</el-menu-item>
-      <el-menu-item index="/admin/test_management">测试管理</el-menu-item>
-    </el-menu>
+
+          </ul>
+          <ul class="navbar-nav ml-auto d-flex align-items-center">
+            <li class="nav-item">
+   <span class="nav-link" href="#">
+   <a class="btn btn-info btn-round shadow" @click="logout" data-toggle="modal" data-target="#modal_newsletter"><i class="fas fa-cloud-download-alt"></i>退出登录</a>
+
+   </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
     <div class="hospital_admin-page">
       <router-view></router-view>
     </div>
 
-  </el-container>
+  </div>
 </template>
 
 <script>
@@ -89,8 +92,8 @@ export default {
 .hospital_admin-page {
   margin-top: 90px;
   height: 100%;
-  margin-left: 241px;
-  background-image: url("@/assets/main/bg.jpg");
+
+
   background-position: center center;
   background-repeat: repeat;
   background-size: 100%;
@@ -98,7 +101,7 @@ export default {
 
 .nav {
   min-height: 90px;
-  background: rgba(66, 66, 66, 1.0);
+
   height: 90px;
   position: fixed;
   left: 0;
