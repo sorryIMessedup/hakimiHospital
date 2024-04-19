@@ -108,6 +108,10 @@ const router = new VueRouter({
           component: () => import("@/page/disease_viewer/Add_disease.vue"),
         },
         {
+          path: "edit_disease",
+          component: () => import("@/page/disease_viewer/Edit_disease.vue"),
+        },
+        {
           path: "disease_view",
           component: () => import("@/page/disease_viewer/Disease_view.vue"),
         },

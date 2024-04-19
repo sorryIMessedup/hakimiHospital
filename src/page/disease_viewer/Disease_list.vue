@@ -28,7 +28,8 @@
 					<h1>统计数据</h1><br>
 					<el-row style="font-size: 15px;">
 						<el-col :span="6">
-							<el-statistic group-separator="," :precision="0" decimal-separator="." :value="category.length" title="病类数量">
+							<el-statistic group-separator="," :precision="0" decimal-separator="." :value="category.length"
+								title="病类数量">
 								<template slot="prefix">
 									<i class="el-icon-s-flag" style="color: red"></i>
 								</template>
@@ -36,7 +37,8 @@
 						</el-col>
 						<el-col :span="3">&nbsp;&nbsp;</el-col>
 						<el-col :span="6">
-							<el-statistic group-separator="," :precision="0" decimal-separator="." :value="disease_data.length" title="疾病数量">
+							<el-statistic group-separator="," :precision="0" decimal-separator="." :value="disease_data.length"
+								title="疾病数量">
 								<template slot="prefix">
 									<i class="el-icon-s-flag" style="color: blue"></i>
 								</template>
