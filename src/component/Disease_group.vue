@@ -152,6 +152,7 @@ export default {
     handleEdit(row) {
       console.log(row);
       window.sessionStorage.setItem('rowIdToEdit', row.id);
+      window.sessionStorage.setItem('rowNameToEdit', row.name);
       this.$router.push('/admin/edit_disease');
     }
   },
