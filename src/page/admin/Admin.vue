@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-black fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-black fixed-top topnav">
       <div class="container">
         <a class="navbar-brand" href='/home'><i class="fas fa-anchor mr-2"></i><img src="@/assets/logo.png" style="width: 45px;" alt="" />
           <span style="font-size: 30px;">&nbsp;&nbsp;虚拟宠物医院学习后台</span>
@@ -94,6 +94,8 @@
 
 <script>
 import { NetLoader } from '@/net';
+import '../../js/functions'
+
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Admin",

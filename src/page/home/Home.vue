@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- header with nav -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top topnav">
       <div class="container">
         <a class="navbar-brand" href="#"><i class="fas fa-anchor mr-2"></i><img src="@/assets/logo.png" style="width: 45px;" alt="" />
           <span style="font-size: 30px;">&nbsp;&nbsp;虚拟宠物医院学习系统</span>
@@ -95,10 +95,14 @@
 
 </template>
 <script src="./assets/js/vendor/aos.js" type="text/javascript">
+
 </script>
 <script>
 import { NetLoader } from "@/net";
 import '../../css/main.css'
+import '../../js/functions'
+
+
 
 import '../../css/vendor/aos.css'
 
