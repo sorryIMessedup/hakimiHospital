@@ -78,7 +78,21 @@
     </div>
 
   </div>
+<br><br><br><br><br><br><br><br><br>
+  <!-- jumbotron with background image -->
+  <div class="wallpaper">
+    <div class="jumbotron-xl jumbotron-fluid overlay overlay-blue" style="background-size:cover; background-image:url(../../assets/img/9.png);" data-aos="fade-in">
 
+      <div class="container text-center text-white h-100">
+      <h1 class="display-2">保护动物 从我做起</h1>
+      <h5 class="font-weight-light">G14 stay together with animals❤️  </h5>
+    </div>
+    <p class="bottom-align-text-absolute">
+      <span class="d-block text-center text-white">Made by G14</span>
+    </p>
+  </div>
+  </div>
+  <br><br><br><br><br><br><br><br><br>
 </div>
 
 
@@ -110,6 +124,14 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
+
+.wallpaper{
+  background-image: url("@/assets/img/9.png");
+  background-position: center center;
+  background-repeat: repeat;
+  background-size: cover;
+}
 .hospital_main-container {
 	position: relative;
 	height: calc(100vh - 100px);
