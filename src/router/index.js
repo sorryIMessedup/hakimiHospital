@@ -93,6 +93,10 @@ const router = new VueRouter({
         {
           path: "airobot",
           component: () => import("@/page/ai_robot/Airobot.vue"),
+        },
+        {
+          path: "airobot_index",
+          component: () => import("@/page/ai_robot/Index.vue"),
         }
       ],
     },

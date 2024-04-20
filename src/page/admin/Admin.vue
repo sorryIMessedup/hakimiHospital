@@ -23,10 +23,12 @@
                 <a class="dropdown-item" @click="$router.push('/admin/staff');isDropdownOpen=false;">人员管理</a>
                 <a class="dropdown-item" @click="$router.push('/admin/record');isDropdownOpen=false;">档案管理</a>
                 <a class="dropdown-item" @click="$router.push('/admin/inpatient');isDropdownOpen=false;">住院管理</a>
+                <a class="dropdown-item" @click="$router.push('/admin/disease_list');isDropdownOpen=false;">病例管理</a>
+
               </div>
             </li>
             <li class="nav-item"><a class="nav-link" @click="$router.push('/admin/disease_list')">病类与疾病管理</a></li>
-            <li class="nav-item"><a class="nav-link" @click="$router.push('/admin/disease_list')">病例管理</a></li>
+
           </ul>
           <ul class="navbar-nav ml-auto d-flex align-items-center">
             <li class="nav-item">
