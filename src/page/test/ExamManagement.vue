@@ -29,9 +29,10 @@
           <el-button type="primary" size="mini" @click="delete_exam(scope.row)" style="margin-right: 15px;">删除考试</el-button>
           <el-popover placement="right" width="700" trigger="click">
             <el-table :data="questionRecord">
-              <el-table-column width="350" property="user" label="受试者id"></el-table-column>
-              <el-table-column width="200" property="status" label="状态"></el-table-column>
+              <el-table-column width="150" property="user" label="受试者id"></el-table-column>
+              <el-table-column width="150" property="status" label="状态"></el-table-column>
               <el-table-column width="100" property="score" label="得分"></el-table-column>
+			  <el-table-column width="150" property="holder" label="举行者"></el-table-column>
             </el-table>
             <el-button type="primary" size="mini" @click="loadUserResult(scope.row)" slot="reference">考试结果</el-button>
           </el-popover>
@@ -101,6 +102,7 @@
 </template>
 
 <script>
+import QuestionManagementVue from './QuestionManagement.vue';
 import { NetLoader } from '@/net';
 export default {
   data() {
@@ -112,7 +114,12 @@ export default {
       exams: [],
       currentUserName: "",
 
-      questionRecord: [],
+      questionRecord: {
+		  user:[],
+		  status:[],
+		  score:[],
+		  
+	  },
 
       formData: {
         name: "",
@@ -294,7 +301,9 @@ export default {
 
 
     loadUserResult: function (row) {
+	//获取用户考试结果，不知道为什么，用户id是undefined
 	  let examId = row.id
+	  this.questionRecord = [];
       this.loader.get('exams/getExamRecordsByExamId',{ examId: examId })
         .then((value) => {
           if (value.data.code == 200) {
