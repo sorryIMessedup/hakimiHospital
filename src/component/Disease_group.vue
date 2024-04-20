@@ -46,7 +46,7 @@
       </span>
     </el-dialog>
 
-    <el-dialog title="" :visible.sync="addVisible3" :before-close="handleClose">
+    <el-dialog title="" width="60%" :visible.sync="addVisible3" :before-close="handleClose">
       <div class="container">
         <div>
           <div style="padding-top: 0px; margin-bottom: 20px;">
@@ -67,13 +67,27 @@
               @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
               @change="onEditorChange($event)" />
           </div>
+          <el-divider></el-divider>
           <div class="hospital_register-button">
             <div class="button" @click="addVisible3 = handleConfirm3()">确定修改</div>
             &nbsp;&nbsp;
             <div class="button" @click="addVisible3 = false">返回</div>
           </div>
         </div>
+        <div>
+          <div style="width: 100px; margin-left: 20px;">
+            <div style="height: 125px;"></div>
+            <span style="font-size: 20px; font-weight: normal;">文件附件：</span><br><br>
+            <el-upload class="upload-demo" action="disease/uploadFile" :on-preview="handlePreview"
+              :on-remove="handleRemove" :before-remove="beforeRemove" multiple :limit="3" :on-exceed="handleExceed"
+              :file-list="fileList" :http-request="handleFileUpload">
+              <el-button size="small" type="primary">点击上传</el-button>
+              <div slot="tip" class="el-upload__tip">文件大小不能超过5MB</div>
+            </el-upload>
+          </div>
+        </div>
       </div>
+
     </el-dialog>
 
     <el-dialog title="" :visible.sync="addVisible1" :before-close="handleClose">
@@ -86,7 +100,7 @@
           </div>
           <el-divider></el-divider>
           <div class="editor">
-            <quill-editor ref="myQuillEditor" v-model="rrow.info" :options="{modules: {toolbar: false}}"
+            <quill-editor ref="myQuillEditor" v-model="rrow.info" :options="{ modules: { toolbar: false } }"
               @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
               @change="onEditorChange($event)" />
           </div>
@@ -121,7 +135,8 @@ export default {
       addVisible1: false,
       addVisible2: false,
       addVisible3: false,
-      rrow : '',
+      fileList: [],
+      rrow: '',
       newName: '',
       form: {},
       form2: { name: '', info: '' },
@@ -261,6 +276,7 @@ export default {
     handleEdit(row) {
       console.log(row);
       this.rrow = row;
+      this.fileList = row.files;
       this.addVisible3 = true;
     },
     quit() {
@@ -278,6 +294,28 @@ export default {
     onEditorChange({ quill, html, text }) {
       console.log('editor change!', quill, html, text)
       this.content = html
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`);
+    },
+    handleFileUpload(file) {
+      this.loading = true;
+      this.loader.post("disease/uploadFile", {
+        file: file.file,
+        id: this.rrow.id
+      }).catch((e) => {
+        this.$message.error(e.message);
+        this.$refs.upload.clearFiles();
+      })
     }
   },
   created() {
