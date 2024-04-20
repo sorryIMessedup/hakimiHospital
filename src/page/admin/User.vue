@@ -5,7 +5,7 @@
       <div class="table-responsive table-wrapper" >
 
         <table
-            class="table table-vcenter table-nowrap table-shadow" >
+            class="table table-vcenter table-nowrap table-shadow" data-aos="fade-up">
           <thead class="thead-light">
           <tr>
             <th>用户名</th>
@@ -114,10 +114,12 @@
   </div>
 </template>
 
-<script src="./assets/js/vendor/aos.js" type="text/javascript"></script>
+
 
 <script>
 import { NetLoader } from "@/net";
+import '../../css/vendor/aos.css'
+import AOS from '../../js/vendor/aos'
 export default {
   data() {
     return {
@@ -349,6 +351,10 @@ export default {
     this.getUsers();
 
   },
+  mounted(){
+    AOS.init({ duration: 1000 });
+    AOS.refresh();
+  }
 };
 </script>
 

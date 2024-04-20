@@ -27,7 +27,7 @@
   <div class="container" data-aos="fade-up">
 
     <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3" data-aos="fade-right">
       <div class="card shadow-sm border-0">
         <img class="card-img-top" src="../../assets/img/3.png" alt="Card image cap">
         <div class="card-body">
@@ -39,7 +39,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-3">
+      <div class="col-md-3" data-aos="fade-right">
       <div class="card shadow-sm border-0">
         <img class="card-img-top" src="../../assets/img/4.png" alt="Card image cap">
         <div class="card-body">
@@ -51,7 +51,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-3">
+      <div class="col-md-3" data-aos="fade-left">
       <div class="card shadow-sm border-0">
         <img class="card-img-top" src="../../assets/img/5.png" alt="Card image cap">
         <div class="card-body">
@@ -63,7 +63,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-3">
+      <div class="col-md-3" data-aos="fade-left">
       <div class="card shadow-sm border-0">
         <img class="card-img-top" src="../../assets/img/6.png" alt="Card image cap">
         <div class="card-body">
