@@ -4,7 +4,7 @@
 <div class="table-wrapper">
   <br><br><br><br><br><br>
   <!-- Author Card -->
-  <div class="card shadow-sm border-0 table-shadow">
+  <div class="card shadow-sm border-0 table-shadow" data-aos="fade-up">
     <img class="card-img-top" src="../../assets/img/8.jpg" alt="Card image cap">
     <div class="card-body text-center">
       <img id="userAvatar" class="rounded-circle shadow mt-neg5" :src="'files/findFileById?id=' + user.avatar" width="70">
@@ -26,11 +26,14 @@
 
 <script >
 import { NetLoader } from "@/net";
+import '../../css/vendor/aos.css'
+import AOS from '../../js/vendor/aos'
 export default {
   data(){
     return{
       loader: new NetLoader("test"),
       user : {},
+
     }
   },
   methods:{
@@ -47,7 +50,16 @@ export default {
     this.getData()
     const avatarImg = document.getElementById('userAvatar');
     avatarImg.src = '../../assets/img/8.jpg';
-  }
+  },
+  mounted() {
+
+
+
+    AOS.init({ duration: 1000 });
+    AOS.refresh();
+
+
+  },
 }
 </script>
 
