@@ -1,0 +1,65 @@
+
+
+<template>
+<div class="table-wrapper">
+  <br><br><br><br><br><br>
+  <!-- Author Card -->
+  <div class="card shadow-sm border-0 table-shadow">
+    <img class="card-img-top" src="../../assets/img/8.jpg" alt="Card image cap">
+    <div class="card-body text-center">
+      <img id="userAvatar" class="rounded-circle shadow mt-neg5" :src="'files/findFileById?id=' + user.avatar" width="70">
+      <h5 class="card-title">{{user.username}}</h5>
+      <p class="card-text text-muted">
+        你好，亲爱的{{user.auth}}
+      </p>
+      <div class="text-center">
+        <a target="_blank" href="#"><span class="iconbox iconsmall rounded-circle bg-secondary text-white mr-1"><i class="fab fa-facebook-f"></i></span></a>
+        <a target="_blank" href="#"><span class="iconbox iconsmall rounded-circle bg-info text-white mr-1"><i class="fab fa-twitter"></i></span></a>
+        <a target="_blank" href="#"><span class="iconbox iconsmall rounded-circle bg-dark text-white"><i class="fab fa-github"></i></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+
+
+
+<script >
+import { NetLoader } from "@/net";
+export default {
+  data(){
+    return{
+      loader: new NetLoader("test"),
+      user : {},
+    }
+  },
+  methods:{
+    getData(){
+      this.loader.get("users/findCurrentUser").then(value => {
+        this.user = value.data.data
+        // 获取<img>元素
+        this.user.auth = (this.user.auth==2)? "管理员":"实习生";
+
+      })
+    }
+  },
+  created() {
+    this.getData()
+    const avatarImg = document.getElementById('userAvatar');
+    avatarImg.src = '../../assets/img/8.jpg';
+  }
+}
+</script>
+
+
+<style scoped lang="less">
+.table-wrapper {
+  padding: 0 200px; /* 在左右两侧留出相同的空白 */
+
+}
+.table-shadow{
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  border-radius: 8px; /* 可选：添加圆角效果 */
+  overflow: hidden; /* 防止阴影被裁剪 */
+}
+</style>
