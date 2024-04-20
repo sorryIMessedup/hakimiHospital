@@ -360,6 +360,7 @@ export default {
 
 <style lang="less" scoped>
 .hospital_user-container {
+  margin-top: 15vh;
   .table-wrapper {
     padding: 0 60px; /* 在左右两侧留出相同的空白 */
 
