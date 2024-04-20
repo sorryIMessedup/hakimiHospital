@@ -73,6 +73,9 @@ export default {
       loader.get(url).then((value) => {
         let res = value.data.data;
         console.log(res);
+		console.log("Labels:", this.labels);
+		console.log("Table Data:", this.tableData);
+		console.log("Width List:", this.widthlist);
         for (let index in res) {
           let count = 0
           for (let key in res[index]) {
@@ -85,32 +88,27 @@ export default {
         }
       })
     },
-    switch_label: function (label) {
-      let res = "";
-      for (let i = 0; i < this.labels.length; i++) {
-        if (this.labels[i] == label) {
-          let j = 0;
-          for (var key in this.tableData[0]) {
-            if (j == i) {
-              res = key;
-              break;
-            }
-            j = j + 1;
-          }
-          break;
-        }
-      }
-      return res;
-    },
-    switch_width: function (label) {
-      let res = 0;
-      for (let i = 0; i < this.labels.length; i++) {
-        if (this.labels[i] == label) {
-          res = this.widthlist[i];
-        }
-      }
-      return res;
-    },
+	switch_label: function (label) {
+	  let res = "";
+	  if (this.tableData.length > 0) {
+		// 创建一个从 label 到 key 的映射
+		const labelToKeyMap = this.labels.reduce((map, currentLabel, index) => {
+		  const key = Object.keys(this.tableData[0])[index];
+		  map[currentLabel] = key;
+		  return map;
+		}, {});
+		
+		// 使用映射来找到对应的 key
+		res = labelToKeyMap[label] || "";
+	  }
+	  return res;
+	},
+
+	switch_width: function (label) {
+	  const index = this.labels.indexOf(label);
+	  return index !== -1 && index < this.widthlist.length ? this.widthlist[index] : 0;
+	},
+
     formatDate: function (date) {
       var y = date.getFullYear();
       var m = date.getMonth() + 1;
