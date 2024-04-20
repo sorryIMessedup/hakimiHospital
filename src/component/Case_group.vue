@@ -8,12 +8,13 @@
         <span style="font-size: 25px; font-weight: bold; padding-left: 0px;">
           {{ disease_group }}
         </span>
-        <el-button style="float: right; padding: 3px 0" type="text" v-on:click="add_case()" v-if="auth == '2'">添加病例</el-button>
+        <el-button style="float: right; padding: 3px 0" type="text" v-on:click="add_case()"
+          v-if="auth == '2'">添加病例</el-button>
       </div>
       <el-table :data="this.list" style="width: 100%" border>
         <el-table-column fixed width="120" prop="name" label="病例名" align="center" />
         <el-table-column fixed width="120" prop="name" label="疾病名" align="center" />
-        <el-table-column prop="name" width="300" label="示意图片" align="center" />
+        <el-table-column prop="id" width="300" label="病例ID" align="center" />
         <el-table-column fixed="right" width="230">
           <template slot="header">
             <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
@@ -30,15 +31,98 @@
         :total="400">
       </el-pagination>
     </el-card>
+
+    <el-dialog title="" :visible.sync="addVisible" width="60%" :before-close="handleClose">
+      <span style="font-size: 30px; font-weight: bold; color:black">添加病例</span><br>
+      <el-divider></el-divider>
+      <el-form :model="form1" label-position="left" label-width="100px" :rules="rules">
+        <el-form-item label="病例名" prop="name">
+          <el-input v-model="form1.name" placeholder="请输入病例名"></el-input>
+        </el-form-item>
+        <el-form-item label="从属疾病" prop="corrDisease">
+            <el-select v-model="form1.corrDisease" placeholder="请选择从属疾病">
+              <el-option v-for="item in this.$props.disease_data" :key="item.id" :label="item.name" :value="item.id"></el-option>
+            </el-select>
+          </el-form-item>
+      </el-form>
+      <span style="font-size: 20px; font-weight: bold; color:black">病例描述</span><br><br>
+      <div class="editor">
+        <quill-editor ref="myQuillEditor1" v-model="this.text1" @blur="onEditorBlur($event)"
+          :options="this.editorOption" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
+          @change="onEditorChange($event)" />
+      </div>
+      <el-divider></el-divider>
+      <span style="font-size: 20px; font-weight: bold; color:black">接诊</span><br><br>
+      <div class="editor">
+        <quill-editor ref="myQuillEditor2" v-model="this.text2" @blur="onEditorBlur($event)"
+          :options="this.editorOption" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
+          @change="onEditorChange($event)" />
+      </div>
+      <el-divider></el-divider>
+      <span style="font-size: 20px; font-weight: bold; color:black">病例检查</span><br><br>
+      <div class="editor">
+        <quill-editor ref="myQuillEditor3" v-model="this.text3" @blur="onEditorBlur($event)"
+          :options="this.editorOption" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
+          @change="onEditorChange($event)" />
+      </div>
+      <el-divider></el-divider>
+      <span style="font-size: 20px; font-weight: bold; color:black">诊断结果</span><br><br>
+      <div class="editor">
+        <quill-editor ref="myQuillEditor4" v-model="this.text4" @blur="onEditorBlur($event)"
+          :options="this.editorOption" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
+          @change="onEditorChange($event)" />
+      </div>
+      <el-divider></el-divider>
+      <span style="font-size: 20px; font-weight: bold; color:black">治疗方案</span><br><br>
+      <div class="editor">
+        <quill-editor ref="myQuillEditor5" v-model="this.text5" @blur="onEditorBlur($event)"
+          :options="this.editorOption" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
+          @change="onEditorChange($event)" />
+      </div>
+      <el-divider></el-divider>
+
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="addVisible = false">取消</el-button>
+        <el-button type="primary" @click="handleConfirm()">确定</el-button>
+      </span>
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
 import { NetLoader } from '@/net';
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
+import { quillEditor } from 'vue-quill-editor'
+
 export default {
+  components: { quillEditor },
   name: "Disease_group",
   data() {
     return {
+      editorOption: {
+        modules: {
+          toolbar: [
+            ['bold', 'italic', 'underline', 'strike'], // 字体
+            ['blockquote', 'code-block'],
+            [{ 'header': 1 }, { 'header': 2 }], // 样式标题
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            [{ 'script': 'sub' }, { 'script': 'super' }], // 下标、上标
+            [{ 'indent': '-1' }, { 'indent': '+1' }], // 缩进
+            [{ 'direction': 'rtl' }],
+            [{ 'size': ['small', false, 'large', 'huge'] }], // 字体
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+            [{ 'color': [] }, { 'background': [] }],
+            [{ 'font': [] }],
+            ['image'],
+            [{ 'align': [] }],
+            ['clean'] // 格式清除
+          ]
+        }
+      },
       rrow: '',
       auth: '',
       currentPage4: 4,
@@ -46,9 +130,17 @@ export default {
       list: [],
       loader: new NetLoader("test"),
       list2: [],
-      form: {
-      },
-      rules: {}
+      addVisible: false,
+      text1: '请输入病例描述...',
+      text2: '请输入病例接诊...',
+      text3: '请输入病例检查...',
+      text4: '请输入病例诊断结果...',
+      text5: '请输入病例治疗方案...',
+      form1: { name: '', corrDisease: '' },
+      rules: {
+        name: [{ required: true, message: '请输入疾病名', trigger: 'blur' }],
+        corrDisease: [{ required: true, message: '请选择从属疾病', trigger: 'blur' }]
+      }
     };
   },
   methods: {
@@ -81,6 +173,27 @@ export default {
     },
     handleConfirm() {
       this.addVisible = false;
+      let textList = [];
+      textList.push(this.text1);
+      textList.push(this.text2);
+      textList.push(this.text3);
+      textList.push(this.text4);
+      textList.push(this.text5);
+      console.log(textList);
+      this.loader.post("/case/addCase", {
+        textList: textList,
+        name: this.form1.name,
+        categoryId: this.disease_groupid
+      }).then(val => {
+        console.log(val);
+        this.$message({
+          type: 'success',
+          message: '添加成功!'
+        });
+      }, err => {
+        this.$message({ type: 'warning', message: err.response.data.message });
+        console.log(err);
+      })
     },
     handleDelete(row) {
       console.log(row);
@@ -115,14 +228,27 @@ export default {
       console.log(`当前页: ${val}`);
     },
     handleClose(done) {
-			this.$confirm('确认关闭？')
-				// eslint-disable-next-line no-unused-vars
-				.then(_ => {
-					done();
-				})
-				// eslint-disable-next-line no-unused-vars
-				.catch(_ => { });
-		},
+      this.$confirm('确认关闭？')
+        // eslint-disable-next-line no-unused-vars
+        .then(_ => {
+          done();
+        })
+        // eslint-disable-next-line no-unused-vars
+        .catch(_ => { });
+    },
+    onEditorBlur(quill) {
+      console.log('editor blur!', quill)
+    },
+    onEditorFocus(quill) {
+      console.log('editor focus!', quill)
+    },
+    onEditorReady(quill) {
+      console.log('editor ready!', quill)
+    },
+    onEditorChange({ quill, html, text }) {
+      console.log('editor change!', quill, html, text)
+      this.content = html
+    }
   },
   created() {
     this.get_data();
@@ -131,6 +257,11 @@ export default {
     disease_group: String,
     disease_groupid: String,
     disease_data: Array
+  },
+  computed: {
+    editor() {
+      return this.$refs.myQuillEditor1.quill;
+    }
   }
 }
 </script>

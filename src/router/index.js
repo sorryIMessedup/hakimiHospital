@@ -113,6 +113,10 @@ const router = new VueRouter({
           component: () => import("@/page/admin/Upload.vue"),
         },
         {
+          path: "adminCase_list",
+          component: () => import("@/page/disease_viewer/AdminCase_list.vue")
+        },
+        {
           path: "disease_list",
           component: () => import("@/page/disease_viewer/Disease_list.vue"),
         },

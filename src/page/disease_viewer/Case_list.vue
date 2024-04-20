@@ -56,7 +56,7 @@ export default {
         this.category.push(item);
       }
     });
-    this.loader.get("/case/findAllCases").then((val) => {
+    this.loader.get("/disease/findAllDiseases").then((val) => {
       let res = val.data.data;
       console.log(res);
       for (let item of res) {
