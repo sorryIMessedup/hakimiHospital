@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div>
     <!-- header with nav -->
@@ -35,14 +36,7 @@
       </div>
     </nav>
 
-
     <el-container >
-
-		<el-breadcrumb separator-class="el-icon-arrow-right" class="nav-path" style="margin-top: 70px; margin-left: 10px"
-			v-if="$router.currentRoute.path !== '/home/main'">
-			<el-breadcrumb-item v-for="(item, index) in $store.state.path" :key="index" :to="{ path: item.to }">{{
-					item.name }}</el-breadcrumb-item>
-		</el-breadcrumb>
 		<el-main>
 			<router-view> </router-view>
 		</el-main>

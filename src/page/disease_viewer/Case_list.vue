@@ -1,7 +1,8 @@
 <template>
   <div>
+
     <div>
-      <div class="jumbotron jumbotron-lg jumbotron-fluid jumbotron-lg-withnav mb-3 bg-primary position-relative">
+      <div class="jumbotron jumbotron-lg jumbotron-fluid jumbotron-lg-withnav mb-3 bg-primary position-fixed-absolute">
         <div class="container text-white h-100 tofront">
           <div class="row align-items-center justify-content-center text-center">
             <div class="col-md-10">
@@ -11,23 +12,17 @@
         </div>
       </div>
     </div>
-    <br><br><br><br>    <br><br><br><br><br>
 
-    <div id="case_list" data-aos="fade-up">
-
-    <div class="case_list-container" v-if="this.token != 0">
+    <div id="case_list" data-aos="fade-up" style="justify-content: center;">
       <div>
         <Case_group v-for="item in category" :key="item.id" :disease_group="item.name" :disease_groupid="item.id"
           :disease_data="disease_data" />
       </div>
-      <div style="">
+      <div>
         <Disease_selector />
       </div>
     </div>
-    <div v-else>
-      <el-empty description="您暂未登录，无法查看病例信息"></el-empty>
-    </div>
-  </div>
+
   </div>
 </template>
 
@@ -80,7 +75,6 @@ export default {
 <style scoped lang="less">
 #case_list {
   display: flex;
-  width: 100vh;
   height: wrap-content;
   margin: 0;
   margin-left: 2%;
@@ -88,6 +82,7 @@ export default {
 
   .case_list-container {
     display: flex;
+    justify-content: center;
   }
 }
 
