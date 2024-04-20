@@ -34,7 +34,7 @@
           <ul class="navbar-nav ml-auto d-flex align-items-center">
             <li class="nav-item">
               <span class="nav-link" href="#">
-                <a class="btn btn-info btn-round shadow" @click="logout" data-toggle="modal"
+                <a class="btn btn-info btn-round shadow" style="color: black;" @click="logout" data-toggle="modal"
                   data-target="#modal_newsletter"><i class="fas fa-cloud-download-alt"></i>退出登录</a>
               </span>
             </li>

@@ -3,24 +3,53 @@
 
     <el-card class="card">
       <div style="padding-top: 10px; margin-bottom: 20px;">
-        <span style="font-size: 30px; font-weight: bold;">查看病例</span><br>
-        <span style="font-size: 20px; font-weight: normal;">正在查看病例：{{ s }}</span>
+        <span style="font-size: 25px; font-weight: bold;">查看病例</span><br><br>
+        <span style="font-size: 15px; font-weight: normal;">
+          正在查看：{{ c.name }}&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: gray; font-weight: 100;">(#{{ c.id }})</a> <br>
+          病类：{{ c.disease.category.name }}&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: gray; font-weight: 100;">(#{{
+            c.disease.category.id }})</a> <br>
+          疾病：{{ c.disease.name }}&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: gray; font-weight: 100;">(#{{ c.disease.id
+            }})</a> <br>
+        </span>
       </div>
-      <span style="font-size: 20px; font-weight: normal;">疾病描述：</span><br><br>
+      <span style="font-size: 18px; font-weight: bold;">病例描述：</span><br><br>
       <div class="editor">
-        <quill-editor ref="myQuillEditor1" v-model="content" :options="{ modules: { toolbar: false } }"
+        <quill-editor ref="myQuillEditor1" v-model="c.textList[0]" :options="{ modules: { toolbar: false } }"
           @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
           @change="onEditorChange($event)" />
       </div>
+      <el-divider></el-divider>
+      <span style="font-size: 18px; font-weight: bold;">病例接诊：</span><br><br>
+      <div class="editor">
+        <quill-editor ref="myQuillEditor2" v-model="c.textList[1]" :options="{ modules: { toolbar: false } }"
+          @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
+          @change="onEditorChange($event)" />
+      </div>
+      <el-divider></el-divider>
+      <span style="font-size: 18px; font-weight: bold;">病例检查：</span><br><br>
+      <div class="editor">
+        <quill-editor ref="myQuillEditor3" v-model="c.textList[2]" :options="{ modules: { toolbar: false } }"
+          @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
+          @change="onEditorChange($event)" />
+      </div>
+      <el-divider></el-divider>
     </el-card>
 
     <el-card class="card">
+      <span style="font-size: 18px; font-weight: bold;">病例诊断结果：</span><br><br>
       <div class="editor">
-        <span style="font-size: 20px; font-weight: normal;">该病例隶属于疾病：{{ s }}</span><br><br>
-        <quill-editor ref="myQuillEditor2" v-model="content" :options="{ modules: { toolbar: false } }"
+        <quill-editor ref="myQuillEditor1" v-model="c.textList[3]" :options="{ modules: { toolbar: false } }"
           @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
           @change="onEditorChange($event)" />
       </div>
+      <el-divider></el-divider>
+      <span style="font-size: 18px; font-weight: bold;">病例治疗方案：</span><br><br>
+      <div class="editor">
+        <quill-editor ref="myQuillEditor1" v-model="c.textList[4]" :options="{ modules: { toolbar: false } }"
+          @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
+          @change="onEditorChange($event)" />
+      </div>
+      <el-divider></el-divider>
       <div class="hospital_register-button">
         <div class="button" @click="quit()">我知道了</div>
       </div>
@@ -30,6 +59,8 @@
 </template>
 
 <script>
+import { NetLoader } from '@/net';
+
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
@@ -40,6 +71,7 @@ export default {
   comments: { quillEditor },
   data() {
     return {
+      loader: new NetLoader("test"),
       rules: {
         newName: { required: true, message: '请输入疾病名', trigger: 'blur' }
       },
@@ -63,12 +95,16 @@ export default {
           ]
         }
       },
-      s: "222"
+      sid: '',
+      c: ''
     };
   },
   methods: {
     quit() {
-      this.$router.push("/home/case_list");
+      if (window.localStorage.getItem("token") == 1)
+        this.$router.push("/home/case_list");
+      if (window.localStorage.getItem("token") == 2)
+        this.$router.push("/admin/adminCase_list");
     },
     onEditorBlur(quill) {
       console.log('editor blur!', quill)
@@ -91,8 +127,14 @@ export default {
     }
   },
   created() {
-    this.s = window.sessionStorage.getItem('rowNameToEdit');
-    console.log(this.s);
+    this.sid = window.localStorage.getItem('rowToDisplayId');
+    console.log(this.sid);
+    this.loader.get("/case/findCaseById", {
+      id: this.sid
+    }).then(val => {
+      console.log(val);
+      this.c = val.data.data;
+    })
   },
   mounted() {
     console.log('this is current quill instance object', this.editor)

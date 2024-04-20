@@ -212,6 +212,7 @@ export default {
     },
     handleView(row) {
       console.log(row);
+      window.localStorage.setItem('rowToDisplayId', row.id);
       this.rrow = row;
       this.$router.push("/home/view_case");
     },
