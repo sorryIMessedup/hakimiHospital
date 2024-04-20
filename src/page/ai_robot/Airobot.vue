@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <br><br><br><br><br><br>
+
+    <br><br><br><br>
     <div class="table-shadow">
     <div id="chat-container" >
       <div id="messages" v-for="msg in messages" :key="msg.id">
@@ -8,12 +9,11 @@
       </div>
     </div>
     <div class="row">
-      <div class="col">
-        <input type="text" class="form-control input-round" placeholder="请输入宠物治疗相关的问题"v-model="userInput" @keyup.enter="sendMessage" >
-      </div>
-      <div class="col">
+      <div class="input-group">
+        <input type="text" class="form-control input-round table-shadow" placeholder="请输入宠物治疗相关的问题" v-model="userInput" @keyup.enter="sendMessage">
         <button type="submit" class="btn btn-primary btn-round" @click="sendMessage">提问</button>
       </div>
+
     </div>
   </div>
 
@@ -107,7 +107,7 @@ input {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
   border-radius: 8px; /* 可选：添加圆角效果 */
   overflow: hidden; /* 防止阴影被裁剪 */
-  margin : 40px
+
 }
 button {
   width: 80px;
@@ -115,4 +115,6 @@ button {
   font-size: 16px;
   cursor: pointer;
 }
+
+
 </style>

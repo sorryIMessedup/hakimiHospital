@@ -29,7 +29,7 @@
               </div>
             </li>
             <li class="nav-item"><a class="nav-link" @click="$router.push('/home/profile')">用户详情</a></li>
-            <li class="nav-item"><a class="nav-link" @click="$router.push('/home/airobot')">智能助教</a></li>
+            <li class="nav-item"><a class="nav-link" @click="$router.push('/home/airobot_index')">智能助教</a></li>
           </ul>
           <ul class="navbar-nav ml-auto d-flex align-items-center">
             <li class="nav-item">
