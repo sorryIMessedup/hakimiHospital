@@ -12,7 +12,7 @@
       </div>
       <el-table :data="this.list" style="width: 100%" border>
         <el-table-column fixed width="200" prop="name" label="疾病名" align="center" />
-        <el-table-column prop="info" width="300" label="描述" align="center" />
+        <el-table-column prop="id" width="300" label="疾病ID" align="center" />
         <el-table-column fixed="right" width="230">
           <template slot="header">
             <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
@@ -63,12 +63,12 @@
           </el-form>
           <span style="font-size: 20px; font-weight: normal;">请输入(新)疾病描述：</span><br><br>
           <div class="editor">
-            <quill-editor ref="myQuillEditor" v-model="content" :options="this.editorOption"
+            <quill-editor ref="myQuillEditor" v-model="rrow.info" :options="this.editorOption"
               @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
               @change="onEditorChange($event)" />
           </div>
           <div class="hospital_register-button">
-            <div class="button">确定修改</div>
+            <div class="button" @click="addVisible3 = handleConfirm3()">确定修改</div>
             &nbsp;&nbsp;
             <div class="button" @click="addVisible3 = false">返回</div>
           </div>
@@ -81,12 +81,12 @@
         <div>
           <div style="padding-top: 0px; margin-bottom: 20px;">
             <span style="font-size: 30px; font-weight: bold;">查看疾病</span><br>
-            <span style="font-size: 20px; font-weight: normal;">正在尝试编辑：{{ this.rrow.name }}</span>
+            <span style="font-size: 20px; font-weight: normal;">正在查看：{{ this.rrow.name }}</span>
             <span style="font-size: 20px; font-weight: normal;">&nbsp;(#{{ this.rrow.id }})</span>
           </div>
           <el-divider></el-divider>
           <div class="editor">
-            <quill-editor ref="myQuillEditor" v-model="content" :options="this.editorOption"
+            <quill-editor ref="myQuillEditor" v-model="rrow.info" :options="{modules: {toolbar: false}}"
               @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
               @change="onEditorChange($event)" />
           </div>
@@ -118,11 +118,11 @@ export default {
       list: [],
       loader: new NetLoader("test"),
       list2: [],
-      content: '<h2>请输入疾病描述...</h2><br><br>',
       addVisible1: false,
       addVisible2: false,
       addVisible3: false,
       rrow : '',
+      newName: '',
       form: {},
       form2: { name: '', info: '' },
       rules: { newName: { required: true, message: '请输入疾病名', trigger: 'blur' } },
@@ -144,6 +144,7 @@ export default {
             [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
             [{ 'color': [] }, { 'background': [] }],
             [{ 'font': [] }],
+            ['image'],
             [{ 'align': [] }],
             ['clean'] // 格式清除
           ]
@@ -164,6 +165,26 @@ export default {
       }).then(val => {
         if (val.status == 200) {
           this.$message.success('添加疾病成功');
+          this.list = [];
+          this.get_data();
+        } else {
+          this.$message.error(val.data.data.message);
+        }
+      }, err => {
+        this.$message.error(err.response.data.message);
+        console.log(err);
+      })
+    },
+    handleConfirm3() {
+      this.addVisible2 = false;
+      this.loader.put("/disease/updateDisease", {
+        category: { id: this.$props.disease_groupid, name: this.$props.disease_group },
+        name: this.newName,
+        info: this.rrow.info,
+        id: this.rrow.id
+      }).then(val => {
+        if (val.status == 200) {
+          this.$message.success('更新疾病成功');
           this.list = [];
           this.get_data();
         } else {
