@@ -8,7 +8,7 @@
         <span style="font-size: 25px; font-weight: bold; padding-left: 0px;">
           {{ disease_group }}
         </span>
-        <el-button style="float: right; padding: 3px 0" type="text" v-on:click="add_case()">添加病例</el-button>
+        <el-button style="float: right; padding: 3px 0" type="text" v-on:click="add_case()" v-if="auth == '2'">添加病例</el-button>
       </div>
       <el-table :data="this.list" style="width: 100%" border>
         <el-table-column fixed width="120" prop="name" label="病例名" align="center" />
@@ -19,9 +19,9 @@
             <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
           </template>
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.row)">查看</el-button>
-            <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
-            <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+            <el-button size="mini" @click="handleView(scope.row)">查看</el-button>
+            <el-button size="mini" @click="handleEdit(scope.row)" v-if="auth == '2'">编辑</el-button>
+            <el-button size="mini" type="danger" @click="handleDelete(scope.row)" v-if="auth == '2'">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -30,17 +30,6 @@
         :total="400">
       </el-pagination>
     </el-card>
-
-    <el-dialog title="添加病例" :visible.sync="addVisible" width="30%" :before-close="handleClose">
-      <el-form :rules="rules" :model="form">
-				
-			</el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="addVisible = false">取消</el-button>
-        <el-button type="primary" @click="handleConfirm()">确定</el-button>
-      </span>
-    </el-dialog>
-
   </div>
 </template>
 
@@ -50,20 +39,21 @@ export default {
   name: "Disease_group",
   data() {
     return {
+      rrow: '',
+      auth: '',
       currentPage4: 4,
       search: "",
       list: [],
       loader: new NetLoader("test"),
       list2: [],
-      addVisible: false,
       form: {
-
       },
       rules: {}
     };
   },
   methods: {
     get_data() {
+      this.auth = window.localStorage.getItem('token');
       this.loader.get("/case/findAllCases").then((val) => {
         this.list = [];
         let res = val.data.data;
@@ -83,6 +73,11 @@ export default {
     },
     add_case() {
       this.addVisible = true;
+    },
+    handleView(row) {
+      console.log(row);
+      this.rrow = row;
+      this.$router.push("/home/view_case");
     },
     handleConfirm() {
       this.addVisible = false;

@@ -9,7 +9,6 @@
         </div>
       </div>
     </div>
-    <br><br><br><br><br><br><br><br><br><br><br><br>
     <div id="basic_structure" data-aos="fade-up">
 
         <el-row>

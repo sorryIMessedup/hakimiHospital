@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div>
       <div class="jumbotron jumbotron-lg jumbotron-fluid jumbotron-lg-withnav mb-3 bg-primary position-fixed-absolute">
         <div class="container text-white h-100 tofront">
@@ -12,8 +11,9 @@
         </div>
       </div>
     </div>
-
+    
     <div id="case_list" data-aos="fade-up" style="justify-content: center;">
+      
       <div>
         <Case_group v-for="item in category" :key="item.id" :disease_group="item.name" :disease_groupid="item.id"
           :disease_data="disease_data" />

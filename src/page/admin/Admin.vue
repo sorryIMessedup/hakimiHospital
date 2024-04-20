@@ -23,17 +23,15 @@
                 <a class="dropdown-item" @click="$router.push('/admin/staff');isDropdownOpen=false;">人员管理</a>
                 <a class="dropdown-item" @click="$router.push('/admin/record');isDropdownOpen=false;">档案管理</a>
                 <a class="dropdown-item" @click="$router.push('/admin/inpatient');isDropdownOpen=false;">住院管理</a>
-
               </div>
             </li>
-            <li class="nav-item"><a class="nav-link" @click="$router.push('/admin/disease_list')">疾病与病类管理</a></li>
-
-
+            <li class="nav-item"><a class="nav-link" @click="$router.push('/admin/disease_list')">病类与疾病管理</a></li>
+            <li class="nav-item"><a class="nav-link" @click="$router.push('/admin/disease_list')">病例管理</a></li>
           </ul>
           <ul class="navbar-nav ml-auto d-flex align-items-center">
             <li class="nav-item">
    <span class="nav-link" href="#">
-   <a class="btn btn-info btn-round shadow" @click="logout" data-toggle="modal" data-target="#modal_newsletter"><i class="fas fa-cloud-download-alt"></i>退出登录</a>
+   <a class="btn btn-info btn-round shadow" @click="logout" data-toggle="modal" data-target="#modal_newsletter"><i class="fas fa-cloud-download-alt"></i>退出</a>
 
    </span>
             </li>

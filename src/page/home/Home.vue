@@ -4,48 +4,55 @@
     <!-- header with nav -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top topnav">
       <div class="container">
-        <a class="navbar-brand" href="#"><i class="fas fa-anchor mr-2"></i><img src="@/assets/logo.png" style="width: 45px;" alt="" />
+        <a class="navbar-brand" href="#"><i class="fas fa-anchor mr-2"></i><img src="@/assets/logo.png"
+            style="width: 45px;" alt="" />
           <span style="font-size: 30px;">&nbsp;&nbsp;虚拟宠物医院学习系统</span>
-        </a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-1" aria-controls="navbarNavDropdown-1" aria-expanded="false" aria-label="Toggle navigation" style=""><span class="navbar-toggler-icon"></span></button>
+        </a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-1"
+          aria-controls="navbarNavDropdown-1" aria-expanded="false" aria-label="Toggle navigation" style=""><span
+            class="navbar-toggler-icon"></span></button>
+
         <div class="collapse navbar-collapse" id="navbarNavDropdown-1">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active"><a class="nav-link" @click="$router.push('/home')">主页<span class="sr-only">(current)</span></a></li>
+            <li class="nav-item active"><a class="nav-link" @click="$router.push('/home')">主页<span
+                  class="sr-only">(current)</span></a></li>
             <li class="nav-item"><a class="nav-link" href="#">充值会员</a></li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" @click="toggleDropdown">
                 更多功能
               </a>
               <div class="dropdown-menu" :class="{ show: isDropdownOpen }" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" @click="$router.push('/detail?room=手术室');isDropdownOpen=false;">医院2d导览</a>
-                <a class="dropdown-item" @click="$router.push('/vr');isDropdownOpen=false;">医院VR导览</a>
-                <a class="dropdown-item" @click="$router.push('/home/case_list');isDropdownOpen=false;">病例查阅</a>
-                <a class="dropdown-item" @click="$router.push('/home/role');isDropdownOpen=false;">角色扮演</a>
-                <a class="dropdown-item" @click="$router.push('/home/exams');isDropdownOpen=false;">参与考试</a>
+                <a class="dropdown-item" @click="$router.push('/detail?room=手术室'); isDropdownOpen = false;">医院2d导览</a>
+                <a class="dropdown-item" @click="$router.push('/vr'); isDropdownOpen = false;">医院VR导览</a>
+                <a class="dropdown-item" @click="$router.push('/home/case_list'); isDropdownOpen = false;">病例查阅</a>
+                <a class="dropdown-item" @click="$router.push('/home/role'); isDropdownOpen = false;">角色扮演</a>
+                <a class="dropdown-item" @click="$router.push('/home/exams'); isDropdownOpen = false;">参与考试</a>
               </div>
             </li>
           </ul>
           <ul class="navbar-nav ml-auto d-flex align-items-center">
             <li class="nav-item">
-			<span class="nav-link" href="#">
-			<a class="btn btn-info btn-round shadow" @click="logout" data-toggle="modal" data-target="#modal_newsletter"><i class="fas fa-cloud-download-alt"></i>退出登录</a>
-
-			</span>
+              <span class="nav-link" href="#">
+                <a class="btn btn-info btn-round shadow" @click="logout" data-toggle="modal"
+                  data-target="#modal_newsletter"><i class="fas fa-cloud-download-alt"></i>退出登录</a>
+              </span>
             </li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <el-container >
-		<el-main>
-			<router-view> </router-view>
-		</el-main>
-	</el-container>
-    <br><br><br><br><br><br>
+    <el-container>
+      <el-main>
+        <router-view> </router-view>
+      </el-main>
+    </el-container>
+
     <!-- dark footer -->
-    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1440 126" style="enable-background:new 0 0 1440 126;" xml:space="preserve">
-<path class="bg-black" d="M685.6,38.8C418.7-11.1,170.2,9.9,0,30v96h1440V30C1252.7,52.2,1010,99.4,685.6,38.8z"></path>
-</svg>
+    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+      x="0px" y="0px" viewBox="0 0 1440 126" style="enable-background:new 0 0 1440 126;" xml:space="preserve">
+      <path class="bg-black" d="M685.6,38.8C418.7-11.1,170.2,9.9,0,30v96h1440V30C1252.7,52.2,1010,99.4,685.6,38.8z">
+      </path>
+    </svg>
     <footer class="bg-black pb-5">
       <div class="container">
         <div class="row">
@@ -182,7 +189,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
 *[data-aos] {
   display: block !important;
   opacity: 1 !important;
@@ -190,105 +196,104 @@ export default {
 }
 
 .nav {
-	min-width: 900px;
-	min-height: 10px;
-	background: rgba(66, 66, 66);
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 100%;
-	z-index: 10;
+  min-width: 900px;
+  min-height: 10px;
+  background: rgba(66, 66, 66);
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 10;
 
-	.nav-path {
-		margin-top: 70px;
-	}
+  .nav-path {
+    margin-top: 70px;
+  }
 
-	.nav-left {
-		float: left;
-		height: 100%;
+  .nav-left {
+    float: left;
+    height: 100%;
 
-		.nav-icon {
-			cursor: pointer;
-			float: left;
-			margin-left: 10px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			height: 100%;
+    .nav-icon {
+      cursor: pointer;
+      float: left;
+      margin-left: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
 
-			span {
-				background: white;
-				background-clip: text;
-				-webkit-text-fill-color: transparent;
-				font-size: 24px;
-				font-weight: 600;
-			}
-		}
-	}
+      span {
+        background: white;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 24px;
+        font-weight: 600;
+      }
+    }
+  }
 
-	.nav-right {
-		float: right;
-		height: 100%;
+  .nav-right {
+    float: right;
+    height: 100%;
 
-		.nav-right-item {
-			float: right;
-			height: 100%;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			margin-right: 25px;
-			cursor: pointer;
-			color: #fff;
-			opacity: 0.6;
-			font-weight: 200;
-			position: relative;
+    .nav-right-item {
+      float: right;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 25px;
+      cursor: pointer;
+      color: #fff;
+      opacity: 0.6;
+      font-weight: 200;
+      position: relative;
 
-			&:hover {
-				opacity: 1;
-			}
+      &:hover {
+        opacity: 1;
+      }
 
-			.nav-right-user {
-				position: absolute;
-				top: 65px;
-				left: 50%;
-				transform: translateX(-50%);
-				white-space: nowrap;
-				background: rgba(0, 0, 0, 0.8);
-				border-radius: 5px;
+      .nav-right-user {
+        position: absolute;
+        top: 65px;
+        left: 50%;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 5px;
 
-				div {
-					padding: 10px 20px;
-					border-radius: 5px;
+        div {
+          padding: 10px 20px;
+          border-radius: 5px;
 
-					&:hover {
-						background: gray;
-					}
-				}
-			}
+          &:hover {
+            background: gray;
+          }
+        }
+      }
 
-			.nav-right-itemList {
-				position: absolute;
-				top: 60px;
-				left: 50%;
-				transform: translateX(-50%);
-				white-space: nowrap;
-				background: rgba(0, 0, 0, 0.8);
-				border-radius: 5px;
+      .nav-right-itemList {
+        position: absolute;
+        top: 60px;
+        left: 50%;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 5px;
 
-				div {
-					padding: 10px 20px;
-					border-radius: 5px;
+        div {
+          padding: 10px 20px;
+          border-radius: 5px;
 
-					&:hover {
-						background: gray;
-					}
-				}
-			}
-		}
-	}
+          &:hover {
+            background: gray;
+          }
+        }
+      }
+    }
+  }
 }
 
 .el-main {
-	padding: 0 !important;
+  padding: 0 !important;
 }
 </style>
