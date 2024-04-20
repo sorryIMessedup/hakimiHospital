@@ -38,7 +38,7 @@
               <el-col :span="3">&nbsp;&nbsp;</el-col>
               <el-col :span="6">
                 <el-statistic group-separator="," :precision="0" decimal-separator="." :value="disease_data.length"
-                  title="疾病数量">
+                  title="病例数量">
                   <template slot="prefix">
                     <i class="el-icon-s-flag" style="color: blue"></i>
                   </template>
@@ -89,7 +89,7 @@ export default {
           this.category.push(item);
         }
       });
-      this.loader.get("/disease/findAllDiseases").then((val) => {
+      this.loader.get("/case/findAllCases").then((val) => {
         let res = val.data.data;
         console.log(res);
         for (let item of res) {
