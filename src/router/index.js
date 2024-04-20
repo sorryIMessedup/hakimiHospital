@@ -82,6 +82,14 @@ const router = new VueRouter({
           path: "testResult",
           component: () => import("@/page/test/TestResult.vue"),
         },
+        {
+          path: "profile",
+          component: () => import("@/page/profile/Profile.vue"),
+        },
+        {
+          path: "airobot",
+          component: () => import("@/page/ai_robot/Airobot.vue"),
+        }
       ],
     },
     {
@@ -188,6 +196,10 @@ const router = new VueRouter({
           component: () =>
             import("@/page/basic_structure/Staff_management.vue"),
         },
+        {
+          path: "profile",
+          component: () => import("@/page/profile/Profile.vue"),
+        }
       ],
     },
   ],
