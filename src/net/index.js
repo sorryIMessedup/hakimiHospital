@@ -13,7 +13,7 @@ export class NetLoader {
     // this.baseURL = config.env[this.env].base_url;
     this.baseURL = "";
     this.instance = axios.create({
-      timeout: 2000,
+      timeout: 30000,
       baseURL: this.baseURL,
       headers: {
         "Content-Encoding": "utf-8",

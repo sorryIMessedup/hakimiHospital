@@ -33,51 +33,53 @@
     </el-card>
 
     <el-dialog title="" :visible.sync="addVisible" width="60%" :before-close="handleClose">
-      <span style="font-size: 30px; font-weight: bold; color:black">添加病例</span><br>
+      <span style="font-size: 25px; font-weight: bold; color:black;" v-if="this.status == 1">
+        添加病例<br>
+      </span>
+      <span style="font-size: 25px; font-weight: bold; color:black;" v-if="this.status == 0">
+        修改病例<br>
+        <span style="font-size: 15px; font-weight: normal;">您正在尝试修改：{{ rrow.name }} (#{{ rrow.id }})</span>
+      </span><br>
+      <span style="font-size: 15px; font-weight: normal;">您目前处在的病类是：{{ this.$props.disease_group }}</span>
       <el-divider></el-divider>
       <el-form :model="form1" label-position="left" label-width="100px" :rules="rules">
         <el-form-item label="病例名" prop="name">
           <el-input v-model="form1.name" placeholder="请输入病例名"></el-input>
         </el-form-item>
         <el-form-item label="从属疾病" prop="corrDisease">
-            <el-select v-model="form1.corrDisease" placeholder="请选择从属疾病">
-              <el-option v-for="item in this.$props.disease_data" :key="item.id" :label="item.name" :value="item.id"></el-option>
-            </el-select>
-          </el-form-item>
+          <el-select v-model="form1.corrDisease" placeholder="请选择从属疾病">
+            <el-option v-for="item in this.list3" :key="item.id" :label="item.name" :value="item.id"></el-option>
+          </el-select>
+        </el-form-item>
       </el-form>
       <span style="font-size: 20px; font-weight: bold; color:black">病例描述</span><br><br>
       <div class="editor">
-        <quill-editor ref="myQuillEditor1" v-model="this.text1" @blur="onEditorBlur($event)"
-          :options="this.editorOption" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
-          @change="onEditorChange($event)" />
+        <quill-editor ref="myQuillEditor1" v-model="text1" @blur="onEditorBlur($event)" :options="this.editorOption"
+          @focus="onEditorFocus($event)" @ready="onEditorReady($event)" @change="onEditorChange($event)" />
       </div>
       <el-divider></el-divider>
       <span style="font-size: 20px; font-weight: bold; color:black">接诊</span><br><br>
       <div class="editor">
-        <quill-editor ref="myQuillEditor2" v-model="this.text2" @blur="onEditorBlur($event)"
-          :options="this.editorOption" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
-          @change="onEditorChange($event)" />
+        <quill-editor ref="myQuillEditor2" v-model="text2" @blur="onEditorBlur($event)" :options="this.editorOption"
+          @focus="onEditorFocus($event)" @ready="onEditorReady($event)" @change="onEditorChange($event)" />
       </div>
       <el-divider></el-divider>
       <span style="font-size: 20px; font-weight: bold; color:black">病例检查</span><br><br>
       <div class="editor">
-        <quill-editor ref="myQuillEditor3" v-model="this.text3" @blur="onEditorBlur($event)"
-          :options="this.editorOption" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
-          @change="onEditorChange($event)" />
+        <quill-editor ref="myQuillEditor3" v-model="text3" @blur="onEditorBlur($event)" :options="this.editorOption"
+          @focus="onEditorFocus($event)" @ready="onEditorReady($event)" @change="onEditorChange($event)" />
       </div>
       <el-divider></el-divider>
       <span style="font-size: 20px; font-weight: bold; color:black">诊断结果</span><br><br>
       <div class="editor">
-        <quill-editor ref="myQuillEditor4" v-model="this.text4" @blur="onEditorBlur($event)"
-          :options="this.editorOption" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
-          @change="onEditorChange($event)" />
+        <quill-editor ref="myQuillEditor4" v-model="text4" @blur="onEditorBlur($event)" :options="this.editorOption"
+          @focus="onEditorFocus($event)" @ready="onEditorReady($event)" @change="onEditorChange($event)" />
       </div>
       <el-divider></el-divider>
       <span style="font-size: 20px; font-weight: bold; color:black">治疗方案</span><br><br>
       <div class="editor">
-        <quill-editor ref="myQuillEditor5" v-model="this.text5" @blur="onEditorBlur($event)"
-          :options="this.editorOption" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
-          @change="onEditorChange($event)" />
+        <quill-editor ref="myQuillEditor5" v-model="text5" @blur="onEditorBlur($event)" :options="this.editorOption"
+          @focus="onEditorFocus($event)" @ready="onEditorReady($event)" @change="onEditorChange($event)" />
       </div>
       <el-divider></el-divider>
 
@@ -103,6 +105,7 @@ export default {
   name: "Disease_group",
   data() {
     return {
+      status: 1,
       editorOption: {
         modules: {
           toolbar: [
@@ -130,6 +133,8 @@ export default {
       list: [],
       loader: new NetLoader("test"),
       list2: [],
+      list3: [],
+      list4: [],
       addVisible: false,
       text1: '请输入病例描述...',
       text2: '请输入病例接诊...',
@@ -148,6 +153,7 @@ export default {
       this.auth = window.localStorage.getItem('token');
       this.loader.get("/case/findAllCases").then((val) => {
         this.list = [];
+        this.list2 = [];
         let res = val.data.data;
         for (let item of res)
           this.list2.push(item);
@@ -159,11 +165,49 @@ export default {
           if (item.categoryId == target)
             res.push(item);
         }
-        console.log(res);
         this.list = res;
+      })
+      this.loader.get("/disease/findAllDiseases").then((val) => {
+        this.list3 = [];
+        this.list4 = [];
+        let res = val.data.data;
+        console.log(res);
+        for (let item of res)
+          this.list4.push(item);
+        this.list3 = this.list4;
+      }).then(() => {
+        let target = this.$props.disease_groupid;
+        var res = [];
+        for (let item of this.list3) {
+          if (item.category.id == target)
+            res.push(item);
+        }
+        console.log(res);
+        this.list3 = res;
       })
     },
     add_case() {
+      this.status = 1;
+      this.form1.name = '';
+      this.form1.corrDisease = '';
+      this.text1 = '请输入病例描述...';
+      this.text2 = '请输入病例接诊...';
+      this.text3 = '请输入病例检查...';
+      this.text4 = '请输入病例诊断结果...';
+      this.text5 = '请输入病例治疗方案...';
+      this.addVisible = true;
+    },
+    handleEdit(row) {
+      this.status = 0;
+      console.log(row);
+      this.form1.name = row.name;
+      this.form1.corrDisease = row.disease;
+      this.rrow = row;
+      this.text1 = row.textList[0];
+      this.text2 = row.textList[1];
+      this.text3 = row.textList[2];
+      this.text4 = row.textList[3];
+      this.text5 = row.textList[4];
       this.addVisible = true;
     },
     handleView(row) {
@@ -183,7 +227,8 @@ export default {
       this.loader.post("/case/addCase", {
         textList: textList,
         name: this.form1.name,
-        categoryId: this.disease_groupid
+        categoryId: this.disease_groupid,
+        disease: { id: this.form1.corrDisease }
       }).then(val => {
         console.log(val);
         this.$message({
@@ -267,6 +312,10 @@ export default {
 </script>
 
 <style scoped lang="less">
+.el-dialog__body {
+  padding-top: 0px;
+}
+
 #disease_group {
   width: 100%;
   height: wrap-content;
