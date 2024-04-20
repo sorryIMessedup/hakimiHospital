@@ -13,7 +13,7 @@
       </div>
       <el-table :data="this.list" style="width: 100%" border>
         <el-table-column fixed width="120" prop="name" label="病例名" align="center" />
-        <el-table-column fixed width="120" prop="name" label="疾病名" align="center" />
+        <el-table-column fixed width="120" prop="disease.name" label="疾病名" align="center" />
         <el-table-column prop="id" width="300" label="病例ID" align="center" />
         <el-table-column fixed="right" width="230">
           <template slot="header">
