@@ -15,7 +15,7 @@ export default {
     return {
       labels: ["编号", "科室名称", "科室介绍"],
       keys: ["id", "name", "info"],
-      widthList: [120, 150, 500],
+      widthList: [200, 150, 500],
       base_url: "/department",
       add_url: '/addDepartment',
       delete_url: '/deleteDepartment',

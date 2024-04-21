@@ -1,61 +1,63 @@
 <template>
-  <div class="container">
+  <div class="box">
+    <div class="container">
+      <el-card class="card">
+        <div style="padding-top: 10px; margin-bottom: 20px;">
+          <span style="font-size: 25px; font-weight: bold;">查看病例</span><br><br>
+          <span style="font-size: 15px; font-weight: normal;">
+            正在查看：{{ c.name }}&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: gray; font-weight: 100;">(#{{ c.id }})</a> <br>
+            病类：{{ c.disease.category.name }}&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: gray; font-weight: 100;">(#{{
+              c.disease.category.id }})</a> <br>
+            疾病：{{ c.disease.name }}&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: gray; font-weight: 100;">(#{{ c.disease.id
+              }})</a> <br>
+          </span>
+        </div>
+        <span style="font-size: 18px; font-weight: bold;">病例描述：</span><br><br>
+        <div class="editor">
+          <quill-editor ref="myQuillEditor1" v-model="c.textList[0]" :options="{ modules: { toolbar: false } }"
+            @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
+            @change="onEditorChange($event)" />
+        </div>
+        <el-divider></el-divider>
+        <span style="font-size: 18px; font-weight: bold;">病例接诊：</span><br><br>
+        <div class="editor">
+          <quill-editor ref="myQuillEditor2" v-model="c.textList[1]" :options="{ modules: { toolbar: false } }"
+            @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
+            @change="onEditorChange($event)" />
+        </div>
+        <el-divider></el-divider>
+        <span style="font-size: 18px; font-weight: bold;">病例检查：</span><br><br>
+        <div class="editor">
+          <quill-editor ref="myQuillEditor3" v-model="c.textList[2]" :options="{ modules: { toolbar: false } }"
+            @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
+            @change="onEditorChange($event)" />
+        </div>
+        <el-divider></el-divider>
+      </el-card>
 
-    <el-card class="card">
-      <div style="padding-top: 10px; margin-bottom: 20px;">
-        <span style="font-size: 25px; font-weight: bold;">查看病例</span><br><br>
-        <span style="font-size: 15px; font-weight: normal;">
-          正在查看：{{ c.name }}&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: gray; font-weight: 100;">(#{{ c.id }})</a> <br>
-          病类：{{ c.disease.category.name }}&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: gray; font-weight: 100;">(#{{
-            c.disease.category.id }})</a> <br>
-          疾病：{{ c.disease.name }}&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: gray; font-weight: 100;">(#{{ c.disease.id
-            }})</a> <br>
-        </span>
-      </div>
-      <span style="font-size: 18px; font-weight: bold;">病例描述：</span><br><br>
-      <div class="editor">
-        <quill-editor ref="myQuillEditor1" v-model="c.textList[0]" :options="{ modules: { toolbar: false } }"
-          @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
-          @change="onEditorChange($event)" />
-      </div>
-      <el-divider></el-divider>
-      <span style="font-size: 18px; font-weight: bold;">病例接诊：</span><br><br>
-      <div class="editor">
-        <quill-editor ref="myQuillEditor2" v-model="c.textList[1]" :options="{ modules: { toolbar: false } }"
-          @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
-          @change="onEditorChange($event)" />
-      </div>
-      <el-divider></el-divider>
-      <span style="font-size: 18px; font-weight: bold;">病例检查：</span><br><br>
-      <div class="editor">
-        <quill-editor ref="myQuillEditor3" v-model="c.textList[2]" :options="{ modules: { toolbar: false } }"
-          @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
-          @change="onEditorChange($event)" />
-      </div>
-      <el-divider></el-divider>
-    </el-card>
+      <el-card class="card">
+        <span style="font-size: 18px; font-weight: bold;">病例诊断结果：</span><br><br>
+        <div class="editor">
+          <quill-editor ref="myQuillEditor1" v-model="c.textList[3]" :options="{ modules: { toolbar: false } }"
+            @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
+            @change="onEditorChange($event)" />
+        </div>
+        <el-divider></el-divider>
+        <span style="font-size: 18px; font-weight: bold;">病例治疗方案：</span><br><br>
+        <div class="editor">
+          <quill-editor ref="myQuillEditor1" v-model="c.textList[4]" :options="{ modules: { toolbar: false } }"
+            @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
+            @change="onEditorChange($event)" />
+        </div>
+        <el-divider></el-divider>
+        <div class="hospital_register-button">
+          <div class="button" @click="quit()">我知道了</div>
+        </div>
+      </el-card>
 
-    <el-card class="card">
-      <span style="font-size: 18px; font-weight: bold;">病例诊断结果：</span><br><br>
-      <div class="editor">
-        <quill-editor ref="myQuillEditor1" v-model="c.textList[3]" :options="{ modules: { toolbar: false } }"
-          @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
-          @change="onEditorChange($event)" />
-      </div>
-      <el-divider></el-divider>
-      <span style="font-size: 18px; font-weight: bold;">病例治疗方案：</span><br><br>
-      <div class="editor">
-        <quill-editor ref="myQuillEditor1" v-model="c.textList[4]" :options="{ modules: { toolbar: false } }"
-          @blur="onEditorBlur($event)" @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
-          @change="onEditorChange($event)" />
-      </div>
-      <el-divider></el-divider>
-      <div class="hospital_register-button">
-        <div class="button" @click="quit()">我知道了</div>
-      </div>
-    </el-card>
-
+    </div>
   </div>
+
 </template>
 
 <script>
@@ -143,21 +145,32 @@ export default {
 </script>
 
 <style scoped lang="less">
-.container {
+
+.box {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  position: relative;
   display: flex;
   justify-content: center;
-  width: 100%;
+}
+
+.container {
+  margin-right: 0px;
+  margin-left: 0px;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
   height: calc(100vh - 90px);
   margin-top: 90px;
 
-  .card {
+}
+
+.card {
     margin-top: 30px;
     height: calc(90vh - 90px);
     width: 60vw;
-
-
   }
-}
 
 .hospital_register-button {
   width: 100%;
