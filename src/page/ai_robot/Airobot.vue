@@ -51,12 +51,23 @@
       </div>
       <div class="chat-box">
 
-        <div class="messages">
+        <div class="messages" >
 
-          <div v-for="(message, index) in messages" :key="`msg-${index}`" class="message">
+
+          <div v-for="(message, index) in messages" :key="`msg-${index}`" class="message" >
             <img class="rounded-circle shadow" :src="getAvatarSrc(message.sender)" width="30">
             <span>&nbsp;&nbsp;&nbsp;{{ message.sender }}:<br></span> <div class="message-bubble"><span v-html="message.content"></span></div>
           </div>
+
+          <div v-if="isLoading" class="message" >
+            <img class="rounded-circle shadow" :src="getAvatarSrc('AI')" width="30">
+            <span>&nbsp;&nbsp;&nbsp;AI :<br></span>
+            <div class="message-bubble">
+              <span class="blinking-dot">•&nbsp;</span>
+              <span >小史迪奇正在思考答案...</span>
+          </div>
+          </div>
+
 
         </div>
         <div class="row">
@@ -80,6 +91,8 @@
 import {NetLoader} from "@/net";
 import marked from 'marked';
 import DOMPurify from 'dompurify';
+import '../../css/vendor/aos.css'
+import AOS from '../../js/vendor/aos'
 
 export default {
   name: 'ChatInterface',
@@ -89,7 +102,8 @@ export default {
       newMessage: '',
       showUserAvatar: true,
       messages: [],
-      user:""
+      user:"",
+      isLoading: false, // 加载状态
     };
   },
   methods: {
@@ -117,6 +131,7 @@ export default {
         sender:'User',
         content:message
       });
+      this.isLoading = true; // 开始加载
       this.loader.post("chat/interact",{"text":message}).then(value => {
         console.log("发送信息")
         const rawHtml = marked(value.data);
@@ -126,7 +141,16 @@ export default {
           sender: 'AI',
           content: cleanHtml
         });
+        this.isLoading = false; // 加载结束
+      }).catch(error=>{
+        console.log(value)
+        this.messages.push({
+          sender: 'AI',
+          content: "请求过于频繁"
+        })
+        this.isLoading = false; // 加载结束
       })
+
     },
     sendMessage() {
       if (this.newMessage.trim() !== '') {
@@ -154,6 +178,10 @@ export default {
     this.loader.get("users/findCurrentUser").then(value => {
       this.user = value.data.data.username
     })
+  },
+  mounted() {
+    AOS.init({ duration: 1000 });
+    AOS.refresh();
   }
 };
 </script>
@@ -234,9 +262,11 @@ export default {
   background-color: #f0f0f0; /* 背景色 */
   border-radius: 20px; /* 圆角边框 */
   border: 1px solid #ccc; /* 边框 */
-  max-width: 60%; /* 最大宽度，根据需要调整 */
+  max-width: 100%; /* 最大宽度，根据需要调整 */
+  width: auto; /* 宽度根据内容自适应，但不会超过max-width */
   word-wrap: break-word; /* 自动换行 */
   margin-bottom: 10px; /* 与下一个气泡的间距 */
+
 }
 .chat-history ul {
   list-style-type: none; /* 移除列表项的默认样式 */
@@ -275,4 +305,17 @@ export default {
 .down{
   margin-top: 10px;
 }
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.blinking-dot {
+  animation: blink 2s linear infinite;
+  font-size: 20px; /* 调整点的大小 */
+}
+
+
 </style>
