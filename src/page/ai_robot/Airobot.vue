@@ -29,22 +29,22 @@
         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   您可以这么问:</p>
         <ul>
           <li>
-            <a class="btn btn-light table-shadow text-left" href="#" @click="fillInput('狗狗流眼泪是为什么')"><span class="text-indent">狗狗流眼泪是为什么</span></a>
+            <a class="btn btn-light table-shadow text-left" href="" @click.prevent="fillInput('狗狗流眼泪是为什么')"><span class="text-indent">狗狗流眼泪是为什么</span></a>
           </li>
           <li>
-            <a class="btn btn-light table-shadow text-left" href="#" @click="fillInput('宠物狗出现口腔白斑怎么处理')"><span class="text-indent">宠物狗出现口腔白斑怎么处理</span></a>
+            <a class="btn btn-light table-shadow text-left" href="" @click.prevent="fillInput('宠物狗出现口腔白斑怎么处理')"><span class="text-indent">宠物狗出现口腔白斑怎么处理</span></a>
           </li>
           <li>
-            <a class="btn btn-light table-shadow text-left" href="#"><span class="text-indent"@click="fillInput('宠物猫皮肤出现红疹')">宠物猫皮肤出现红疹</span></a>
+            <a class="btn btn-light table-shadow text-left" href="#" @click.prevent="fillInput('宠物猫皮肤出现红疹')"><span class="text-indent">宠物猫皮肤出现红疹</span></a>
           </li>
           <li>
-            <a class="btn btn-light table-shadow text-left" href="#"><span class="text-indent" @click="fillInput('宠物猫手术流程')">宠物猫手术流程</span></a>
+            <a class="btn btn-light table-shadow text-left" href="#" @click.prevent="fillInput('宠物猫手术流程')"><span class="text-indent" >宠物猫手术流程</span></a>
           </li>
           <li>
-            <a class="btn btn-light table-shadow text-left" href="#"><span class="text-indent" @click="fillInput('宠物狗都要打什么疫苗')">宠物狗都要打什么疫苗</span></a>
+            <a class="btn btn-light table-shadow text-left" href="#" @click.prevent="fillInput('宠物狗都要打什么疫苗')"><span class="text-indent" >宠物狗都要打什么疫苗</span></a>
           </li>
           <li>
-            <a class="btn btn-light table-shadow text-left" href="#"><span class="text-indent" @click="fillInput('宠物猫不安分怎么办')">宠物猫不安分怎么办</span></a>
+            <a class="btn btn-light table-shadow text-left" href="#" @click.prevent="fillInput('宠物猫不安分怎么办')"><span class="text-indent" >宠物猫不安分怎么办</span></a>
           </li>
 
         </ul>
