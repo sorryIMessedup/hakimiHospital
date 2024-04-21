@@ -1,27 +1,31 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div style="height:100%; width:100%">
-    <el-table border :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
-      style="width: 80vw; margin-top: 10px;" max-height="400">
-      <!-- eslint-disable-next-line vue/valid-v-for -->
-      <el-table-column align="center" v-for="item in mmap" :label="item.label" :prop="item.key"
-        :width="item.width"></el-table-column>
-      <el-table-column align="right" fixed="right" width="180">
-        <template v-if="tableData.length !== 0" slot="header">
-          <el-input v-model="search" size="mini" placeholder="输入检索信息" />
-        </template>
-        <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">修改</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <el-button type="primary" icon="el-icon-plus" style="width:80vw" size="small" @click="handleAdd()"></el-button>
-    <PopUpDialog ref="child" :select-data="selectData" :labels="labels" :keys="keyslist"
-      :base_url="this.$props.base_url" :get_data="this.get_data" :config="this.$props.config"
-      :updateById_url="this.$props.update_url"></PopUpDialog>
-    <PopUpDialogForAdd ref="child2" :labels="labels.slice(1)" :keys="keyslist.slice(1)" :base_url="this.$props.base_url"
-      :get_data="this.get_data" :config="configs.slice(1)" :add_url="add_url"></PopUpDialogForAdd>
+  <div style="">
+    <div style="height:100%; width:100%;">
+      <el-table border
+        :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+        style="width: 80vw; margin-top: 10px;" max-height="400">
+        <!-- eslint-disable-next-line vue/valid-v-for -->
+        <el-table-column align="center" v-for="item in mmap" :label="item.label" :prop="item.key"
+          :width="item.width"></el-table-column>
+        <el-table-column align="right" fixed="right" width="180">
+          <template v-if="tableData.length !== 0" slot="header">
+            <el-input v-model="search" size="mini" placeholder="输入检索信息" />
+          </template>
+          <template slot-scope="scope">
+            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">修改</el-button>
+            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-button type="primary" icon="el-icon-plus" style="width:80vw" size="small" @click="handleAdd()"></el-button>
+      <PopUpDialog ref="child" :select-data="selectData" :labels="labels" :keys="keyslist"
+        :base_url="this.$props.base_url" :get_data="this.get_data" :config="this.$props.config"
+        :updateById_url="this.$props.update_url"></PopUpDialog>
+      <PopUpDialogForAdd ref="child2" :labels="labels.slice(1)" :keys="keyslist.slice(1)"
+        :base_url="this.$props.base_url" :get_data="this.get_data" :config="configs.slice(1)" :add_url="add_url">
+      </PopUpDialogForAdd>
+    </div>
   </div>
 </template>
 
