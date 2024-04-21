@@ -5,7 +5,23 @@
       <div class="chat-history">
         <div>
          <br>
-          <img class="rounded-circle shadow" src="@/assets/img/10.png" width="50">
+          <img
+              id="userAvatar"
+              class="rounded-circle shadow mt-neg5 down"
+              :src="'users/getCurrentAvatar'"
+              @error="errorHandler"
+              @click="triggerFileInput"
+              width="70"
+              v-show="showUserAvatar"
+          >
+          <img
+              id="defaultAvatar"
+              class="rounded-circle shadow mt-neg5 down"
+              src="@/assets/img/10.png"
+              @click="triggerFileInput"
+              width="70"
+              v-show="!showUserAvatar"
+          >
           <p3><strong>宠物医院助手</strong></p3>
           <br><br><br><br><br>
         </div>
@@ -13,22 +29,22 @@
         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   您可以这么问:</p>
         <ul>
           <li>
-            <a class="btn btn-light table-shadow text-left" href="#"><span class="text-indent">狗狗流眼泪是为什么</span></a>
+            <a class="btn btn-light table-shadow text-left" href="#" @click="fillInput('狗狗流眼泪是为什么')"><span class="text-indent">狗狗流眼泪是为什么</span></a>
           </li>
           <li>
-            <a class="btn btn-light table-shadow text-left" href="#"><span class="text-indent">宠物狗出现口腔白斑怎么处理</span></a>
+            <a class="btn btn-light table-shadow text-left" href="#" @click="fillInput('宠物狗出现口腔白斑怎么处理')"><span class="text-indent">宠物狗出现口腔白斑怎么处理</span></a>
           </li>
           <li>
-            <a class="btn btn-light table-shadow text-left" href="#"><span class="text-indent">宠物猫皮肤出现红疹</span></a>
+            <a class="btn btn-light table-shadow text-left" href="#"><span class="text-indent"@click="fillInput('宠物猫皮肤出现红疹')">宠物猫皮肤出现红疹</span></a>
           </li>
           <li>
-            <a class="btn btn-light table-shadow text-left" href="#"><span class="text-indent">宠物猫手术流程</span></a>
+            <a class="btn btn-light table-shadow text-left" href="#"><span class="text-indent" @click="fillInput('宠物猫手术流程')">宠物猫手术流程</span></a>
           </li>
           <li>
-            <a class="btn btn-light table-shadow text-left" href="#"><span class="text-indent">宠物狗都要打什么疫苗</span></a>
+            <a class="btn btn-light table-shadow text-left" href="#"><span class="text-indent" @click="fillInput('宠物狗都要打什么疫苗')">宠物狗都要打什么疫苗</span></a>
           </li>
           <li>
-            <a class="btn btn-light table-shadow text-left" href="#"><span class="text-indent">宠物猫不安分怎么办</span></a>
+            <a class="btn btn-light table-shadow text-left" href="#"><span class="text-indent" @click="fillInput('宠物猫不安分怎么办')">宠物猫不安分怎么办</span></a>
           </li>
 
         </ul>
@@ -36,8 +52,10 @@
       <div class="chat-box">
 
         <div class="messages">
+
           <div v-for="(message, index) in messages" :key="`msg-${index}`" class="message">
-            <span>{{ message.sender }}:</span> <div class="message-bubble"><span v-html="message.content"></span></div>
+            <img class="rounded-circle shadow" :src="getAvatarSrc(message.sender)" width="30">
+            <span>&nbsp;&nbsp;&nbsp;{{ message.sender }}:<br></span> <div class="message-bubble"><span v-html="message.content"></span></div>
           </div>
 
         </div>
@@ -69,14 +87,51 @@ export default {
     return {
       loader: new NetLoader("test"),
       newMessage: '',
+      showUserAvatar: true,
       messages: [],
+      user:""
     };
   },
   methods: {
+    getAvatarSrc(sender) {
+      if (sender === 'AI') {
+        return require('@/assets/img/11.png');
+
+
+      } else {
+        if(this.showUserAvatar ) return 'users/getCurrentAvatar';
+        else return require('@/assets/img/10.png')
+      }
+    },
+    triggerFileInput() {
+      // 触发文件输入
+      this.$refs.fileInput.click();
+    },errorHandler(event) {
+      // 设置为本地图像路径
+      this.showUserAvatar = false;
+      console.log("用户头像不存在")
+    },
+    fillInput(message) {
+      // 将按钮文本赋值给 newMessage
+      this.messages.push({
+        sender:'User',
+        content:message
+      });
+      this.loader.post("chat/interact",{"text":message}).then(value => {
+        console.log("发送信息")
+        const rawHtml = marked(value.data);
+        // 使用DOMPurify来清理HTML，确保它是安全的
+        const cleanHtml = DOMPurify.sanitize(rawHtml);
+        this.messages.push({
+          sender: 'AI',
+          content: cleanHtml
+        });
+      })
+    },
     sendMessage() {
       if (this.newMessage.trim() !== '') {
         this.messages.push({
-          sender: 'User',
+          sender: this.user,
           content: this.newMessage,
         });
 
@@ -95,6 +150,11 @@ export default {
       }
     },
   },
+  created() {
+    this.loader.get("users/findCurrentUser").then(value => {
+      this.user = value.data.data.username
+    })
+  }
 };
 </script>
 
@@ -211,5 +271,8 @@ export default {
 
 .chat-history img {
   margin-right: 20px; /* 图片右侧的外边距，让文字离图片更远一点 */
+}
+.down{
+  margin-top: 10px;
 }
 </style>
