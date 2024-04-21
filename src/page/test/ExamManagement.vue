@@ -28,11 +28,11 @@
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="delete_exam(scope.row)" style="margin-right: 15px;">删除考试</el-button>
           <el-popover placement="right" width="700" trigger="click">
-            <el-table :data="questionRecord">
-              <el-table-column width="150" prop="user" label="受试者id"></el-table-column>
+            <el-table :data="questionRecord" >
+              <el-table-column width="150" prop="user.username" label="受试者"></el-table-column>
               <el-table-column width="150" prop="status" label="状态"></el-table-column>
               <el-table-column width="100" prop="score" label="得分"></el-table-column>
-			  <el-table-column width="150" prop="holder" label="举行者"></el-table-column>
+			  <el-table-column width="150" prop="exam.holder.username" label="举行者"></el-table-column>
             </el-table>
             <el-button type="primary" size="mini" @click="loadUserResult(scope.row)" slot="reference">考试结果</el-button>
           </el-popover>
@@ -115,7 +115,7 @@ export default {
       currentUserName: "",
 
       questionRecord: {
-		  user:"",
+		  username:"",
 		  status:"",
 		  score:"",
 		  holder:"",
@@ -308,8 +308,7 @@ export default {
         .then((value) => {
           if (value.data.code == 200) {
 			this.questionRecord = value.data.data
-			this.questionRecord.user = value.data.data.exam.participantList.username
-			this.questionRecord.holder = value.data.data.exam.holder.username
+			console.log("tests:", this.questionRecord);
           } else{
 			  this.$message.error(jsonData.message);
 		  }
