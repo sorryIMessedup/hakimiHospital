@@ -37,8 +37,9 @@
 
         <div class="messages">
           <div v-for="(message, index) in messages" :key="`msg-${index}`" class="message">
-            <span>{{ message.sender }}:</span> {{ message.content }}
+            <span>{{ message.sender }}:</span> <div class="message-bubble"><span v-html="message.content"></span></div>
           </div>
+
         </div>
         <div class="row">
 
@@ -59,6 +60,8 @@
 
 <script>
 import {NetLoader} from "@/net";
+import marked from 'marked';
+import DOMPurify from 'dompurify';
 
 export default {
   name: 'ChatInterface',
@@ -76,6 +79,17 @@ export default {
           sender: 'User',
           content: this.newMessage,
         });
+
+        this.loader.post("chat/interact",{"text":this.newMessage}).then(value => {
+          console.log("发送信息")
+          const rawHtml = marked(value.data);
+          // 使用DOMPurify来清理HTML，确保它是安全的
+          const cleanHtml = DOMPurify.sanitize(rawHtml);
+          this.messages.push({
+            sender: 'AI',
+            content: cleanHtml
+          });
+        })
         this.newMessage = '';
         // 这里可以添加发送消息到后端的代码
       }
@@ -132,6 +146,9 @@ export default {
 }
 
 .messages {
+
+  bottom: 10%;
+  width: 90%;
   flex: 1;
   padding: 10px;
   overflow-y: auto;
@@ -152,10 +169,15 @@ export default {
   padding: 5px 10px;
 }
 
-.message span {
-  font-weight: bold;
+.message-bubble {
+  padding: 10px 20px; /* 内边距 */
+  background-color: #f0f0f0; /* 背景色 */
+  border-radius: 20px; /* 圆角边框 */
+  border: 1px solid #ccc; /* 边框 */
+  max-width: 60%; /* 最大宽度，根据需要调整 */
+  word-wrap: break-word; /* 自动换行 */
+  margin-bottom: 10px; /* 与下一个气泡的间距 */
 }
-
 .chat-history ul {
   list-style-type: none; /* 移除列表项的默认样式 */
   padding: 0; /* 移除默认的内边距 */
