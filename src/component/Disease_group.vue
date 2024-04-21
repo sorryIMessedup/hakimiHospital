@@ -318,7 +318,7 @@ export default {
       this.loader.post("disease/uploadFile", {
         file: file.file,
         id: this.rrow.id
-      }).catch((e) => {
+      }, { "Content-Type": "multipart/form-data" }).catch((e) => {
         this.$message.error(e.message);
         this.$refs.upload.clearFiles();
       })
