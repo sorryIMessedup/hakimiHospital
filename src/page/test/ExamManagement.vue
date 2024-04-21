@@ -301,7 +301,6 @@ export default {
 
 
     loadUserResult: function (row) {
-	//获取用户考试结果，不知道为什么，用户id是undefined，举行者空白
 	  let examId = row.id
 	  this.questionRecord = [];
       this.loader.get('exams/getExamRecordsByExamId',{ examId: examId })
