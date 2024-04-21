@@ -18,7 +18,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-button type="primary" icon="el-icon-plus" style="width:80vw" size="small" @click="handleAdd()"></el-button>
+      <el-button type="primary" icon="el-icon-plus" style="width:80vw; background-color: rgba(72, 42, 104);" size="small" @click="handleAdd()"></el-button>
       <PopUpDialog ref="child" :select-data="selectData" :labels="labels" :keys="keyslist"
         :base_url="this.$props.base_url" :get_data="this.get_data" :config="this.$props.config"
         :updateById_url="this.$props.update_url"></PopUpDialog>
