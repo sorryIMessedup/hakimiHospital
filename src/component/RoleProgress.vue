@@ -4,12 +4,12 @@
             <el-steps :active="active" finish-status="success">
                 <el-step v-for="(item,index) in progress" :key="index" :title="item.name"></el-step>
             </el-steps>
-            <el-button type="primary" @click="enterNext" v-if="progress.length > 0">
+            <button type="primary" @click="enterNext"class="btn btn-primary" v-if="progress.length  > 0">
                 <template>
                     <span v-if="active === progress.length">重新开始</span>
-                    <span v-else>下一步</span>
+                    <span v-else >下一步</span>
                 </template>
-            </el-button>
+            </button>
         </div>
         <div class="role_progress-detail" v-if="active < progress.length">
             <div>示例图:</div>
