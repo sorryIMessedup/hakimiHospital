@@ -11,7 +11,7 @@
         <el-button style="float: right; padding: 3px 0" type="text" v-on:click="add_case()"
           v-if="auth == '2'">添加病例</el-button>
       </div>
-      <el-table :data="this.list" style="width: 100%" border>
+      <el-table :data="list.slice((pageNum - 1) * pageSize, pageNum * pageSize)" style="width: 100%" border>
         <el-table-column fixed width="120" prop="name" label="病例名" align="center" />
         <el-table-column fixed width="120" prop="disease.name" label="疾病名" align="center" />
         <el-table-column prop="id" width="300" label="病例ID" align="center" />
@@ -26,9 +26,16 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4"
-        :page-sizes="[100, 200, 300, 400]" :page-size="100" layout="total, sizes, prev, pager, next, jumper"
-        :total="400">
+
+      <!-- 分页 -->
+      <el-pagination 
+        @size-change="handleSizeChange" 
+        @current-change="handleCurrentChange" 
+        :current-page="pageNum"
+        :page-sizes="[1, 2, 5, 10]" 
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total">
       </el-pagination>
     </el-card>
 
@@ -105,6 +112,9 @@ export default {
   name: "Disease_group",
   data() {
     return {
+      pageNum: 1,
+      pageSize: 5,
+      total: 0,
       status: 1,
       editorOption: {
         modules: {
@@ -128,7 +138,6 @@ export default {
       },
       rrow: '',
       auth: '',
-      currentPage4: 4,
       search: "",
       list: [],
       loader: new NetLoader("test"),
@@ -166,6 +175,7 @@ export default {
             res.push(item);
         }
         this.list = res;
+        this.total = this.list.length;
       })
       this.loader.get("/disease/findAllDiseases").then((val) => {
         this.list3 = [];
@@ -265,13 +275,15 @@ export default {
         });
       });
     },
-    handleSizeChange(val) {
-      // @TODO
-      console.log(`每页 ${val} 条`);
+    handleSizeChange(newSize) {
+      this.pageSize = newSize;
+      console.log("New Page Size: " + newSize);
+      // this.get_data();
     },
-    handleCurrentChange(val) {
-      // @TODO
-      console.log(`当前页: ${val}`);
+    handleCurrentChange(newPage) {
+      this.pageNum = newPage;
+      console.log("New Page Num: " + newPage);
+      // this.get_data();
     },
     handleClose(done) {
       this.$confirm('确认关闭？')

@@ -10,7 +10,8 @@
         </span>
         <el-button style="float: right; padding: 3px 0" type="text" v-on:click="add_disease">添加疾病</el-button>
       </div>
-      <el-table :data="this.list" style="width: 100%" border>
+
+      <el-table :data="list.slice((pageNum - 1) * pageSize, pageNum * pageSize)" style="width: 100%" border>
         <el-table-column fixed width="200" prop="name" label="疾病名" align="center" />
         <el-table-column prop="id" width="300" label="疾病ID" align="center" />
         <el-table-column fixed="right" width="230">
@@ -24,9 +25,16 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4"
-        :page-sizes="[100, 200, 300, 400]" :page-size="100" layout="total, sizes, prev, pager, next, jumper"
-        :total="400">
+
+      <!-- 分页 -->
+      <el-pagination 
+        @size-change="handleSizeChange" 
+        @current-change="handleCurrentChange" 
+        :current-page="pageNum"
+        :page-sizes="[1, 2, 5, 10]" 
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total">
       </el-pagination>
     </el-card>
 
@@ -126,11 +134,12 @@ export default {
   components: { quillEditor },
   data() {
     return {
-      currentPage4: 4,
+      pageNum: 1,
+      pageSize: 5,
+      total: 0,
       search: "",
       list: [],
       loader: new NetLoader("test"),
-      list2: [],
       addVisible1: false,
       addVisible2: false,
       addVisible3: false,
@@ -211,20 +220,15 @@ export default {
     },
     get_data() {
       this.loader.get("/disease/findAllDiseases").then((val) => {
-        this.list = [];
         let res = val.data.data;
-        for (let item of res)
-          this.list2.push(item);
-        this.list = this.list2;
-      }).then(() => {
+        this.list = [];   // 最终展示在病类中的条目
         let target = this.$props.disease_groupid;
-        var res = [];
-        for (let item of this.list) {
+        for (let item of res) {
           if (item.category.id == target)
-            res.push(item);
+            this.list.push(item);
         }
-        console.log(res);
-        this.list = res;
+        console.log(this.list);
+        this.total = this.list.length;
       })
     },
     handleDelete(row) {
@@ -250,13 +254,15 @@ export default {
         });
       });
     },
-    handleSizeChange(val) {
-      // @TODO
-      console.log(`每页 ${val} 条`);
+    handleSizeChange(newSize) {
+      this.pageSize = newSize;
+      console.log("New Page Size: " + newSize);
+      // this.get_data();
     },
-    handleCurrentChange(val) {
-      // @TODO
-      console.log(`当前页: ${val}`);
+    handleCurrentChange(newPage) {
+      this.pageNum = newPage;
+      console.log("New Page Num: " + newPage);
+      // this.get_data();
     },
     handleClose(done) {
       this.$confirm('确认关闭？')

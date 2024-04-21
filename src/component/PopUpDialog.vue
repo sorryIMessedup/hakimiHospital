@@ -84,7 +84,7 @@ export default {
       }
       let url = this.$props.base_url + this.$props.updateById_url;
       let loader = new NetLoader("test")
-      loader.put(url, formData).then((value) => {
+      loader.put(url, formData).then(() => {
         this.dialogFormVisible = false
         this.$props.get_data()
         this.$message({
@@ -118,7 +118,7 @@ export default {
     config: Array
   },
   watch: {
-    dialogFormVisible(val, newval) {
+    dialogFormVisible(val) {
       if (val) {
         for (let key in this.$props.selectData) {
           this.$set(this.data, key, this.$props.selectData[key])
