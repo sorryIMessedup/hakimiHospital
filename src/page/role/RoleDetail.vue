@@ -217,4 +217,14 @@ import AOS from '../../js/vendor/aos'
   height: auto
 }
 
+        .hospital_roleDetail-header {
+          display: flex; /* 启用Flexbox布局 */
+          justify-content: center; /* 将子元素居中对齐 */
+          align-items: center; /* 垂直居中 */
+        }
+
+        .leftIcon, .rightIcon {
+          margin: 0 10px; /* 在左右图标与标题之间添加一些间距 */
+        }
+
 </style>
