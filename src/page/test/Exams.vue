@@ -6,6 +6,8 @@
         @keyup.enter.native="search" style="flex: 1; margin-right: 10px;"></el-input>
       <el-button type="primary" @click="search" style="flex-shrink: 0;">搜索</el-button>
     </div>
+    <br>
+    <br>
     <!--考试list -->
     <el-table :data="exams" border style="width: 100%;margin-top: 20px;"
       :header-cell-style="{ background: 'rgb(242, 243, 244)', color: '#515a6e' }">

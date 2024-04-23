@@ -42,7 +42,7 @@
               </div>
               <p class="card-text mb-auto">
                 兽医医助是兽医医院中不可或缺的重要角色，承担着协助兽医进行诊疗、照顾患者、维护医疗环境等多项职责。他们在医院中起着极其关键的作用，为医院的正常运转和患者的顺利治疗提供了有力支持。              </p>
-              <a class="text-gray" @click="$router.push('/home/roleDetail?role=qiantai')">Continue reading</a>
+              <a class="text-gray" @click="$router.push('/home/roleDetail?role=yizhu')">Continue reading</a>
             </div>
             <img class="card-img-right flex-auto d-none d-md-block" src="../../assets/role/yizhu.png">
           </div>
