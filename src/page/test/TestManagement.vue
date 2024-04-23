@@ -27,7 +27,7 @@ export default {
     name: "Test_management",
     data() {
         return {
-            section_list:["试题管理", "试卷管理", "考试管理"]
+            section_list:["试题管理",  "考试管理"]
         }
     },
     methods: {

@@ -17,7 +17,7 @@ export class NetLoader {
       baseURL: this.baseURL,
       headers: {
         "Content-Encoding": "utf-8",
-
+        "Content-Type" :"application/json"
       },
     });
     this.instance.interceptors.request.use((config) => {

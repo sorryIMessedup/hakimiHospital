@@ -2,7 +2,7 @@
   <div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-black fixed-top topnav">
       <div class="container">
-        <a class="navbar-brand" href='/home'><i class="fas  mr-2"></i><img src="@/assets/logo.png" style="width: 45px;" alt="" />
+        <a class="navbar-brand" href='/admin/mainpage'><i class="fas  mr-2"></i><img src="@/assets/logo.png" style="width: 45px;" alt="" />
           <span style="font-size: 30px;">&nbsp;&nbsp;虚拟宠物医院学习后台</span>
         </a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-1" aria-controls="navbarNavDropdown-1" aria-expanded="false" aria-label="Toggle navigation" style=""><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown-1">
