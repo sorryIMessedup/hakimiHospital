@@ -1,5 +1,6 @@
 <template>
   <div>
+    <br><br><br><br>
     <!-- 搜索栏和按钮 -->
     <div style="display: flex; align-items: center; margin-bottom: 20px;">
       <el-input v-model="searchBar" placeholder="请输入关键字搜索" prefix-icon="el-icon-search" clearable @clear="getAll"
@@ -30,6 +31,7 @@
         </template>
       </el-table-column>
     </el-table>
+    <br><br><br><br><br><br><br><br><br><br><br><br>
     <!-- <el-menu class="exam-nav">
         <el-menu-item :key="item.id" v-for="item in exams" v-on:click="show_paper(item.testpaper)">考试{{ item.id }}</el-menu-item>
     </el-menu> -->
