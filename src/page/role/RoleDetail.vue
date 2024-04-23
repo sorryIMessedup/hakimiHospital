@@ -11,15 +11,12 @@
     </div>
     <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1440 126" style="enable-background:new 0 0 1440 126;" xml:space="preserve">
   <path class="bg-primary" d="M685.6,87.2C418.7,136.1,170.2,116.1,0,96v-96h1440v96C1252.7,73.8,1010,26.6,685.6,87.2z"></path>
-</svg>
-    <br><br> <br><br> <br><br> <br><br> <br><br> <br><br>
-    <div class="container" data-aos="fade-up">
-    <div class="video-container">
+    </svg>
+    <br><br>
+      <div class="video-container">
       <video :src="videoUrl" controls loop class="video"></video>
     </div>
-      </div>
-      <br><br><br><br><br><br>
-
+    <br><br>
       <div class="procedure-box" data-aos="fade-up">
         <div class="hospital_roleDetail-header">
           <div class="leftIcon" @click="handleLeftClick">
@@ -141,90 +138,84 @@ import AOS from '../../js/vendor/aos'
 
 <style lang="less" scoped>
 
-        .hospital_roleDetail-header {
-            padding: 0 10px;
-            display: flex;
+  .hospital_roleDetail-header {
+    padding: 0 10px;
+    display: flex;
 
-            .leftIcon .rightIcon {
-                width: 30px;
-                text-align: center;
-                cursor: pointer;
-            }
+    .leftIcon .rightIcon {
+      width: 30px;
+      text-align: center;
+      cursor: pointer;
+    }
 
-            .hospital_roleDetail-title {
-                flex-grow: 1;
-                text-align: center;
-                font-size: 23px;
-                font-weight: 600;
-            }
-        }
+    .hospital_roleDetail-title {
+      flex-grow: 1;
+      text-align: center;
+      font-size: 23px;
+      font-weight: 600;
+    }
 
-    .hospital_roleDetail-rightContainer {
-        flex: 1;
-        margin-left: 15px;
-        padding: 10px;
-        height: 600px;
-        overflow-y: scroll;
-        box-sizing: border-box;
-        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-        .title {
-            font-size: 23px;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
+  }
 
+  .hospital_roleDetail-rightContainer {
+    flex: 1;
+    margin-left: 15px;
+    padding: 10px;
+    height: 600px;
+    overflow-y: scroll;
+    box-sizing: border-box;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
+    .title {
+      font-size: 23px;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
 
+  }
 
+  //.container {
+  //  display: flex;
+  //  justify-content: center;
+  //  align-items: center;
+  //  height: 100vh; /* 设置容器高度为视口高度，可以根据实际情况调整 */
+  //}
 
+  .video-container {
+    width: 1600px; /* 设置.video-container占屏幕宽度的90% */
+    margin: 0 auto; /* 居中显示 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+    border-radius: 8px; /* 可选：添加圆角效果 */
+    overflow: hidden;
+    display: flex; /* 使用Flexbox */
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    height: 900px /* 或者根据需要设置一个具体的高度 */
+  }
 
+  .video {
+    width: 100%; /* 设置.video占.video-container宽度的80% */
+    height: 100%; /* 高度自适应 */
+  }
 
-
-    
-}
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* 设置容器高度为视口高度，可以根据实际情况调整 */
-}
-
-.video-container {
-  width: 90%; /* 设置.video-container占屏幕宽度的90% */
-  margin: 0 auto; /* 居中显示 */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
-  border-radius: 8px; /* 可选：添加圆角效果 */
-  overflow: hidden;
-  display: flex; /* 使用Flexbox */
-  justify-content: center; /* 水平居中 */
-  align-items: center; /* 垂直居中 */
-  height: 80% /* 或者根据需要设置一个具体的高度 */
-}
-
-.video {
-  width: 80%; /* 设置.video占.video-container宽度的80% */
-  height: auto; /* 高度自适应 */
-}
-.procedure-box{
-  width: 80%; /* 设置.video-container占屏幕宽度的90% */
-  margin: 0 auto; /* 居中显示 */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
-  border-radius: 8px; /* 可选：添加圆角效果 */
-  overflow: hidden;
+  .procedure-box {
+    width: 80%; /* 设置.video-container占屏幕宽度的90% */
+    margin: 0 auto; /* 居中显示 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+    border-radius: 8px; /* 可选：添加圆角效果 */
+    overflow: hidden;
 
 
+    height: auto
+  }
 
-  height: auto
-}
+  .hospital_roleDetail-header {
+    display: flex; /* 启用Flexbox布局 */
+    justify-content: center; /* 将子元素居中对齐 */
+    align-items: center; /* 垂直居中 */
+  }
 
-        .hospital_roleDetail-header {
-          display: flex; /* 启用Flexbox布局 */
-          justify-content: center; /* 将子元素居中对齐 */
-          align-items: center; /* 垂直居中 */
-        }
-
-        .leftIcon, .rightIcon {
-          margin: 0 10px; /* 在左右图标与标题之间添加一些间距 */
-        }
-
+  .leftIcon, .rightIcon {
+    margin: 0 10px; /* 在左右图标与标题之间添加一些间距 */
+  }
 </style>
