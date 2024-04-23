@@ -1,5 +1,6 @@
 <template>
-    <div class="test-container">
+    <div class="test-container hospital_user-container">
+      <br><br><br><br><br><br>
         <div class="header">
             <h1>测试结果</h1>
         </div>
@@ -88,6 +89,9 @@ export default {
   display: block;
   width: 15%;
   margin: 20px auto;
+}
+.hospital_user-container {
+  margin-top: 15vh;
 }
 </style>
 

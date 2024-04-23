@@ -1,44 +1,73 @@
 <template>
-  <div>
-    <!-- 搜索栏和按钮 -->
-    <div style="display: flex; align-items: center; margin-bottom: 20px;">
-      <el-input v-model="searchBar" placeholder="请输入关键字搜索" prefix-icon="el-icon-search" clearable @clear="getAll"
-        @keyup.enter.native="search" style="flex: 0 1 300px; margin-right: 10px;"></el-input>
-      <el-button type="primary" @click="search" style="flex-shrink: 0;">搜索</el-button>
-      <el-button type="primary" size="medium" @click="showAddDialog">新增考试</el-button>
-    </div>
+  <div >
+    <div class = "hospital_user-container">
+      <div class="table-responsive table-wrapper">
+        <table class="table table-vcenter table-nowrap table-shadow" data-aos="fade-up">
+          <thead class="thead-light">
+          <tr>
+            <th>考试名字</th>
+            <th>开始时间</th>
+            <th>结束时间</th>
+            <th>总分</th>
+            <th>举办人</th>
+            <th>
+              <div class="row">
+                <div class="col">
+                  <input type="text" @input="search"  class="form-control input-round" v-model="searchBar"  placeholder="查找考试名">
+                </div>
+                <div class="col">
+                  <button type="submit" class="btn btn-primary btn-round" @click="showAddDialog">新增考试</button>
+                </div>
+              </div>
+            </th>
 
-    <!--考试list -->
-    <el-table :data="exams" border style="width: 100%;margin-top: 20px;"
-      :header-cell-style="{ background: 'rgb(242, 243, 244)', color: '#515a6e' }">
-      <el-table-column prop="id" label="考试id">
-        <template slot-scope="scope">
-          考试{{ scope.row.id }}
-        </template>
-      </el-table-column>
-      <el-table-column prop="name" label="考试名字">
-      </el-table-column>
-      <el-table-column prop="startTime" label="开始时间">
-      </el-table-column>
-      <el-table-column prop="endTime" label="结束时间">
-      </el-table-column>
-      <el-table-column prop="score" label="总分">
-      </el-table-column>
-      <el-table-column fixed="right" label="操作">
-        <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="delete_exam(scope.row)" style="margin-right: 15px;">删除考试</el-button>
-          <el-popover placement="right" width="700" trigger="click">
-            <el-table :data="questionRecord" >
-              <el-table-column width="150" prop="user.username" label="受试者"></el-table-column>
-              <el-table-column width="150" prop="status" label="状态"></el-table-column>
-              <el-table-column width="100" prop="score" label="得分"></el-table-column>
-			  <el-table-column width="150" prop="exam.holder.username" label="举行者"></el-table-column>
-            </el-table>
-            <el-button type="primary" size="mini" @click="loadUserResult(scope.row)" slot="reference">考试结果</el-button>
-          </el-popover>
-        </template>
-      </el-table-column>
-    </el-table>
+            <th class="w-1"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="exam in paginatedExams" :key="exam.id">
+            <td>{{ exam.name }}</td>
+            <td>{{ exam.startTime }}</td>
+            <td>{{ exam.endTime }}</td>
+            <td>{{ exam.score }}</td>
+            <td>{{exam.holder.username}}</td>
+            <td>
+              <button @click="delete_exam(exam)" class="btn btn-link">删除</button>
+
+              <el-popover placement="right" width="700" trigger="click">
+                <el-table :data="questionRecord" >
+                  <el-table-column width="150" prop="user.username" label="受试者"></el-table-column>
+                  <el-table-column width="150" prop="status" label="状态"></el-table-column>
+                  <el-table-column width="100" prop="score" label="得分"></el-table-column>
+                  <el-table-column width="150" prop="exam.holder.username" label="举行者"></el-table-column>
+                </el-table>
+                <el-button type="primary" size="mini" @click="loadUserResult(exam)" slot="reference" class="btn btn-link bg-primary">考试结果</el-button>
+              </el-popover>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+
+      </div>
+    </div>
+    <!-- 搜索栏和按钮 -->
+
+    <!-- pagination -->
+    <nav aria-label="Page navigation example">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#" @click="handlePreviousPage"><i
+            class="fas fa-angle-left"></i></a></li>
+        <li class="page-item" v-for="page in totalPages" :key="page" :class="{ 'active': page === currentPage }">
+          <a class="page-link" href="#" @click="handlePageClick(page)">{{ page }}</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#" @click="handleNextPage"><i
+            class="fas fa-angle-right"></i></a></li>
+      </ul>
+    </nav>
+
+
 
     <!-- <el-menu class="exam-nav">
         <el-menu-item :key="item.id" v-for="item in exams" v-on:click="show_paper(item.testpaper)">考试{{ item.id }}</el-menu-item>
@@ -104,6 +133,8 @@
 <script>
 import QuestionManagementVue from './QuestionManagement.vue';
 import { NetLoader } from '@/net';
+import '../../css/vendor/aos.css'
+import AOS from '../../js/vendor/aos'
 export default {
   data() {
     return {
@@ -113,6 +144,12 @@ export default {
 
       exams: [],
       currentUserName: "",
+
+      currentPage: 1, // 当前页码
+      pageSize: 10,   // 每页显示的数据条数
+      totalPages: 0,  // 总页数
+      totalItems: 0,  // 总数据条数
+      paginatedExams: [], // 当前页显示的数据
 
       questionRecord: {
 		  username:"",
@@ -142,20 +179,58 @@ export default {
 
     }
   },
+  computed: {
+    // 根据当前页和每页显示的数据条数计算起始索引
+    startIndex() {
+      return (this.currentPage - 1) * this.pageSize;
+    },
+    // 根据起始索引和每页显示的数据条数截取出当前页显示的数据
+    endIndex() {
+      return (this.currentPage - 1) * this.pageSize + this.pageSize;
+    }
+  },
 
   methods: {
+    handlePreviousPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+        this.updatePaginatedUsers();
+      }
+    },
+    handleNextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+        this.updatePaginatedUsers();
+      }
+    },
+    updatePaginatedUsers() {
+      this.paginatedExams = []; // 清空当前页的数据
+
+      // 通过循环手动构建当前页的数据
+      for (let i = this.startIndex; i < this.endIndex && i < this.exams.length; i++) {
+        this.paginatedExams.push(this.exams[i]);
+        console.log(this.exams[i])
+      }
+      console.log("分页后" + this.paginatedUsers);
+    },
+    // 处理分页点击事件
+    handlePageClick(page) {
+      this.currentPage = page;
+      this.updatePaginatedUsers();
+    },
+
     search() {
       const name = this.searchBar;
-      console.log("名字" + name)
-      var url = "exams/search?name=" + name + "&status=false";
+
+      var url = "exams/search?name=" + name ;
       this.loader.get(url).then(value => {
         const jsonData = value.data;
         // 将 JSON 数据转换为字符串并输出到控制台
-        console.log(JSON.stringify(jsonData));
+
 
         if (jsonData.code == 200) {
           let res = value.data.data;
-          console.log(res)
+          this.exams = [];
           for (let item of res) {
             this.exams.push(item);
           }
@@ -194,6 +269,8 @@ export default {
           // 其他表单项
         };
         this.getAll()
+        this.loadUserList()
+        this.loadCategoryList()
       }).catch((res) => {
         this.$message.error(res.message)
       })
@@ -208,25 +285,28 @@ export default {
       this.loader.get("/exams/list").then((value) => {
         const jsonData = value.data;
         // 将 JSON 数据转换为字符串并输出到控制台
-        console.log(JSON.stringify(jsonData));
 
         if (jsonData.code == 200) {
           let res = value.data.data;
-          console.log(res)
+
           for (let item of res) {
             this.exams.push(item);
           }
+          console.log("exam列表是："+ JSON.stringify( this.exams));
+
         } else {
           console.log(400)
           this.$message.error(jsonData.message);
         }
+        this.updatePaginatedUsers()
+        this.totalItems = this.exams.length; // 设置总数据条数
+        this.totalPages = Math.ceil(this.totalItems / this.pageSize); // 计算总页数
       })
     },
 
     show_paper: function (row) {
       let id = row.id
       this.$router.push({ name: 'PaperDetail', params: { paperId: id } });
-      console.log("id是" + id)
     },
 
     delete_exam: function (row) {
@@ -269,7 +349,6 @@ export default {
               label: category.name,
               value: category.id
             }))
-            console.log("category列表" + this.formData.categories)
           } else {
             this.$message.error(jsonData.message);
           }
@@ -283,7 +362,6 @@ export default {
       const categoryId = value[value.length - 1]; // 获取选中类别的值
 
       // 现在你可以使用 categoryId 和 categoryName 来做任何你想做的事情了
-      console.log("选中的类别 ID：", categoryId);
 
       let url = "question/findByCategoryId?categoryIdStr=" + categoryId
       this.loader.get(url).then(value => {
@@ -320,11 +398,23 @@ export default {
     this.getAll()
     this.loadUserList()
     this.loadCategoryList()
+  },
+  mounted() {
+    AOS.init({ duration: 1000 });
+    AOS.refresh();
   }
 }
 </script>
 
 <style>
+.hospital_user-container {
+  margin-top: 15vh;
+
+  .table-wrapper {
+    padding: 0 60px;
+    /* 在左右两侧留出相同的空白 */
+
+  }}
 .exam-nav {
   min-height: calc(100vh - 60px);
   text-align: center
