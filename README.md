@@ -6,7 +6,7 @@ Virtual Pet Hospital Learning System (front-end) base on Vue2 & ElementUI.
 
 ## 安装依赖
 
-请确保你有合适版本的Node.js工具，随后在目录下运行以下命令安装依赖：
+请确保你有合适版本的Node.js工具（18 LTS），随后在目录下运行以下命令安装依赖：
 
 ```bash
 npm install
