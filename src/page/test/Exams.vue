@@ -137,8 +137,8 @@ export default {
     },
 
     show_paper: function (row) {
-      this.$router.push({ name: 'PaperDetail', params: { paperId: row.id } });
-      /* this.loader.post('/exams/joinExam', { examId: row.id }).then((value) => {
+
+       this.loader.post('/exams/joinExam', { examId: row.id }).then((value) => {
         const jsonData = value.data;
         if (jsonData.code == 200) {
           this.$router.push({ name: 'PaperDetail', params: { paperId: row.id } });
@@ -152,7 +152,7 @@ export default {
         } else {
           this.$message.error('未知错误！!');
         }
-      }) */
+      })
     },
     show_result: function (row) {
       //查询当前用户的当前考试结果
