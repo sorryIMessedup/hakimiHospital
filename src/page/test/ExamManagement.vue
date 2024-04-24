@@ -276,6 +276,7 @@ export default {
       })
     },
     showAddDialog() {
+      console.log("biandekejian")
       this.dialogVisible = true;
     },
 
