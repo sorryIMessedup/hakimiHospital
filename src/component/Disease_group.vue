@@ -16,8 +16,8 @@
         <el-table-column prop="id" width="300" label="疾病ID" align="center" />
         <el-table-column fixed="right" width="230">
           <template slot="header">
-            <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
-          </template>
+            <template slot="header">
+                    </template>          </template>
           <template slot-scope="scope">
             <el-button size="mini" @click="handleView(scope.row)">查看</el-button>
             <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>

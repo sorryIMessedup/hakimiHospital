@@ -16,9 +16,7 @@
         <el-table-column fixed width="120" prop="disease.name" label="疾病名" align="center" />
         <el-table-column prop="id" width="300" label="病例ID" align="center" />
         <el-table-column fixed="right" width="230">
-          <template slot="header">
-            <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
-          </template>
+
           <template slot-scope="scope">
             <el-button size="mini" @click="handleView(scope.row)">查看</el-button>
             <el-button size="mini" @click="handleEdit(scope.row)" v-if="auth == '2'">编辑</el-button>
@@ -138,7 +136,7 @@ export default {
       },
       rrow: '',
       auth: '',
-      search: "",
+      searchBar: "",
       list: [],
       loader: new NetLoader("test"),
       list2: [],
@@ -195,6 +193,9 @@ export default {
         console.log(res);
         this.list3 = res;
       })
+    },
+    search(){
+      this.loader.get()
     },
     add_case() {
       this.status = 1;
