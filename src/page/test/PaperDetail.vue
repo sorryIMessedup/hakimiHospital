@@ -78,9 +78,8 @@ export default {
         }
         this.seconds = this.period * 60;
 
-        this.loader.get("/question/findAllVisibleQuestions", {
-            id: this.$route.params.paperId
-        }).then((value) => {
+        this.loader.get("/exams/getQuestionsOf?examId="+this.$route.params.paperId
+        ).then((value) => {
             console.log('所有问题裂变', value);
             this.questions = value.data.data;
         })
