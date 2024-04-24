@@ -246,6 +246,7 @@ export default {
           type: 'success',
           message: '添加成功!'
         });
+        location.reload();
       }, err => {
         this.$message({ type: 'warning', message: err.response.data.message });
         console.log(err);
